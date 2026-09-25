@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { MotionConfig, motion, useReducedMotion } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -79,23 +79,58 @@ function TypingHeadline({ reduceMotion }: { reduceMotion: boolean | null }) {
   );
 }
 
+const skillCards = [
+  { label: 'Product engineering', size: 'hero', tone: 'ink', angle: -5, lift: 2 },
+  { label: 'AI integration', size: 'hero', tone: 'accent', angle: 4, lift: -4 },
+  { label: 'UX/UI & user flows', size: 'major', tone: 'paper', angle: -7, lift: -1 },
+  { label: 'System architecture', size: 'hero', tone: 'paper', angle: 3, lift: 5 },
+  { label: 'TypeScript', size: 'minor', tone: 'ink', angle: 9, lift: -5 },
+  { label: 'React', size: 'minor', tone: 'paper', angle: -4, lift: 4 },
+  { label: 'Full-stack delivery', size: 'major', tone: 'accent', angle: -3, lift: -2 },
+  { label: 'Next.js', size: 'minor', tone: 'paper', angle: 6, lift: 3 },
+  { label: 'Workflow automation', size: 'hero', tone: 'ink', angle: -2, lift: 5 },
+  { label: 'Python', size: 'minor', tone: 'accent', angle: 8, lift: -5 },
+  { label: 'Supabase', size: 'minor', tone: 'paper', angle: -8, lift: 3 },
+  { label: 'API design', size: 'minor', tone: 'paper', angle: 5, lift: -4 },
+  { label: 'Agentic workflows', size: 'major', tone: 'paper', angle: -6, lift: 1 },
+  { label: 'Model evaluation', size: 'major', tone: 'ink', angle: 3, lift: -2 },
+  { label: 'Structured extraction', size: 'major', tone: 'accent', angle: -4, lift: 4 },
+  { label: 'Human review', size: 'minor', tone: 'paper', angle: 8, lift: -3 },
+  { label: 'Data pipelines', size: 'minor', tone: 'ink', angle: -6, lift: 2 },
+  { label: 'Product discovery', size: 'minor', tone: 'paper', angle: 4, lift: -5 },
+  { label: 'Windows tooling', size: 'minor', tone: 'paper', angle: -7, lift: 4 },
+  { label: 'Google Maps RPC', size: 'minor', tone: 'accent', angle: 7, lift: -4 },
+  { label: 'Testing & iteration', size: 'minor', tone: 'paper', angle: -3, lift: 3 },
+  { label: 'Git & CI/CD', size: 'minor', tone: 'ink', angle: 5, lift: -2 },
+  { label: 'Technical leadership', size: 'major', tone: 'paper', angle: -5, lift: 4 },
+  { label: 'Workshop facilitation', size: 'minor', tone: 'accent', angle: 5, lift: -3 },
+  { label: 'Cloud support', size: 'minor', tone: 'paper', angle: -6, lift: 4 },
+  { label: 'Google Workspace', size: 'minor', tone: 'ink', angle: 6, lift: -2 },
+  { label: 'Technical hiring', size: 'minor', tone: 'paper', angle: -4, lift: 3 },
+  { label: 'PWA', size: 'minor', tone: 'accent', angle: 7, lift: -4 },
+  { label: 'Google Apps Script', size: 'minor', tone: 'paper', angle: -7, lift: 2 },
+  { label: 'Database design', size: 'minor', tone: 'paper', angle: 4, lift: -3 },
+  { label: 'Document workflows', size: 'minor', tone: 'ink', angle: -5, lift: 4 },
+  { label: 'Desktop GUI', size: 'minor', tone: 'paper', angle: 5, lift: -2 },
+];
+
 function HeroShowcase() {
   return (
-    <div className="hero-showcase" data-entrance aria-label="Project previews">
-      <figure className="hero-showcase__card hero-showcase__card--main">
-        <div className="hero-preview hero-preview--clutch" aria-hidden="true"><span>CLUTCHG / SYSTEM CONTROL</span><strong>Optimize with<br />evidence.</strong><div><b>56</b> vetted tweaks <i>↗</i></div></div>
-        <figcaption>ClutchG / Windows tooling</figcaption>
-      </figure>
-      <figure className="hero-showcase__card hero-showcase__card--younum">
-        <img src="/showcase/younum-landing.webp" alt="YouNum product landing page" fetchPriority="high" />
-        <figcaption>YouNum / solo product</figcaption>
-      </figure>
-      <figure className="hero-showcase__card hero-showcase__card--research">
-        <div className="hero-preview hero-preview--data" aria-hidden="true"><span>GOOGLE MAPS / RESEARCH</span><strong>22,664</strong><small>reviews · 11 restaurants</small></div>
-        <figcaption>RPC scraper / measured data</figcaption>
-      </figure>
-      <p className="hero-showcase__note">Product, data, and decisions.<br />Explore the stories below ↘</p>
-    </div>
+    <section className="skill-wall" data-entrance aria-label="Skills and methods I use in my work">
+      <div className="skill-wall__header"><span>WHAT I BUILD WITH</span><span>{skillCards.length} IN PRACTICE</span></div>
+      <ul className="skill-wall__pile">
+        {skillCards.map((skill, index) => (
+          <li
+            key={skill.label}
+            className={`skill-card skill-card--${skill.size} skill-card--${skill.tone}`}
+            style={{ '--angle': `${skill.angle}deg`, '--lift': `${skill.lift}px`, '--order': index } as CSSProperties}
+          >
+            <span>{skill.label}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="skill-wall__footer">From the first question to a working release <span aria-hidden="true">↗</span></p>
+    </section>
   );
 }
 
