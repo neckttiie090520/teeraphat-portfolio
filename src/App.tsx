@@ -142,42 +142,59 @@ function HeroShowcase() {
 }
 
 function CaseNotes({ project }: { project: Project }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const contentId = `case-notes-${project.id}`;
+
   return (
-    <details className="project-notes">
-      <summary>Open case notes</summary>
-      <div className="project-notes__content">
-        <dl className="case-facts">
-          <div>
-            <dt>Context</dt>
-            <dd>{project.caseStudy.context}</dd>
+    <div className={'project-notes' + (isOpen ? ' is-open' : '')}>
+      <button
+        className="project-notes__toggle"
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        <span>{isOpen ? 'Close case notes' : 'Open case notes'}</span>
+        <span className="project-notes__glyph" aria-hidden="true"><span /></span>
+      </button>
+      <div className="project-notes__reveal" id={contentId} aria-hidden={!isOpen} inert={!isOpen}>
+        <div className="project-notes__reveal-inner">
+          <div className="project-notes__content">
+            <div className="project-notes__masthead" aria-hidden="true"><span>CASE FILE / {project.index}</span><span>PROBLEM → DECISION → EVIDENCE</span></div>
+            <dl className="case-facts">
+              <div>
+                <dt>Context</dt>
+                <dd>{project.caseStudy.context}</dd>
+              </div>
+              <div>
+                <dt>Why it mattered</dt>
+                <dd>{project.caseStudy.why}</dd>
+              </div>
+              <div>
+                <dt>Role and scope</dt>
+                <dd>{project.caseStudy.role}</dd>
+              </div>
+              <div>
+                <dt>Constraint and decision</dt>
+                <dd>{project.caseStudy.constraints} {project.caseStudy.decisions}</dd>
+              </div>
+            </dl>
+            <div className="case-facts__build">
+              <h4>What I built</h4>
+              <ol>
+                {project.caseStudy.build.map((step) => <li key={step}>{step}</li>)}
+              </ol>
+            </div>
+            <div className="case-facts__evidence">
+              <h4>Evidence</h4>
+              <p>{project.caseStudy.evidence}</p>
+              <h4>Verified outcome or learning</h4>
+              <p>{project.caseStudy.outcome}</p>
+            </div>
           </div>
-          <div>
-            <dt>Why it mattered</dt>
-            <dd>{project.caseStudy.why}</dd>
-          </div>
-          <div>
-            <dt>Role and scope</dt>
-            <dd>{project.caseStudy.role}</dd>
-          </div>
-          <div>
-            <dt>Constraint and decision</dt>
-            <dd>{project.caseStudy.constraints} {project.caseStudy.decisions}</dd>
-          </div>
-        </dl>
-        <div className="case-facts__build">
-          <h4>What I built</h4>
-          <ol>
-            {project.caseStudy.build.map((step) => <li key={step}>{step}</li>)}
-          </ol>
-        </div>
-        <div className="case-facts__evidence">
-          <h4>Evidence</h4>
-          <p>{project.caseStudy.evidence}</p>
-          <h4>Verified outcome or learning</h4>
-          <p>{project.caseStudy.outcome}</p>
         </div>
       </div>
-    </details>
+    </div>
   );
 }
 
@@ -267,12 +284,12 @@ function FeaturedProject({ project }: { project: Project }) {
             {project.stack.join(' · ')}
           </p>
           <ProjectLinks project={project} />
-          <CaseNotes project={project} />
         </div>
         <div className="project-card__visual">
           {project.images?.length ? <EvidenceGallery project={project} /> : <ProjectGraphic project={project} />}
         </div>
       </div>
+      <CaseNotes project={project} />
       <div className="featured-project__story" aria-label={`${project.title} project story`}>
         <div><span>01 / The question</span><p>{project.caseStudy.context}</p></div>
         <div><span>02 / The decision</span><p>{project.caseStudy.decisions}</p></div>
