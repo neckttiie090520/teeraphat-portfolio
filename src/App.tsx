@@ -469,6 +469,7 @@ function PageMascot({ activeChapter, reduceMotion }: {
   const momentIndex = useRef(0);
   const lastChapter = useRef<ChapterId>(activeChapter);
   const educationInView = useRef(false);
+  const creativeInView = useRef(false);
 
   const announce = useCallback((next: MascotMoment) => {
     setMoment(next);
@@ -503,9 +504,20 @@ function PageMascot({ activeChapter, reduceMotion }: {
   }, [announce, isPaused]);
 
   useEffect(() => {
+    const section = document.getElementById('creative-practice');
+    if (isPaused || !section || !('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      creativeInView.current = entry.isIntersecting;
+      if (entry.isIntersecting) announce({ eyebrow: 'THE CREATIVE SIDE', body: 'Before designing user flows, Necktie directed, filmed, edited, and made music. Start with the documentary, then follow the rest of the work.', target: 'https://www.youtube.com/watch?v=RjLryUSlC4c', action: 'Watch Graduated' });
+    }, { rootMargin: '-20% 0px -55% 0px' });
+    observer.observe(section);
+    return () => { creativeInView.current = false; observer.disconnect(); };
+  }, [announce, isPaused]);
+
+  useEffect(() => {
     if (isPaused) return;
     const timer = window.setInterval(() => {
-      if (document.visibilityState !== 'visible' || educationInView.current || document.querySelector('dialog[open]') || document.querySelector('#mascot-message:hover') || document.activeElement?.closest('#mascot-message')) return;
+      if (document.visibilityState !== 'visible' || educationInView.current || creativeInView.current || document.querySelector('dialog[open]') || document.querySelector('#mascot-message:hover') || document.activeElement?.closest('#mascot-message')) return;
       const moments = mascotMoments[activeChapter];
       momentIndex.current = (momentIndex.current + 1) % moments.length;
       announce(moments[momentIndex.current]);
@@ -858,6 +870,49 @@ function App() {
               <figure className="education-gallery__image" data-reveal><img src="/images/education/touch-experiment.jpg" alt="A visitor touches a glowing plasma sphere in an early interactive art experiment" width="1080" height="1440" loading="lazy" decoding="async" /><figcaption><span>02 / 04</span> Pre-thesis · an invitation to touch</figcaption></figure>
               <figure className="education-gallery__image" data-reveal><img src="/images/education/visitor-experiment.jpg" alt="Visitors looking at the interactive object inside a wooden enclosure" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>03 / 04</span> The experience, seen with visitors</figcaption></figure>
               <figure className="education-gallery__image" data-reveal><img src="/images/education/installation-process.jpg" alt="White sculptural forms during construction of the installation" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>04 / 04</span> Form taking shape during the build</figcaption></figure>
+            </div>
+          </div>
+
+          <div id="creative-practice" className="creative-practice" aria-labelledby="creative-practice-title">
+            <div className="creative-practice__intro" data-reveal>
+              <p className="education-work__eyebrow">CREATIVE PRACTICE / FILM & MUSIC</p>
+              <h3 id="creative-practice-title">I learned to tell a story before I built software.</h3>
+              <p>Outside interactive installations, I worked behind the camera and made music. Directing, shooting, editing, songwriting, and covers taught me how to shape a sequence for people who will actually watch or listen. That sense of pacing still informs how I present a product and guide someone through it.</p>
+            </div>
+
+            <div className="creative-practice__features">
+              <a className="creative-film creative-film--lead" href="https://www.youtube.com/watch?v=RjLryUSlC4c" target="_blank" rel="noreferrer" data-reveal aria-label="Watch Graduated, a short documentary directed, filmed, and edited by Teeraphat Raksawong on YouTube">
+                <span className="creative-film__visual"><img src="https://i.ytimg.com/vi/RjLryUSlC4c/hqdefault.jpg" alt="Still from the short documentary Graduated" loading="lazy" decoding="async" /><span className="creative-film__play" aria-hidden="true">↗</span></span>
+                <span className="creative-film__meta">SHORT DOCUMENTARY <span>21 MIN · 2021</span></span>
+                <strong>Graduated</strong>
+                <span className="creative-film__role">Director · Director of Photography · Editor</span>
+              </a>
+
+              <div className="creative-music" data-reveal>
+                <div className="creative-music__waves" aria-hidden="true">{[22, 42, 64, 36, 78, 53, 95, 58, 39, 72, 48, 86, 60, 32, 68, 43, 79, 51, 26, 62, 38, 73, 47, 24].map((height, index) => <span key={index} style={{ height: `${height}%` }} />)}</div>
+                <p className="creative-music__label">MUSIC / NEXTZUS STUDIO</p>
+                <h4>Original songs & covers.</h4>
+                <p>I write songs and share original work and covers through my YouTube channel.</p>
+                <div className="creative-music__links">
+                  <a href="https://www.youtube.com/watch?v=VpjOSOCzDus" target="_blank" rel="noreferrer">Listen to an original track <span aria-hidden="true">↗</span></a>
+                  <a href="https://www.youtube.com/watch?v=szPEpbjPhA8" target="_blank" rel="noreferrer">Listen to a cover <span aria-hidden="true">↗</span></a>
+                  <a href="https://www.youtube.com/@NextzusStudio_official/featured" target="_blank" rel="noreferrer">Explore Nextzus Studio <span aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div className="creative-video-list" aria-label="Selected film and video work">
+              {[
+                { id: 'HSGF20gdvDI', type: 'MOVING IMAGE / AD', title: 'Another Place', detail: 'A headphone advertisement made for a moving-image course.', role: 'Course project · moving-image advertisement' },
+                { id: 'i7xiiDgpHxI', type: 'VLOG / 2020', title: 'Vlog film · 01', detail: 'Camera and editing for a vlog.', role: 'Camera · Editor' },
+                { id: 'RJeFe-Ae7PE', type: 'VLOG / 2021', title: 'Vlog film · 02', detail: 'Camera and editing for a second vlog.', role: 'Camera · Editor' },
+              ].map((film) => (
+                <a className="creative-video" href={`https://www.youtube.com/watch?v=${film.id}`} target="_blank" rel="noreferrer" key={film.id} data-reveal aria-label={`Watch ${film.type}: ${film.title} on YouTube`}>
+                  <span className="creative-video__image"><img src={`https://i.ytimg.com/vi/${film.id}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" /></span>
+                  <span className="creative-video__copy"><span>{film.type}</span><strong>{film.title}</strong><span>{film.detail}</span><small>{film.role}</small></span>
+                  <span className="creative-video__arrow" aria-hidden="true">↗</span>
+                </a>
+              ))}
             </div>
           </div>
         </section>
