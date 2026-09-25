@@ -3,6 +3,7 @@ import { MotionConfig, motion, useReducedMotion } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { Mascot } from 'page-mascot';
 import {
   chapters,
   content,
@@ -24,6 +25,76 @@ function ProjectLinks({ project }: { project: Project }) {
           {link.label}<span aria-hidden="true"> ↗</span>
         </a>
       ))}
+    </div>
+  );
+}
+
+function EvidenceGallery({ project, compact = false }: { project: Project; compact?: boolean }) {
+  const [active, setActive] = useState(0);
+  const images = project.images ?? [];
+
+  if (images.length === 0) return null;
+
+  const item = images[active];
+  return (
+    <div className={'evidence-gallery' + (compact ? ' evidence-gallery--compact' : '')} data-project={project.id} aria-label={`${project.title} image gallery`}>
+      <figure className="evidence-gallery__frame">
+        <img src={item.src} alt={item.alt} loading="lazy" />
+        <figcaption>{item.caption}</figcaption>
+      </figure>
+      {images.length > 1 && (
+        <div className="evidence-gallery__controls">
+          <button type="button" aria-label={`Previous ${project.title} image`} onClick={() => setActive((index) => (index + images.length - 1) % images.length)}>←</button>
+          <span aria-live="polite">{String(active + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</span>
+          <button type="button" aria-label={`Next ${project.title} image`} onClick={() => setActive((index) => (index + 1) % images.length)}>→</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TypingHeadline({ reduceMotion }: { reduceMotion: boolean | null }) {
+  const name = 'Teeraphat Raksawong';
+  const [length, setLength] = useState(reduceMotion ? name.length : 0);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setLength(name.length);
+      return;
+    }
+    let current = 0;
+    const timer = window.setInterval(() => {
+      current += 1;
+      setLength(current);
+      if (current >= name.length) window.clearInterval(timer);
+    }, 50);
+    return () => window.clearInterval(timer);
+  }, [reduceMotion]);
+
+  return (
+    <h1 id="hero-title" className="hero__title" aria-label={`${name} (Necktie)`}>
+      <span className="hero__name-line" aria-hidden="true">{name.slice(0, Math.min(length, 9))}{length <= 9 && <span className="hero__cursor">|</span>}</span>
+      <span className="hero__name-line" aria-hidden="true">{length > 9 ? name.slice(10, length) : ''}{length > 9 && <span className="hero__cursor">|</span>}</span>
+    </h1>
+  );
+}
+
+function HeroShowcase() {
+  return (
+    <div className="hero-showcase" data-entrance aria-label="Project previews">
+      <figure className="hero-showcase__card hero-showcase__card--main">
+        <img src="/showcase/younum-landing.webp" alt="YouNum product landing page" fetchPriority="high" />
+        <figcaption>YouNum / product from concept to release</figcaption>
+      </figure>
+      <figure className="hero-showcase__card hero-showcase__card--faii">
+        <img src="/showcase/faii-home.png" alt="faii cotton storefront" />
+        <figcaption>faii / commerce</figcaption>
+      </figure>
+      <figure className="hero-showcase__card hero-showcase__card--line">
+        <img src="/showcase/line-assistant-menu.png" alt="LINE AI Secretary menu" />
+        <figcaption>LINE / assistant</figcaption>
+      </figure>
+      <p className="hero-showcase__note">Real products, real decisions.<br />Explore the stories below ↘</p>
     </div>
   );
 }
@@ -111,7 +182,7 @@ function ProjectGraphic({ project }: { project: Project }) {
 
 function FeaturedProject({ project }: { project: Project }) {
   return (
-    <article className={'project-card project-card--featured project-card--' + (project.feature ?? 'product')} aria-labelledby={'project-' + project.id}>
+    <article className={'project-card project-card--featured project-card--' + (project.feature ?? 'product')} aria-labelledby={'project-' + project.id} data-reveal>
       <div className="project-card__body">
         <p className="project-card__category"><span>{project.index}</span> / {project.category}</p>
         <h3 id={'project-' + project.id}>{project.title}</h3>
@@ -125,7 +196,12 @@ function FeaturedProject({ project }: { project: Project }) {
         <CaseNotes project={project} />
       </div>
       <div className="project-card__visual">
-        <ProjectGraphic project={project} />
+        {project.images?.length ? <EvidenceGallery project={project} /> : <ProjectGraphic project={project} />}
+      </div>
+      <div className="featured-project__story" aria-label={`${project.title} project story`}>
+        <div><span>01 / The question</span><p>{project.caseStudy.context}</p></div>
+        <div><span>02 / The decision</span><p>{project.caseStudy.decisions}</p></div>
+        <div><span>03 / What it proved</span><p>{project.caseStudy.outcome}</p></div>
       </div>
     </article>
   );
@@ -133,11 +209,12 @@ function FeaturedProject({ project }: { project: Project }) {
 
 function ProjectIndexRow({ project }: { project: Project }) {
   return (
-    <article className="project-card project-card--index" aria-labelledby={'project-' + project.id}>
+    <article className="project-card project-card--index" aria-labelledby={'project-' + project.id} data-reveal>
       <p className="project-index__number" aria-hidden="true">{project.index}</p>
       <div className="project-index__heading">
         <p className="project-card__category">{project.category}</p>
         <h3 id={'project-' + project.id}>{project.title}</h3>
+        {project.images?.length ? <EvidenceGallery project={project} compact /> : null}
       </div>
       <div className="project-index__detail">
         <p className="project-card__summary">{project.summary}</p>
@@ -196,20 +273,18 @@ function PageMascot({ activeChapter, reduceMotion }: {
         </div>
       </motion.div>
 
-      <motion.button
+      <Mascot directions="/mascots/crt-directions.webp" reactions="/mascots/crt-reactions.webp" size={84} label="CRT guide" className="page-mascot__crt" />
+      <button
         ref={buttonRef}
-        className="page-mascot__button"
+        className="page-mascot__guide"
         type="button"
         aria-label={isOpen ? content.mascot.closeLabel : content.mascot.openLabel}
         aria-expanded={isOpen}
         aria-controls="mascot-message"
         onClick={() => setIsOpen((open) => !open)}
-        whileHover={reduceMotion ? undefined : { scale: 1.035, rotate: -1 }}
-        whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-        transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 28 }}
       >
-        <img src="/images/teeraphat-avatar.png" alt="" />
-      </motion.button>
+        {isOpen ? 'Close guide' : 'Where next?'}
+      </button>
     </div>
   );
 }
@@ -220,6 +295,8 @@ function App() {
   const mainRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
+  const showcaseProjects = [...featuredProjects, ...projects.filter((project) => project.id === 'faii')];
+  const indexedProjects = projects.filter((project) => project.id !== 'faii');
 
   useEffect(() => {
     let frame = 0;
@@ -274,22 +351,10 @@ function App() {
         ease: 'power3.out',
       });
 
-      gsap.fromTo(
-        '[data-underline]',
-        { scaleX: 0 },
-        { scaleX: 1, duration: 0.85, delay: 0.25, ease: 'power3.out', transformOrigin: 'left center' },
+      gsap.fromTo('[data-ink-line]',
+        { strokeDashoffset: 500 },
+        { strokeDashoffset: 0, duration: 1.15, ease: 'power2.out', scrollTrigger: { trigger: '[data-ink-line]', start: 'top 85%', once: true } },
       );
-
-      gsap.to('[data-bridge-copy]', {
-        x: -24,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.story-bridge',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 0.5,
-        },
-      });
 
       gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
         gsap.from(element, {
@@ -301,6 +366,25 @@ function App() {
         });
       });
     });
+    media.add('(min-width: 760px) and (prefers-reduced-motion: no-preference)', () => {
+      const bridge = document.querySelector<HTMLElement>('.story-bridge');
+      const track = document.querySelector<HTMLElement>('.story-bridge__track');
+      if (!bridge || !track) return;
+      const distance = () => Math.max(0, track.scrollWidth - bridge.clientWidth + 96);
+      const tween = gsap.to(track, {
+        x: () => -distance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: bridge,
+          start: 'top top',
+          end: () => `+=${Math.max(420, distance())}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+      return () => tween.kill();
+    });
     return () => media.revert();
   }, { scope: mainRef });
 
@@ -310,7 +394,7 @@ function App() {
       <header className="site-header">
         <div className="site-header__inner">
           <a className="wordmark" href="#intro" aria-label="Teeraphat Raksawong, back to introduction">
-            <span className="wordmark__mark" aria-hidden="true">TR</span>
+            <span className="wordmark__mark" aria-hidden="true"><img src="/images/teeraphat-avatar.png" alt="" /></span>
             <span>Teeraphat Raksawong</span>
           </a>
 
@@ -352,13 +436,13 @@ function App() {
               <span className="section-index">01 / INTRODUCTION</span>
               <span>{content.role}</span>
             </p>
-            <h1 id="hero-title" className="hero__title" data-entrance>
-              <span>Teeraphat</span>
-              <span className="hero__title-accent">Raksawong</span>
-              <span className="hero__underline" data-underline aria-hidden="true" />
-            </h1>
+            <TypingHeadline reduceMotion={reduceMotion} />
             <p className="hero__nickname" data-entrance>(Necktie)</p>
-            <p className="hero__intro" data-entrance>{content.hero.intro}</p>
+            <p className="hero__intro" data-entrance>
+              I move from product questions to <span className="hero__sketch-word">working software
+                <svg aria-hidden="true" viewBox="0 0 240 22" preserveAspectRatio="none"><path data-ink-line d="M3 15 C50 5, 100 18, 157 11 S218 10, 237 5" /></svg>
+              </span>: shaping the flow, building the system, and checking the result.
+            </p>
             <p className="hero__background" data-entrance>{content.hero.background}</p>
             <div className="hero__actions" data-entrance>
               <a className="button button--accent" href="#evidence">{content.hero.workCta}</a>
@@ -366,14 +450,7 @@ function App() {
             </div>
           </div>
 
-          <figure className="hero__visual" data-entrance>
-            <img
-              src="/images/teeraphat-avatar.png"
-              alt="Illustrated portrait of Teeraphat Raksawong."
-              fetchPriority="high"
-            />
-            <figcaption><span>TEERAPHAT RAKSAWONG</span><span>PRODUCT · ENGINEERING · AI</span></figcaption>
-          </figure>
+          <HeroShowcase />
 
           <div className="identity-strip" data-reveal>
             <p><span>Education</span><strong>{content.hero.education}</strong></p>
@@ -409,8 +486,14 @@ function App() {
           </div>
         </section>
 
-        <div className="story-bridge" aria-label={content.bridge}>
-          <span data-bridge-copy>{content.bridge}</span>
+        <div className="story-bridge" aria-label="I begin with the question, shape the user flow, build the system, test with real work, then ship and learn.">
+          <div className="story-bridge__track" aria-hidden="true">
+            <span>I begin with the question</span><span className="story-bridge__symbol">↝</span>
+            <span>shape the user flow</span><span className="story-bridge__symbol">✳</span>
+            <span>build the system</span><span className="story-bridge__symbol">↗</span>
+            <span>test with real work</span><span className="story-bridge__symbol">✳</span>
+            <span>ship and learn.</span>
+          </div>
         </div>
 
         <section id="evidence" className="work-section" data-chapter="evidence" aria-labelledby="work-title">
@@ -424,13 +507,13 @@ function App() {
 
           <div className="featured-projects">
             <p className="project-group-label">{content.evidence.featuredLabel}</p>
-            {featuredProjects.map((project) => <FeaturedProject key={project.id} project={project} />)}
+            {showcaseProjects.map((project) => <FeaturedProject key={project.id} project={project} />)}
           </div>
 
           <div className="project-index">
-            <p className="project-group-label">{content.evidence.indexLabel}<span>07 additional projects</span></p>
+            <p className="project-group-label">{content.evidence.indexLabel}<span>06 additional projects</span></p>
             <div className="project-index__list">
-              {projects.map((project) => <ProjectIndexRow key={project.id} project={project} />)}
+              {indexedProjects.map((project) => <ProjectIndexRow key={project.id} project={project} />)}
             </div>
           </div>
         </section>

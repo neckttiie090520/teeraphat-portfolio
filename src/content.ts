@@ -13,6 +13,7 @@ export type Project = {
   summary: string;
   ownership: string;
   stack: string[];
+  images?: { src: string; alt: string; caption: string }[];
   feature?: 'product' | 'research';
   facts?: { value: string; label: string }[];
   links: ProjectLink[];
@@ -83,7 +84,7 @@ export const content = {
   evidence: {
     title: 'Selected evidence',
     intro:
-      'Two deeper projects, followed by seven more products and tools. Every project stays visible; expand a case note for its context, decisions, and evidence.',
+      'A closer look at strong product UI and research data, followed by the rest of my work. Open any case note for the problem, decisions, and evidence.',
     featuredLabel: 'Featured work',
     indexLabel: 'More projects',
   },
@@ -205,6 +206,12 @@ export const featuredProjects: Project[] = [
     ownership:
       'I owned the product journey from the first flow to release and continued iteration.',
     stack: ['Next.js', 'React', 'TypeScript', 'Supabase'],
+    images: [
+      { src: '/showcase/younum-landing.webp', alt: 'YouNum landing page with its night sky theme and number reading entry point', caption: 'The public product entry point · YouNum' },
+      { src: '/showcase/younum-home.png', alt: 'YouNum personal dashboard with dream, birthday, home number, and daily mood entry points', caption: 'The dashboard brings several number journeys into one flow' },
+      { src: '/showcase/younum-dream.png', alt: 'YouNum dream journal with voice recording action', caption: 'A voice-first way to capture a dream before interpretation' },
+      { src: '/showcase/younum-flow.png', alt: 'YouNum number energy flow showing the selected method and saved context', caption: 'The underlying choices stay visible before the result' },
+    ],
     feature: 'product',
     facts: [
       { value: '01 → 06', label: 'Concept to iteration' },
@@ -326,6 +333,10 @@ export const projects: Project[] = [
     ownership:
       'Built the customer-facing storefront and admin experience.',
     stack: ['Next.js', 'React', 'TypeScript', 'Supabase'],
+    images: [
+      { src: '/showcase/faii-home.png', alt: 'faii storefront homepage introducing the Lampang cotton makers', caption: 'The maker story at the entrance to the shop' },
+      { src: '/showcase/faii-product.png', alt: 'faii mobile product page with product photography and an ordering action', caption: 'A mobile product detail and order path' },
+    ],
     links: [
       {
         href: 'https://github.com/neckttiie090520/faii-web',
@@ -463,6 +474,9 @@ export const projects: Project[] = [
     ownership:
       'Built the assistant around everyday personal organization tasks.',
     stack: ['Next.js', 'Supabase', 'LINE API', 'Google Calendar'],
+    images: [
+      { src: '/showcase/line-assistant-menu.png', alt: 'LINE AI Secretary rich menu for chat, tasks, reminders, today, calendar, and dashboard', caption: 'The LINE menu that starts the assistant workflow' },
+    ],
     links: [],
     caseStudy: {
       context:
