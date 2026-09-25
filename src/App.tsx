@@ -346,7 +346,7 @@ function BookPreview() {
         <div className={'book-reader__pages' + (isZoomed ? ' book-reader__pages--zoomed' : '')} aria-label="Read the first 22 pages of Actually Faster?">
           {Array.from({ length: 22 }, (_, index) => (
             <figure className="book-reader__page" key={index}>
-              <img src={`/book-preview/page-${String(index + 1).padStart(2, '0')}.webp`} alt={`Actually Faster? preview page ${index + 1} of 22`} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
+              <img src={`/book-preview/page-${String(index + 1).padStart(2, '0')}.webp`} alt={`Actually Faster? preview page ${index + 1} of 22`} width="864" height="1296" loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
               <figcaption>{String(index + 1).padStart(2, '0')} / 22</figcaption>
             </figure>
           ))}

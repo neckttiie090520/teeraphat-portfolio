@@ -10,3 +10,4 @@ output/
 static/
 public/images/*
 !public/images/teeraphat-avatar.png
+.bug-hunter/

@@ -2029,6 +2029,11 @@ p {
   box-shadow: 0 1.5rem 5rem rgb(0 0 0 / 0.28);
 }
 
+.book-reader[open] {
+  display: flex;
+  flex-direction: column;
+}
+
 .book-reader::backdrop {
   background: rgb(12 12 12 / 0.78);
 }
@@ -2088,7 +2093,8 @@ p {
 }
 
 .book-reader__pages {
-  height: calc(100% - 9.2rem);
+  flex: 1;
+  min-height: 0;
   overflow: auto;
   padding: clamp(0.8rem, 2vw, 1.5rem);
   background: var(--surface-strong);
@@ -2134,7 +2140,6 @@ p {
   .book-reader { width: 100vw; height: 100dvh; border: 0; }
   .book-reader__bar, .book-reader__footer { padding-inline: 0.9rem; }
   .book-reader__footer { align-items: flex-start; flex-direction: column; gap: 0.2rem; }
-  .book-reader__pages { height: calc(100% - 10.4rem); }
   .book-reader__pages--zoomed .book-reader__page { width: 42rem; }
 }
 
