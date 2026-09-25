@@ -2693,7 +2693,7 @@ p {
   align-content: center;
   justify-content: center;
   align-items: center;
-  gap: 0.15rem;
+  gap: 0.45rem;
   margin: 0;
   padding: clamp(0.9rem, 2vw, 1.6rem) 0;
   list-style: none;
@@ -2704,7 +2704,7 @@ p {
   display: flex;
   align-items: center;
   min-height: 2.8rem;
-  margin: -0.2rem -0.38rem;
+  margin: -0.04rem -0.14rem;
   border: 1px solid var(--ink);
   box-shadow: 4px 5px 0 rgb(24 25 23 / 0.22);
   padding: 0.5rem 0.7rem;
@@ -2778,7 +2778,7 @@ p {
 
 @media (max-width: 420px) {
   .skill-wall { padding: 0.8rem; }
-  .skill-card { margin: -0.13rem -0.28rem; padding: 0.45rem 0.55rem; }
+  .skill-card { margin: -0.04rem -0.12rem; padding: 0.45rem 0.55rem; }
   .skill-card--hero { flex-basis: 47%; }
   .skill-card--major { flex-basis: 44%; }
   .skill-card--minor { white-space: normal; }
@@ -2786,4 +2786,72 @@ p {
 
 @media (prefers-reduced-motion: reduce) {
   .skill-card { transform: none; transition: none; animation: none; }
+}
+
+/* AI-native case studies and the ten-stage AIDLC share the existing editorial grid. */
+.system-figure {
+  min-height: 30rem;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.4rem, 3vw, 2.5rem);
+  background: var(--ink);
+  color: var(--page);
+}
+.system-figure__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.38);
+  padding-bottom: 0.7rem;
+  color: var(--accent);
+  font-size: 0.67rem;
+  font-weight: 720;
+  letter-spacing: 0.07em;
+}
+.system-figure__title {
+  max-width: 12ch;
+  margin-block: auto;
+  white-space: pre-line;
+  font-size: clamp(2.6rem, 4.9vw, 5.1rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  font-weight: 650;
+}
+.system-figure__flow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: rgb(255 255 255 / 0.3);
+  border: 1px solid rgb(255 255 255 / 0.3);
+}
+.system-figure__flow li { display: flex; align-items: baseline; gap: 0.65rem; min-width: 0; padding: 0.8rem; background: var(--ink); }
+.system-figure__flow span { color: var(--accent); font-size: 0.68rem; font-weight: 720; }
+.system-figure__flow strong { font-size: 0.84rem; font-weight: 540; line-height: 1.2; }
+.system-figure figcaption { padding-top: 0.7rem; font-size: 0.69rem; color: rgb(255 255 255 / 0.65); }
+
+.method-list { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; }
+.method-list li { min-width: 0; }
+.method-list h3 { font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
+.method-list p { font-size: 0.85rem; line-height: 1.45; }
+.capability-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.capability-group li { font-size: 0.88rem; }
+
+@media (max-width: 1000px) {
+  .method-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .capability-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .method-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .system-figure { min-height: 25rem; }
+}
+@media (max-width: 420px) {
+  .method-list,
+  .capability-list { grid-template-columns: 1fr; }
+  .method-list { gap: 0.6rem; }
+  .method-list li { padding-block: 0.8rem; }
+  .system-figure__top { font-size: 0.58rem; }
+  .system-figure__title { font-size: clamp(2.4rem, 9vw, 3.4rem); }
 }

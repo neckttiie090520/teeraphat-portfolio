@@ -114,44 +114,30 @@ function TypingHeadline({ reduceMotion }: { reduceMotion: boolean | null }) {
 }
 
 const skillCards = [
-  { label: 'Product engineering', size: 'hero', tone: 'ink', angle: -5, lift: 2 },
-  { label: 'AI integration', size: 'hero', tone: 'accent', angle: 4, lift: -4 },
-  { label: 'UX/UI & user flows', size: 'major', tone: 'paper', angle: -7, lift: -1 },
-  { label: 'System architecture', size: 'hero', tone: 'paper', angle: 3, lift: 5 },
-  { label: 'TypeScript', size: 'minor', tone: 'ink', angle: 9, lift: -5 },
-  { label: 'React', size: 'minor', tone: 'paper', angle: -4, lift: 4 },
-  { label: 'Full-stack delivery', size: 'major', tone: 'accent', angle: -3, lift: -2 },
-  { label: 'Next.js', size: 'minor', tone: 'paper', angle: 6, lift: 3 },
-  { label: 'Workflow automation', size: 'hero', tone: 'ink', angle: -2, lift: 5 },
-  { label: 'Python', size: 'minor', tone: 'accent', angle: 8, lift: -5 },
-  { label: 'Supabase', size: 'minor', tone: 'paper', angle: -8, lift: 3 },
-  { label: 'API design', size: 'minor', tone: 'paper', angle: 5, lift: -4 },
-  { label: 'Agentic workflows', size: 'major', tone: 'paper', angle: -6, lift: 1 },
-  { label: 'Model evaluation', size: 'major', tone: 'ink', angle: 3, lift: -2 },
-  { label: 'Structured extraction', size: 'major', tone: 'accent', angle: -4, lift: 4 },
-  { label: 'Human review', size: 'minor', tone: 'paper', angle: 8, lift: -3 },
-  { label: 'Data pipelines', size: 'minor', tone: 'ink', angle: -6, lift: 2 },
-  { label: 'Product discovery', size: 'minor', tone: 'paper', angle: 4, lift: -5 },
-  { label: 'Windows tooling', size: 'minor', tone: 'paper', angle: -7, lift: 4 },
-  { label: 'Google Maps RPC', size: 'minor', tone: 'accent', angle: 7, lift: -4 },
-  { label: 'Testing & iteration', size: 'minor', tone: 'paper', angle: -3, lift: 3 },
-  { label: 'Git & CI/CD', size: 'minor', tone: 'ink', angle: 5, lift: -2 },
-  { label: 'Technical leadership', size: 'major', tone: 'paper', angle: -5, lift: 4 },
-  { label: 'Workshop facilitation', size: 'minor', tone: 'accent', angle: 5, lift: -3 },
-  { label: 'Cloud support', size: 'minor', tone: 'paper', angle: -6, lift: 4 },
-  { label: 'Google Workspace', size: 'minor', tone: 'ink', angle: 6, lift: -2 },
-  { label: 'Technical hiring', size: 'minor', tone: 'paper', angle: -4, lift: 3 },
-  { label: 'PWA', size: 'minor', tone: 'accent', angle: 7, lift: -4 },
-  { label: 'Google Apps Script', size: 'minor', tone: 'paper', angle: -7, lift: 2 },
-  { label: 'Database design', size: 'minor', tone: 'paper', angle: 4, lift: -3 },
-  { label: 'Document workflows', size: 'minor', tone: 'ink', angle: -5, lift: 4 },
-  { label: 'Desktop GUI', size: 'minor', tone: 'paper', angle: 5, lift: -2 },
+  { label: 'AIDLC', size: 'hero', tone: 'ink', angle: -5, lift: 2 },
+  { label: 'Agent Engineering', size: 'hero', tone: 'paper', angle: 4, lift: -4 },
+  { label: 'Agent-as-a-Service', size: 'hero', tone: 'paper', angle: -7, lift: -1 },
+  { label: 'AI Workflow Engineering', size: 'hero', tone: 'ink', angle: 3, lift: 5 },
+  { label: 'Context Engineering', size: 'major', tone: 'paper', angle: 9, lift: -5 },
+  { label: 'Document Intelligence', size: 'major', tone: 'paper', angle: -4, lift: 4 },
+  { label: 'Vibe Coding', size: 'major', tone: 'accent', angle: -3, lift: -2 },
+  { label: 'AI Evaluation', size: 'major', tone: 'ink', angle: 6, lift: 3 },
+  { label: 'Human-in-the-loop', size: 'major', tone: 'paper', angle: -2, lift: 5 },
+  { label: 'AI Integration', size: 'major', tone: 'accent', angle: 8, lift: -5 },
+  { label: 'Agentic Workflows', size: 'major', tone: 'paper', angle: -8, lift: 3 },
+  { label: 'System Architecture', size: 'major', tone: 'paper', angle: 5, lift: -4 },
+  { label: 'Product Discovery', size: 'minor', tone: 'ink', angle: -6, lift: 1 },
+  { label: 'Tool & API Orchestration', size: 'minor', tone: 'paper', angle: 3, lift: -2 },
+  { label: 'Structured Extraction', size: 'minor', tone: 'accent', angle: -4, lift: 4 },
+  { label: 'AI Automation', size: 'minor', tone: 'paper', angle: 8, lift: -3 },
+  { label: 'User Flows', size: 'minor', tone: 'paper', angle: -6, lift: 2 },
+  { label: 'Full-stack Delivery', size: 'minor', tone: 'ink', angle: 4, lift: -5 },
 ];
 
 function HeroShowcase() {
   return (
     <section className="skill-wall" data-entrance aria-label="Skills and methods I use in my work">
-      <div className="skill-wall__header"><span>WHAT I BUILD WITH</span><span>{skillCards.length} IN PRACTICE</span></div>
+      <div className="skill-wall__header"><span>AI IS PART OF THE ENGINEERING METHOD</span><span>DESIGN → BUILD → EVALUATE</span></div>
       <ul className="skill-wall__pile">
         {skillCards.map((skill, index) => (
           <li
@@ -163,7 +149,7 @@ function HeroShowcase() {
           </li>
         ))}
       </ul>
-      <p className="skill-wall__footer">From the first question to a working release <span aria-hidden="true">↗</span></p>
+      <p className="skill-wall__footer">Business problem → product → AI → software <span aria-hidden="true">↗</span></p>
     </section>
   );
 }
@@ -209,6 +195,19 @@ function CaseNotes({ project }: { project: Project }) {
 }
 
 function ProjectGraphic({ project }: { project: Project }) {
+  if (project.id === 'nexora' || project.id === 'hotel-document-intelligence') {
+    const isNexora = project.id === 'nexora';
+    const steps = isNexora
+      ? ['Scope the work', 'Ground in evidence', 'Agent proposes', 'Human authorizes']
+      : ['Parse document', 'Extract fields', 'Check evidence', 'Human reviews'];
+    return <figure className="system-figure" aria-label={`${project.title} system design: ${steps.join(', ')}`}>
+      <div className="system-figure__top"><span>{isNexora ? 'NEXORA / AGENT WORK LAYER' : 'HOTEL CONTRACT / DOCUMENT INTELLIGENCE'}</span><span>DESIGN &amp; EVALUATION</span></div>
+      <p className="system-figure__title">{isNexora ? 'AI prepares.\nPeople decide.' : 'From document\nto verified field.'}</p>
+      <ol className="system-figure__flow">{steps.map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, '0')}</span><strong>{step}</strong></li>)}</ol>
+      <figcaption>{isNexora ? 'Public-safe architecture concept · active internal work' : 'Public-safe evaluation workflow · internal data excluded'}</figcaption>
+    </figure>;
+  }
+
   if (project.id === 'clutchg-pc-optimizer') {
     return <figure className="case-visual case-visual--clutch" aria-label="ClutchG concept diagram showing evidence, risk, and rollback around 56 vetted Windows tweaks">
       <div className="case-visual__top"><span>CLUTCHG / WINDOWS TOOLING</span><span>01—04</span></div>
@@ -383,13 +382,14 @@ function App() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
   const showcaseProjects = [
-    projects.find((project) => project.id === 'clutchg-pc-optimizer')!,
+    featuredProjects.find((project) => project.id === 'nexora')!,
     featuredProjects.find((project) => project.id === 'younum')!,
     featuredProjects.find((project) => project.id === 'khaosoi-research')!,
-    projects.find((project) => project.id === 'valscout')!,
+    projects.find((project) => project.id === 'clutchg-pc-optimizer')!,
+    featuredProjects.find((project) => project.id === 'hotel-document-intelligence')!,
   ].map((project, index) => ({ ...project, index: String(index + 1).padStart(2, '0') }));
-  const indexedProjects = projects.filter((project) => !['clutchg-pc-optimizer', 'valscout'].includes(project.id))
-    .map((project, index) => ({ ...project, index: String(index + 5).padStart(2, '0') }));
+  const indexedProjects = projects.filter((project) => project.id !== 'clutchg-pc-optimizer')
+    .map((project, index) => ({ ...project, index: String(index + 6).padStart(2, '0') }));
 
   useEffect(() => {
     let frame = 0;
@@ -518,9 +518,9 @@ function App() {
             </div>
             <p className="hero__nickname" data-entrance>(Necktie)</p>
             <p className="hero__intro" data-entrance>
-              I move from product questions to <span className="hero__sketch-word">working software
+              I turn ambiguous business problems into <span className="hero__sketch-word">working AI systems
                 <svg aria-hidden="true" viewBox="0 0 240 22" preserveAspectRatio="none"><path data-ink-line d="M3 15 C50 5, 100 18, 157 11 S218 10, 237 5" /></svg>
-              </span>: shaping the flow, building the system, and checking the result.
+              </span>: defining the product, designing agents and architecture, building with AI, evaluating the result, and shipping it.
             </p>
             <p className="hero__background" data-entrance>{content.hero.background}</p>
             <div className="hero__actions" data-entrance>
@@ -573,22 +573,22 @@ function App() {
           <div className="story-bridge__body">
             <h2 id="story-bridge-title" data-reveal>I begin with<br /><em>the question.</em></h2>
             <div className="story-bridge__aside" data-reveal>
-              <p>What does the person need to do, and what gets in their way? That question shapes the flow before I write the system behind it.</p>
+              <p>What does the business need to achieve, and who has authority over the result? My AIDLC turns that question into a scoped product, a governed AI workflow, and working software.</p>
               <a href="#evidence" className="story-bridge__cta">See the work <span aria-hidden="true">↘</span></a>
             </div>
           </div>
           <ol className="story-bridge__path" aria-label="My product process">
-            <li data-reveal><span>01 / ASK</span><strong>Find the real problem</strong></li>
-            <li data-reveal><span>02 / SHAPE</span><strong>Design the user flow</strong></li>
-            <li data-reveal><span>03 / BUILD</span><strong>Make it work end to end</strong></li>
-            <li data-reveal><span>04 / PROVE</span><strong>Test, ship, and learn</strong></li>
+            <li data-reveal><span>01 / BUSINESS</span><strong>Find the real problem</strong></li>
+            <li data-reveal><span>02 / PRODUCT</span><strong>Define scope and flow</strong></li>
+            <li data-reveal><span>03 / AI + SOFTWARE</span><strong>Engineer the system</strong></li>
+            <li data-reveal><span>04 / EVIDENCE</span><strong>Evaluate, ship, and learn</strong></li>
           </ol>
           <a className="story-bridge__down" href="#evidence" aria-label="Scroll to selected projects"><span aria-hidden="true">↓</span><span>SELECTED PROJECTS BELOW</span></a>
         </section>
 
         <section id="evidence" className="work-section" data-chapter="evidence" aria-labelledby="work-title">
           <div className="chapter-heading" data-reveal>
-            <p className="chapter-heading__number">03 / SELECTED EVIDENCE</p>
+            <p className="chapter-heading__number">03 / SELECTED WORK</p>
             <div>
               <h2 id="work-title">{content.evidence.title}</h2>
               <p>{content.evidence.intro}</p>
@@ -610,7 +610,7 @@ function App() {
 
         <section id="approach" className="method-section" data-method data-chapter="approach" aria-labelledby="method-title">
           <div className="chapter-heading chapter-heading--light" data-reveal>
-            <p className="chapter-heading__number">04 / APPROACH &amp; SKILLS</p>
+            <p className="chapter-heading__number">04 / AIDLC &amp; CAPABILITIES</p>
             <div>
               <h2 id="method-title">{content.approach.title}</h2>
               <p>{content.approach.intro}</p>
@@ -628,7 +628,7 @@ function App() {
           </ol>
 
           <div className="capabilities-section">
-            <p className="capabilities-section__label">Skills in practice</p>
+            <p className="capabilities-section__label">Specializations and engineering foundation</p>
             <div className="capability-list">
               {content.approach.skills.map((group) => (
                 <section className="capability-group" key={group.title} aria-label={group.title}>

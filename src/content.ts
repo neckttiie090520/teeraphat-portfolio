@@ -33,18 +33,16 @@ export const chapters: { id: ChapterId; number: string; label: string }[] = [
   { id: 'intro', number: '01', label: 'Introduction' },
   { id: 'experience', number: '02', label: 'Experience' },
   { id: 'evidence', number: '03', label: 'Selected work' },
-  { id: 'approach', number: '04', label: 'Approach' },
+  { id: 'approach', number: '04', label: 'AIDLC' },
   { id: 'contact', number: '05', label: 'Contact' },
 ];
 
 export const content = {
   name: 'Teeraphat Raksawong',
   nickname: 'Necktie',
-  role: 'AI Lead Engineer · Product builder',
+  role: 'AI Lead Engineer · AI-native builder',
   cvUrl: '/files/Teeraphat-Raksawong-CV-2026.pdf',
   hero: {
-    intro:
-      'I move from product questions to working software: shaping the flow, building the system, and checking the result.',
     background:
       'My path began in Media Art & Design and continues through software engineering, applied AI, and products built for real workflows.',
     education: 'Master of Software Engineering candidate · CMU CAMT · 2024–present',
@@ -56,18 +54,18 @@ export const content = {
   experience: {
     title: 'Experience',
     intro:
-      'I work across discovery, technical direction, implementation, and the details that help a team keep moving.',
+      'I connect business workflows to AI systems and software delivery, with human ownership of the decisions that matter.',
     roles: [
       {
         period: 'Sep 2026–Present',
         title: 'AI Lead Engineer',
         company: 'DMC Connect',
         description:
-          'Hands-on technical direction and high-level product work on Nexora, from discovery and architecture through AI integration, testing, and iteration.',
+          'Primary technical owner for Nexora, translating travel operations into product scope, AI workflow design, system architecture, and AI-native implementation.',
         contributions: [
-          'Workflow automation and structured data and document workflows',
-          'AI-assisted engineering practices and technical hiring',
-          'Cloud and Google Workspace support',
+          'Defined an AIDLC workflow linking product requirements, user flows, architecture, coding agents, tests, AI evaluation, and release review',
+          'Designed governed agent workflows and hotel-contract document intelligence with evidence, structured extraction, and human review',
+          'Worked directly with business leadership on product direction, technical decisions, and engineering execution',
         ],
       },
       {
@@ -80,66 +78,45 @@ export const content = {
       },
     ],
   },
-  bridge: 'From a question → to a working system → to evidence.',
   evidence: {
-    title: 'Selected evidence',
+    title: 'Selected work',
     intro:
-      'Four projects lead the story: safety-first Windows tooling, a solo product, measured data collection, and a scouting workflow. Open a case note for the decisions and evidence behind each one.',
+      'Five case notes show how I move between AI systems, product definition, structured data, and software engineering. Internal work is described at a public-safe level; planned capabilities are identified as such.',
     featuredLabel: 'Featured work',
     indexLabel: 'More projects',
   },
   approach: {
-    title: 'Approach & skills',
+    title: 'AI-native engineering, from problem to production.',
     intro:
-      'I like clear constraints, small testable steps, and systems that make uncertainty visible instead of hiding it.',
+      'My AIDLC connects business → product → AI → engineering. Coding agents accelerate the work; I retain ownership of scope, architecture, validation, and release decisions.',
     steps: [
-      {
-        title: 'Understand the work',
-        body: 'Clarify who needs the tool, what slows them down, and what a useful first release would prove.',
-      },
-      {
-        title: 'Shape the flow',
-        body: 'Make the user journey and system boundaries legible before adding technical complexity.',
-      },
-      {
-        title: 'Build with checkpoints',
-        body: 'Integrate the product in small steps, test important paths, and send uncertain AI output to a person.',
-      },
-      {
-        title: 'Release and learn',
-        body: 'Check the real workflow, respond to feedback, and iterate without inventing success metrics.',
-      },
+      { title: 'Understand', body: 'Observe the business workflow, users, constraints, and authority boundaries.' },
+      { title: 'Research', body: 'Study the domain, existing systems, evidence, and failure modes.' },
+      { title: 'Define', body: 'Write the product scope, acceptance criteria, and useful first outcome.' },
+      { title: 'Design', body: 'Map user flows, system boundaries, data, and permissions.' },
+      { title: 'Contextualize', body: 'Give agents bounded context, tools, skills, and review points.' },
+      { title: 'Build with AI', body: 'Use coding agents for implementation and iteration while owning engineering decisions.' },
+      { title: 'Evaluate', body: 'Measure AI outputs against ground truth, edge cases, cost, and failure modes.' },
+      { title: 'Validate', body: 'Test software paths and let people review consequential outputs.' },
+      { title: 'Ship', body: 'Review security and release a working slice into its real workflow.' },
+      { title: 'Iterate', body: 'Observe use, investigate errors, and update the product and system.' },
     ],
     skills: [
       {
-        title: 'Product & engineering',
-        items: [
-          'Product discovery',
-          'User flows and UX/UI',
-          'System architecture',
-          'Full-stack delivery',
-          'Testing and iteration',
-        ],
+        title: 'AI-native development',
+        items: ['AIDLC', 'Vibe Coding with engineering review', 'Coding agents', 'Context engineering', 'Claude Code', 'Codex'],
       },
       {
-        title: 'AI & workflows',
-        items: [
-          'AI integration',
-          'Model evaluation',
-          'Structured extraction',
-          'Human review',
-          'Workflow automation',
-        ],
+        title: 'Agent systems',
+        items: ['Agent engineering', 'Agent-as-a-Service design', 'Tool and API orchestration', 'Permissions', 'Human approval', 'Evaluation and auditability'],
       },
       {
-        title: 'Team enablement',
-        items: [
-          'Technical direction',
-          'AI-assisted engineering',
-          'Technical hiring',
-          'Cloud support',
-          'Google Workspace',
-        ],
+        title: 'AI workflows',
+        items: ['Document intelligence', 'Structured extraction', 'Model evaluation', 'Human-in-the-loop', 'Workflow automation', 'Data pipelines'],
+      },
+      {
+        title: 'Engineering foundation',
+        items: ['Product discovery', 'System architecture', 'TypeScript and Python', 'APIs and databases', 'Testing', 'Git and CI/CD'],
       },
     ],
     language: 'English: conversational for workplace communication.',
@@ -147,7 +124,7 @@ export const content = {
   contact: {
     title: 'Have a useful problem to solve?',
     body:
-      'I’m open to conversations about AI and software engineering, product work, and practical workflow improvements.',
+      'I’m open to AI engineering, agent systems, and product work that turns difficult workflows into reliable software.',
     email: 'pethreeday@gmail.com',
     phone: '095-036-2311',
     phoneHref: '+66950362311',
@@ -155,7 +132,7 @@ export const content = {
     githubLabel: 'GitHub · neckttiie090520',
     emailCta: 'Email Teeraphat',
     cvCta: 'Download CV',
-    footer: 'Built around evidence, useful software, and clear decisions.',
+    footer: 'AI-native engineering with evidence, human judgment, and working software.',
   },
   mascot: {
     openLabel: 'Open page guide',
@@ -181,7 +158,7 @@ export const content = {
       },
       approach: {
         eyebrow: '04 / APPROACH',
-        body: 'See how I work, then use the contact links if a project sounds relevant.',
+        body: 'Follow the AIDLC from business problem to evaluated system, then get in touch.',
         target: '#contact',
         action: 'Next: contact',
       },
@@ -196,6 +173,40 @@ export const content = {
 };
 
 export const featuredProjects: Project[] = [
+  {
+    id: 'nexora',
+    index: '01',
+    title: 'Nexora',
+    category: 'AI product architecture · Agent systems',
+    summary:
+      'A governed AI work layer for travel operations. I help turn messy operational work into scoped, evidence-backed workflows with human control over consequential actions.',
+    ownership:
+      'Primary technical owner across product definition, architecture, agent workflow design, AI-native development, and engineering execution.',
+    stack: ['AIDLC', 'Agent workflow design', 'System architecture', 'Human approval'],
+    feature: 'product',
+    links: [],
+    caseStudy: {
+      context:
+        'Travel teams work across enquiries, contracts, quotations, and existing systems. The challenge is to coordinate that work without losing source evidence or decision ownership.',
+      why:
+        'An AI assistant is useful only when it knows the scope of a task, the source of a claim, and who can authorize the next action.',
+      role:
+        'I lead technical direction and translate business needs into product boundaries, user flows, agent capabilities, architecture, and implementation plans.',
+      constraints:
+        'Nexora is an active internal initiative. The full platform and proposed capabilities should not be presented as deployed; confidential operational details stay private.',
+      decisions:
+        'Design a scoped work layer in which AI prepares and proposes, evidence remains traceable, and people or deterministic rules authorize consequential decisions.',
+      build: [
+        'Defined product scope, user journeys, and technical architecture for a narrower first workflow.',
+        'Specified agent boundaries, context, tools, permissions, and human review points.',
+        'Connected AI-native implementation to requirements, evaluation, security review, and release checkpoints.',
+      ],
+      evidence:
+        'The public case note describes my role and design decisions; internal specifications, customer data, and unreleased functionality are not published.',
+      outcome:
+        'A defined product and architecture direction with implementation work in progress. No production or business-impact metric is claimed.',
+    },
+  },
   {
     id: 'younum',
     index: '01',
@@ -283,6 +294,40 @@ export const featuredProjects: Project[] = [
         'The scraper source is public. The oral presentation was accepted at FAB 2026.',
       outcome:
         'Collected 22,664 reviews across 11 restaurants; the research was accepted for oral presentation at FAB 2026.',
+    },
+  },
+  {
+    id: 'hotel-document-intelligence',
+    index: '05',
+    title: 'Hotel Contract Intelligence',
+    category: 'Document intelligence · AI evaluation',
+    summary:
+      'An internal evaluation workflow for extracting structured hotel-contract information, checking evidence, and routing uncertain fields to human review.',
+    ownership:
+      'Worked on dataset preparation, ground truth, model comparison, error analysis, and the review workflow.',
+    stack: ['Document intelligence', 'Structured extraction', 'Model evaluation', 'Human review'],
+    feature: 'product',
+    links: [],
+    caseStudy: {
+      context:
+        'Hotel contracts contain business-critical details in documents that vary in layout and wording.',
+      why:
+        'Extraction needs source evidence and human verification before a business workflow can rely on the result.',
+      role:
+        'I worked on dataset preparation, extraction evaluation, model comparison, error analysis, and the human-review direction.',
+      constraints:
+        'The work uses internal documents. This page excludes contract content, customer information, accuracy scores, and claims of production-scale automation.',
+      decisions:
+        'Treat parsing, candidate extraction, verification, and human review as separate steps; compare outputs against ground truth and track failure types.',
+      build: [
+        'Prepared contract examples and ground-truth fields for evaluation.',
+        'Compared extraction outputs and recorded error categories.',
+        'Designed a review path for uncertain or consequential fields.',
+      ],
+      evidence:
+        'Only the public-safe workflow and my role are described; datasets and internal evaluation artifacts remain private.',
+      outcome:
+        'An evaluation and review workflow under active development. No extraction accuracy or deployment claim is made.',
     },
   },
 ];
