@@ -107,30 +107,24 @@ function RolodexStatement({ reduceMotion }: { reduceMotion: boolean | null }) {
 }
 
 const skillCards = [
-  { label: 'AIDLC', size: 'hero', tone: 'ink', angle: -5, lift: 2 },
-  { label: 'Agent Engineering', size: 'hero', tone: 'paper', angle: 4, lift: -4 },
-  { label: 'Agent-as-a-Service', size: 'hero', tone: 'paper', angle: -7, lift: -1 },
-  { label: 'AI Workflow Engineering', size: 'hero', tone: 'ink', angle: 3, lift: 5 },
-  { label: 'Context Engineering', size: 'major', tone: 'paper', angle: 9, lift: -5 },
-  { label: 'Document Intelligence', size: 'major', tone: 'paper', angle: -4, lift: 4 },
-  { label: 'Vibe Coding', size: 'major', tone: 'accent', angle: -3, lift: -2 },
-  { label: 'AI Evaluation', size: 'major', tone: 'ink', angle: 6, lift: 3 },
-  { label: 'Human-in-the-loop', size: 'major', tone: 'paper', angle: -2, lift: 5 },
-  { label: 'AI Integration', size: 'major', tone: 'accent', angle: 8, lift: -5 },
-  { label: 'Agentic Workflows', size: 'major', tone: 'paper', angle: -8, lift: 3 },
-  { label: 'System Architecture', size: 'major', tone: 'paper', angle: 5, lift: -4 },
-  { label: 'Product Discovery', size: 'minor', tone: 'ink', angle: -6, lift: 1 },
-  { label: 'Tool & API Orchestration', size: 'minor', tone: 'paper', angle: 3, lift: -2 },
-  { label: 'Structured Extraction', size: 'minor', tone: 'accent', angle: -4, lift: 4 },
-  { label: 'AI Automation', size: 'minor', tone: 'paper', angle: 8, lift: -3 },
-  { label: 'User Flows', size: 'minor', tone: 'paper', angle: -6, lift: 2 },
+  { label: 'AI-native Engineering', size: 'hero', tone: 'ink', angle: -5, lift: 2 },
+  { label: 'Agent Systems', size: 'hero', tone: 'paper', angle: 4, lift: -4 },
+  { label: 'Product Strategy', size: 'major', tone: 'paper', angle: -7, lift: -1 },
+  { label: 'Software Architecture', size: 'major', tone: 'ink', angle: 3, lift: 5 },
+  { label: 'Data & Evaluation', size: 'major', tone: 'paper', angle: 8, lift: -5 },
+  { label: 'Windows Systems', size: 'major', tone: 'paper', angle: -4, lift: 4 },
+  { label: 'Reverse Engineering', size: 'major', tone: 'accent', angle: -3, lift: -2 },
+  { label: 'Security Review', size: 'major', tone: 'ink', angle: 6, lift: 3 },
+  { label: 'Games & Esports', size: 'minor', tone: 'paper', angle: -6, lift: 2 },
+  { label: 'IT Operations', size: 'minor', tone: 'paper', angle: 5, lift: -4 },
+  { label: 'Workflow Automation', size: 'minor', tone: 'accent', angle: -4, lift: 4 },
   { label: 'Full-stack Delivery', size: 'minor', tone: 'ink', angle: 4, lift: -5 },
 ];
 
 function HeroShowcase() {
   return (
-    <section className="skill-wall" data-entrance aria-label="Skills and methods I use in my work">
-      <div className="skill-wall__header"><span>AI IS PART OF THE ENGINEERING METHOD</span><span>DESIGN → BUILD → EVALUATE</span></div>
+    <section className="skill-wall" data-entrance aria-label="A preview of the domains I work across">
+      <div className="skill-wall__header"><span>ONE METHOD, MANY LAYERS</span><span>DISCOVER → ENGINEER → OPERATE</span></div>
       <ul className="skill-wall__pile">
         {skillCards.map((skill, index) => (
           <li
@@ -142,7 +136,7 @@ function HeroShowcase() {
           </li>
         ))}
       </ul>
-      <p className="skill-wall__footer">Business problem → product → AI → software <span aria-hidden="true">↗</span></p>
+      <a className="skill-wall__footer" href="#capability-map">Explore the full capability map <span aria-hidden="true">↘</span></a>
     </section>
   );
 }
@@ -675,18 +669,25 @@ function App() {
             </ol>
           </div>
 
-          <div className="capabilities-section">
-            <p className="capabilities-section__label">Specializations and engineering foundation</p>
-            <div className="capability-list">
-              {content.approach.skills.map((group) => (
-                <section className="capability-group" key={group.title} aria-label={group.title}>
-                  <h3>{group.title}</h3>
-                  <ul>
-                    {group.items.map((item) => <li key={item}>{item}</li>)}
-                  </ul>
-                </section>
-              ))}
+          <div className="capabilities-section" id="capability-map">
+            <div className="capability-map__intro">
+              <p className="capabilities-section__label">WHAT I BUILD WITH</p>
+              <h3>Across the whole system.</h3>
+              <p>AI-native engineering is my method. The work also demands product judgment, data, software, systems, security thinking, and the ability to keep it running.</p>
             </div>
+            <ol className="capability-map">
+              {content.approach.skills.map((group, index) => (
+                <li className="capability-map__layer" key={group.title} data-reveal>
+                  <span className="capability-map__index">{String(index + 1).padStart(2, '0')}</span>
+                  <div className="capability-map__main">
+                    <h4>{group.title}</h4>
+                    <p>{group.summary}</p>
+                    <ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
+                  </div>
+                  <a className="capability-map__proof" href={group.proofHref}>{group.proof}<span aria-hidden="true"> ↗</span></a>
+                </li>
+              ))}
+            </ol>
           </div>
 
           <p className="language-note">{content.approach.language}</p>
