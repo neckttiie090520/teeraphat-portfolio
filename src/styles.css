@@ -1602,7 +1602,7 @@ p {
 }
 
 .featured-projects .project-card--featured {
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  display: block;
   min-height: 31rem;
   margin: 0;
   overflow: visible;
@@ -1613,11 +1613,17 @@ p {
   box-shadow: none;
 }
 
+.featured-project__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: stretch;
+}
+
 .featured-projects .project-card--featured + .project-card--featured {
   margin-top: clamp(2.5rem, 5vw, 4rem);
 }
 
-.featured-projects .project-card--research {
+.featured-projects .project-card--research .featured-project__stage {
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
 }
 
@@ -2272,6 +2278,10 @@ p {
 
   .featured-projects .project-card--featured,
   .featured-projects .project-card--research {
+    display: block;
+  }
+
+  .featured-project__stage {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
@@ -2334,15 +2344,11 @@ p {
     font-size: clamp(1.55rem, 6vw, 2.6rem);
   }
 
-  .featured-projects .project-card--featured,
-  .featured-projects .project-card--research {
+  .featured-project__stage,
+  .featured-projects .project-card--research .featured-project__stage {
     display: flex;
-    flex-direction: column-reverse;
-    min-height: 0;
-  }
-
-  .featured-projects .project-card--research {
     flex-direction: column;
+    min-height: 0;
   }
 
   .featured-projects .project-card__visual {
@@ -2609,8 +2615,6 @@ p {
 }
 
 .featured-project__story {
-  grid-column: 1 / -1;
-  grid-row: 2;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1rem, 3vw, 2.5rem);
@@ -2877,8 +2881,7 @@ p {
   .story-bridge__path strong { font-size: clamp(2rem, 8vw, 3.4rem); }
   .project-index .project-card--index { grid-template-columns: 2rem minmax(0, 1fr); }
   .evidence-gallery--compact { max-width: 28rem; }
-  .featured-projects .project-card--featured,
-  .featured-projects .project-card--research { flex-direction: column; }
+  .featured-project__stage { flex-direction: column; }
   .featured-project__story { grid-template-columns: 1fr; gap: 1rem; padding-top: 1.3rem; }
   .page-mascot__crt { width: 54px !important; height: 54px !important; }
   .page-mascot__guide { min-height: 1.7rem; font-size: 0.58rem; }

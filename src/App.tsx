@@ -256,20 +256,22 @@ function ProjectGraphic({ project }: { project: Project }) {
 function FeaturedProject({ project }: { project: Project }) {
   return (
     <article className={'project-card project-card--featured project-card--' + (project.feature ?? 'product')} aria-labelledby={'project-' + project.id} data-reveal>
-      <div className="project-card__body">
-        <p className="project-card__category"><span>{project.index}</span> / {project.category}</p>
-        <h3 id={'project-' + project.id}>{project.title}</h3>
-        <p className="project-card__summary">{project.summary}</p>
-        <p className="project-card__ownership">{project.ownership}</p>
-        <p className="project-card__stack">
-          <span className="visually-hidden">Technologies and methods: </span>
-          {project.stack.join(' · ')}
-        </p>
-        <ProjectLinks project={project} />
-        <CaseNotes project={project} />
-      </div>
-      <div className="project-card__visual">
-        {project.images?.length ? <EvidenceGallery project={project} /> : <ProjectGraphic project={project} />}
+      <div className="featured-project__stage">
+        <div className="project-card__body">
+          <p className="project-card__category"><span>{project.index}</span> / {project.category}</p>
+          <h3 id={'project-' + project.id}>{project.title}</h3>
+          <p className="project-card__summary">{project.summary}</p>
+          <p className="project-card__ownership">{project.ownership}</p>
+          <p className="project-card__stack">
+            <span className="visually-hidden">Technologies and methods: </span>
+            {project.stack.join(' · ')}
+          </p>
+          <ProjectLinks project={project} />
+          <CaseNotes project={project} />
+        </div>
+        <div className="project-card__visual">
+          {project.images?.length ? <EvidenceGallery project={project} /> : <ProjectGraphic project={project} />}
+        </div>
       </div>
       <div className="featured-project__story" aria-label={`${project.title} project story`}>
         <div><span>01 / The question</span><p>{project.caseStudy.context}</p></div>
