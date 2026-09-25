@@ -207,10 +207,9 @@ export const featuredProjects: Project[] = [
       'I owned the product journey from the first flow to release and continued iteration.',
     stack: ['Next.js', 'React', 'TypeScript', 'Supabase'],
     images: [
-      { src: '/showcase/younum-landing.webp', alt: 'YouNum landing page with its night sky theme and number reading entry point', caption: 'The public product entry point · YouNum' },
-      { src: '/showcase/younum-home.png', alt: 'YouNum personal dashboard with dream, birthday, home number, and daily mood entry points', caption: 'The dashboard brings several number journeys into one flow' },
-      { src: '/showcase/younum-dream.png', alt: 'YouNum dream journal with voice recording action', caption: 'A voice-first way to capture a dream before interpretation' },
-      { src: '/showcase/younum-flow.png', alt: 'YouNum number energy flow showing the selected method and saved context', caption: 'The underlying choices stay visible before the result' },
+      { src: '/showcase/younum-public-home.png', alt: 'Current public YouNum landing page with a night sky and number reading call to action', caption: 'The current public product entry point' },
+      { src: '/showcase/younum-public-dream.png', alt: 'YouNum dream flow explaining the three steps from dream to symbols to numbers', caption: 'The dream flow explains each step before entry' },
+      { src: '/showcase/younum-public-articles.png', alt: 'YouNum article page with a table of contents and clear reading columns', caption: 'Editorial guidance makes the methods understandable' },
     ],
     feature: 'product',
     facts: [
@@ -299,6 +298,12 @@ export const projects: Project[] = [
     ownership:
       'Built the optimizer workflow, desktop GUI, documentation, and safety model around reversible changes.',
     stack: ['Python', 'Windows', 'Desktop GUI', 'Research'],
+    images: [
+      { src: '/showcase/clutchg-dashboard.png', alt: 'ClutchG desktop dashboard with hardware summary, system score, and recommended profile', caption: 'Dashboard: hardware context before optimization' },
+      { src: '/showcase/clutchg-quickfix.png', alt: 'ClutchG quick fix interface grouping lower-risk optimization actions', caption: 'Quick Fix: guided actions with visible risk' },
+      { src: '/showcase/clutchg-context.png', alt: 'ClutchG custom tweak list with an explanation panel for the selected Windows setting', caption: 'Context: each tweak explains what it changes' },
+      { src: '/showcase/clutchg-backup.png', alt: 'ClutchG backup screen showing automatic backup and a restore action', caption: 'Backup: a visible path back from a system change' },
+    ],
     facts: [
       { value: '56', label: 'vetted tweaks' },
       { value: '23', label: 'optimizer repositories studied' },
@@ -500,10 +505,6 @@ export const projects: Project[] = [
     stack: ['Workshop scheduling', 'Tasks and submissions', 'Real-time dashboard'],
     links: [
       {
-        href: 'https://traco-tracker.vercel.app/',
-        label: 'Open live product',
-      },
-      {
         href: 'https://github.com/neckttiie090520/tracco-tracker',
         label: 'View public repository',
       },
@@ -526,9 +527,9 @@ export const projects: Project[] = [
         'Present current activity in a real-time dashboard.',
       ],
       evidence:
-        'The live product and public source repository are linked from this page.',
+        'The public source repository is linked from this page.',
       outcome:
-        'A live workshop-management product with scheduling, task/submission, collaboration, and dashboard features. No adoption metrics are claimed.',
+        'A workshop-management product with scheduling, task/submission, collaboration, and dashboard features. No adoption metrics are claimed.',
     },
   },
 ];

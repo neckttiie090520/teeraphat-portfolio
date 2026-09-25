@@ -31,9 +31,43 @@ function ProjectLinks({ project }: { project: Project }) {
 
 function EvidenceGallery({ project, compact = false }: { project: Project; compact?: boolean }) {
   const [active, setActive] = useState(0);
+  const reduceMotion = useReducedMotion();
   const images = project.images ?? [];
 
   if (images.length === 0) return null;
+
+  if (reduceMotion && !compact) {
+    return <div className="evidence-gallery evidence-gallery--list" data-project={project.id} aria-label={`${project.title} image gallery`}>
+      {images.map((item) => <figure key={item.src} className="evidence-gallery__list-item"><img src={item.src} alt={item.alt} loading="lazy" /><figcaption>{item.caption}</figcaption></figure>)}
+    </div>;
+  }
+
+  if (!compact) {
+    return <div className="evidence-gallery evidence-gallery--deck" data-project={project.id} aria-label={`${project.title} image gallery`}>
+      <div className="evidence-gallery__deck">
+        {images.map((item, index) => {
+          const distance = ((index - active + images.length + Math.floor(images.length / 2)) % images.length) - Math.floor(images.length / 2);
+          const depth = Math.abs(distance);
+          const style = {
+            '--stack-x': `${distance * 39}px`,
+            '--stack-y': `${depth * 14}px`,
+            '--stack-rotate': `${distance * -5.5}deg`,
+            '--stack-scale': 1 - depth * 0.065,
+            '--stack-z': images.length - depth,
+          } as CSSProperties;
+          return <figure key={item.src} className="evidence-gallery__card" style={style} aria-hidden={index !== active}>
+            <img src={item.src} alt={index === active ? item.alt : ''} loading="lazy" />
+            <figcaption>{item.caption}</figcaption>
+          </figure>;
+        })}
+      </div>
+      <div className="evidence-gallery__controls">
+        <button type="button" aria-label={`Previous ${project.title} image`} onClick={() => setActive((index) => (index + images.length - 1) % images.length)}>←</button>
+        <span aria-live="polite">{String(active + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</span>
+        <button type="button" aria-label={`Next ${project.title} image`} onClick={() => setActive((index) => (index + 1) % images.length)}>→</button>
+      </div>
+    </div>;
+  }
 
   const item = images[active];
   return (
@@ -425,25 +459,6 @@ function App() {
         });
       });
     });
-    media.add('(min-width: 760px) and (prefers-reduced-motion: no-preference)', () => {
-      const bridge = document.querySelector<HTMLElement>('.story-bridge');
-      const track = document.querySelector<HTMLElement>('.story-bridge__track');
-      if (!bridge || !track) return;
-      const distance = () => Math.max(0, track.scrollWidth - bridge.clientWidth + 96);
-      const tween = gsap.to(track, {
-        x: () => -distance(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: bridge,
-          start: 'top top',
-          end: () => `+=${Math.max(420, distance())}`,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-      return () => tween.kill();
-    });
     return () => media.revert();
   }, { scope: mainRef });
 
@@ -550,15 +565,26 @@ function App() {
           </div>
         </section>
 
-        <div className="story-bridge" aria-label="I begin with the question, shape the user flow, build the system, test with real work, then ship and learn.">
-          <div className="story-bridge__track" aria-hidden="true">
-            <span>I begin with the question</span><span className="story-bridge__symbol">↝</span>
-            <span>shape the user flow</span><span className="story-bridge__symbol">✳</span>
-            <span>build the system</span><span className="story-bridge__symbol">↗</span>
-            <span>test with real work</span><span className="story-bridge__symbol">✳</span>
-            <span>ship and learn.</span>
+        <section className="story-bridge" aria-labelledby="story-bridge-title">
+          <div className="story-bridge__header" data-reveal>
+            <span className="story-bridge__eyebrow">THE WAY I WORK / 01—04</span>
+            <span className="story-bridge__hint">KEEP SCROLLING ↓</span>
           </div>
-        </div>
+          <div className="story-bridge__body">
+            <h2 id="story-bridge-title" data-reveal>I begin with<br /><em>the question.</em></h2>
+            <div className="story-bridge__aside" data-reveal>
+              <p>What does the person need to do, and what gets in their way? That question shapes the flow before I write the system behind it.</p>
+              <a href="#evidence" className="story-bridge__cta">See the work <span aria-hidden="true">↘</span></a>
+            </div>
+          </div>
+          <ol className="story-bridge__path" aria-label="My product process">
+            <li data-reveal><span>01 / ASK</span><strong>Find the real problem</strong></li>
+            <li data-reveal><span>02 / SHAPE</span><strong>Design the user flow</strong></li>
+            <li data-reveal><span>03 / BUILD</span><strong>Make it work end to end</strong></li>
+            <li data-reveal><span>04 / PROVE</span><strong>Test, ship, and learn</strong></li>
+          </ol>
+          <a className="story-bridge__down" href="#evidence" aria-label="Scroll to selected projects"><span aria-hidden="true">↓</span><span>SELECTED PROJECTS BELOW</span></a>
+        </section>
 
         <section id="evidence" className="work-section" data-chapter="evidence" aria-labelledby="work-title">
           <div className="chapter-heading" data-reveal>
