@@ -479,11 +479,13 @@ function App() {
             </p>
             <div className="hero__identity">
               <TypingHeadline reduceMotion={reduceMotion} />
-              <div className="hero__avatar" data-entrance>
-                <img src="/images/teeraphat-avatar.png" alt="Illustrated avatar of Teeraphat Raksawong" />
+              <div className="hero__signature" data-entrance>
+                <div className="hero__avatar">
+                  <img src="/images/teeraphat-avatar.png" alt="Illustrated avatar of Teeraphat Raksawong" />
+                </div>
+                <p className="hero__nickname">(Necktie)</p>
               </div>
             </div>
-            <p className="hero__nickname" data-entrance>(Necktie)</p>
             <p className="hero__intro" data-entrance>
               I turn ambiguous business problems into <span className="hero__sketch-word">working AI systems
                 <svg aria-hidden="true" viewBox="0 0 240 22" preserveAspectRatio="none"><path data-ink-line d="M3 15 C50 5, 100 18, 157 11 S218 10, 237 5" /></svg>
