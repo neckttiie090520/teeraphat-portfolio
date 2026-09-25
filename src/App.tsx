@@ -334,7 +334,35 @@ function BookPreview() {
   const [isOpen, setIsOpen] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const closingRef = useRef(false);
+  const reduceMotion = useReducedMotion();
   const previewUrl = '/files/Actually-Faster-Book-Preview.pdf';
+
+  const closeReader = () => {
+    const dialog = dialogRef.current;
+    if (!dialog?.open || closingRef.current) return;
+
+    const finish = () => {
+      dialog.classList.remove('is-closing');
+      dialog.close();
+      closingRef.current = false;
+      setIsOpen(false);
+      setIsZoomed(false);
+    };
+
+    if (reduceMotion) {
+      finish();
+      return;
+    }
+
+    closingRef.current = true;
+    dialog.classList.add('is-closing');
+    const animation = dialog.animate(
+      [{ opacity: 1, transform: 'translateY(0) scale(1)' }, { opacity: 0, transform: 'translateY(14px) scale(.985)' }],
+      { duration: 220, easing: 'cubic-bezier(.4, 0, 1, 1)' },
+    );
+    animation.finished.then(finish, finish);
+  };
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -349,7 +377,14 @@ function BookPreview() {
       <button className="book-preview__trigger" type="button" onClick={() => setIsOpen(true)}>
         Read the book preview <span aria-hidden="true">↗</span>
       </button>
-      <dialog className="book-reader" ref={dialogRef} onClose={() => setIsOpen(false)} aria-labelledby="book-reader-title">
+      <dialog
+        className="book-reader"
+        ref={dialogRef}
+        onClose={() => setIsOpen(false)}
+        onCancel={(event) => { event.preventDefault(); closeReader(); }}
+        onClick={(event) => { if (event.target === event.currentTarget) closeReader(); }}
+        aria-labelledby="book-reader-title"
+      >
         <div className="book-reader__bar">
           <div>
             <span className="book-reader__eyebrow">THE PROOF PROJECT / EBOOK PREVIEW</span>
@@ -357,7 +392,7 @@ function BookPreview() {
           </div>
           <div className="book-reader__actions">
             <button className="book-reader__zoom" type="button" aria-pressed={isZoomed} onClick={() => setIsZoomed((value) => !value)}>{isZoomed ? 'Fit page' : 'Zoom in'}</button>
-            <button className="book-reader__close" type="button" onClick={() => setIsOpen(false)} aria-label="Close book preview">×</button>
+            <button className="book-reader__close" type="button" onClick={closeReader} aria-label="Close book preview">×</button>
           </div>
         </div>
         <div className={'book-reader__pages' + (isZoomed ? ' book-reader__pages--zoomed' : '')} aria-label="Read the first 22 pages of Actually Faster?">
@@ -451,6 +486,33 @@ function App() {
   ].map((project, index) => ({ ...project, index: String(index + 1).padStart(2, '0') }));
   const indexedProjects = projects.filter((project) => project.id !== 'clutchg-pc-optimizer')
     .map((project, index) => ({ ...project, index: String(index + 6).padStart(2, '0') }));
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const pulseAt = (target: EventTarget | null, x?: number, y?: number) => {
+      if (reducedMotion.matches || !(target instanceof Element)) return;
+      const control = target.closest('a, button, summary, [role="button"]');
+      if (!control || control.matches(':disabled, [aria-disabled="true"]') || control.closest('dialog[open]')) return;
+      const rect = control.getBoundingClientRect();
+      const pulse = document.createElement('span');
+      pulse.className = 'interaction-pulse';
+      pulse.setAttribute('aria-hidden', 'true');
+      pulse.style.left = `${x ?? rect.left + rect.width / 2}px`;
+      pulse.style.top = `${y ?? rect.top + rect.height / 2}px`;
+      document.body.appendChild(pulse);
+      window.setTimeout(() => pulse.remove(), 600);
+    };
+    const onPointerDown = (event: PointerEvent) => pulseAt(event.target, event.clientX, event.clientY);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (!event.repeat && (event.key === 'Enter' || event.key === ' ')) pulseAt(event.target);
+    };
+    document.addEventListener('pointerdown', onPointerDown, true);
+    document.addEventListener('keydown', onKeyDown, true);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown, true);
+      document.removeEventListener('keydown', onKeyDown, true);
+    };
+  }, []);
 
   useEffect(() => {
     let frame = 0;
@@ -565,7 +627,8 @@ function App() {
             aria-controls="site-navigation"
             onClick={() => setMobileMenuOpen((open) => !open)}
           >
-            {mobileMenuOpen ? 'Close' : 'Menu'}
+            <span className="menu-toggle__icon" aria-hidden="true"><span /><span /></span>
+            <span>{mobileMenuOpen ? 'Close' : 'Menu'}</span>
           </button>
 
           <nav
