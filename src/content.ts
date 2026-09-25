@@ -238,7 +238,7 @@ export const featuredProjects: Project[] = [
       evidence:
         'The live product is available at younum.me.',
       outcome:
-        'A launched product with continued iteration. No usage or revenue figures are claimed here.',
+        'A live product carried through launch and continued iteration of its core flows.',
     },
   },
   {
@@ -283,7 +283,7 @@ export const featuredProjects: Project[] = [
       evidence:
         'The scraper source is public. The oral presentation was accepted at FAB 2026.',
       outcome:
-        'Verified scope: 22,664 reviews across 11 restaurants; oral presentation accepted at FAB 2026. No further research outcome is claimed.',
+        'Collected 22,664 reviews across 11 restaurants; the research was accepted for oral presentation at FAB 2026.',
     },
   },
 ];
@@ -362,7 +362,7 @@ export const projects: Project[] = [
       evidence:
         'The public source repository is available at github.com/neckttiie090520/faii-web.',
       outcome:
-        'Verified project scope: handwoven Lampang cotton storefront with an admin area. No sales or community-impact metrics are claimed.',
+        'Delivered a storefront and admin area connecting the maker story, product catalog, and customer inquiry flow.',
     },
   },
   {
