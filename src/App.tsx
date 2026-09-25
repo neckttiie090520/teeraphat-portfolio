@@ -627,6 +627,22 @@ function App() {
                       {role.contributions.map((item) => <li key={item}>{item}</li>)}
                     </ul>
                   )}
+                  {role.engagements.length > 0 && (
+                    <div className="experience-engagements">
+                      <p className="experience-engagements__label">SELECTED WORKSHOPS</p>
+                      <ol>
+                        {role.engagements.map((engagement) => (
+                          <li key={engagement.title}>
+                            <div className="experience-engagements__heading">
+                              <h4>{engagement.title}</h4>
+                              <time>{engagement.date}</time>
+                            </div>
+                            <p>{engagement.detail}</p>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  )}
                   {role.images.length > 0 && (
                     <div className="experience-gallery" aria-label={`${role.title} photos`}>
                       {role.images.map((photo) => (

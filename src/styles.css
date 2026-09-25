@@ -1483,6 +1483,58 @@ p {
   font-size: 0.92rem;
 }
 
+.experience-engagements {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.experience-engagements__label {
+  margin-bottom: 0.6rem;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.experience-engagements ol {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.experience-engagements li {
+  padding: 0.85rem 0 1rem;
+}
+
+.experience-engagements__heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+}
+
+.experience-engagements h4 {
+  margin: 0;
+  font-size: clamp(1.03rem, 1.5vw, 1.2rem);
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.experience-engagements time {
+  flex: none;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.experience-engagements li > p {
+  max-width: 70ch;
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .experience-gallery {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr;
@@ -1505,6 +1557,16 @@ p {
 
 .experience-gallery__item:first-child img {
   object-position: 65% center;
+}
+
+.experience-gallery:has(> :only-child) {
+  grid-template-columns: 1fr;
+  max-width: 52rem;
+}
+
+.experience-gallery:has(> :only-child) img {
+  aspect-ratio: 3 / 2;
+  object-position: center;
 }
 
 .experience-gallery__item figcaption {
@@ -2252,6 +2314,12 @@ p {
 
   .experience-entry__body {
     order: 1;
+  }
+
+  .experience-engagements__heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.2rem;
   }
 
   .experience-gallery {

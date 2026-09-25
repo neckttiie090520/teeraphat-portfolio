@@ -69,6 +69,7 @@ export const content = {
           'Worked directly with business leadership on product direction, technical decisions, and engineering execution',
         ],
         images: [],
+        engagements: [],
       },
       {
         period: 'Invited session',
@@ -85,15 +86,35 @@ export const content = {
           { src: '/showcase/camt-vibe-coding-talk.webp', alt: 'Teeraphat Raksawong speaking into a microphone during the CAMT workshop', caption: 'Explaining the process in the room' },
           { src: '/showcase/camt-vibe-coding-session.webp', alt: 'CAMT lecture hall displaying the Vibe Coding: From Feeling to Systems with AI workshop title', caption: 'Vibe Coding: From Feeling to Systems with AI' },
         ],
+        engagements: [],
       },
       {
-        period: '2024–2026',
-        title: 'AI Workshop Facilitator',
-        company: 'Corporate and government participants',
+        period: '2025',
+        title: 'AI Workshop Teaching Assistant',
+        company: 'Corporate and public-sector training',
         description:
-          'Facilitated practical AI workshops for corporate and government participants, adapting technical ideas to the work in front of each group.',
+          'Helped turn AI and data topics into practical learning: preparing exercises and materials, guiding participants through the tools, and solving issues in the room.',
         contributions: [],
-        images: [],
+        engagements: [
+          {
+            title: 'Next Level CorpComm: AI Tools',
+            date: '30 Jul 2025',
+            detail: 'Prepared generative-AI exercises for corporate communication, supported tool setup and live troubleshooting, and gathered feedback for instructors.',
+          },
+          {
+            title: 'Unlocking Opportunities with Big Data & AI',
+            date: '23 Aug 2025',
+            detail: 'Guided small groups through data analysis and AI applications for decision support while coordinating workshop logistics and technical help.',
+          },
+          {
+            title: 'Public Relations Network Workshop',
+            date: '3–4 Sep 2025',
+            detail: 'Adapted hands-on activities for provincial government staff applying digital and AI tools to PR work; prepared handouts and follow-up templates.',
+          },
+        ],
+        images: [
+          { src: '/showcase/ai-workshop-teaching-assistant.webp', alt: 'Teeraphat Raksawong supporting participants with a laptop during an in-person workshop', caption: 'Helping participants apply the tools during an in-person workshop' },
+        ],
       },
     ],
   },
