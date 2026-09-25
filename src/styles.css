@@ -2405,6 +2405,20 @@ p {
 .evidence-gallery--compact .evidence-gallery__scene figcaption { display: block; padding: 0.45rem; font-size: 0.58rem; line-height: 1.25; }
 .evidence-gallery--compact .evidence-gallery__scene figcaption span { display: block; margin-bottom: 0.2rem; }
 
+.evidence-gallery--compact[data-project="inand-on"] {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 18rem;
+}
+
+.evidence-gallery--compact[data-project="inand-on"] .evidence-gallery__scene img {
+  aspect-ratio: auto;
+}
+
+.evidence-gallery--compact[data-project="inand-on"] .evidence-gallery__scene figcaption {
+  padding: 0.65rem 0.75rem;
+  font-size: 0.7rem;
+}
+
 @media (max-width: 720px) {
   .featured-projects .project-card--featured:has(.evidence-gallery--journey) .project-card__body { position: static; }
   .featured-projects .project-card__visual:has(.evidence-gallery--journey) { aspect-ratio: auto; }

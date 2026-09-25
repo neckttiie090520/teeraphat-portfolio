@@ -577,33 +577,43 @@ export const projects: Project[] = [
     id: 'inand-on',
     index: '05',
     title: 'InAndOn',
-    category: 'Business workflow PWA',
+    category: 'Mobile-first business workflow · PWA',
     summary:
-      'A quotation and cash-bill PWA for a tailoring business, backed by Google Apps Script.',
+      'A mobile document workspace for a tailoring business: create cash bills, billing notes, receipts, and quotations from one focused flow.',
     ownership:
-      'Built a small-business workflow around quotations and cash bills.',
-    stack: ['PWA', 'Google Apps Script'],
-    links: [],
+      'Designed and built the customer-facing PWA and connected its document workflow to a Google Apps Script backend.',
+    stack: ['Mobile UX', 'PWA', 'Google Apps Script', 'Document workflows'],
+    images: [
+      {
+        src: '/showcase/inandon-document-types.webp',
+        alt: 'InAndOn mobile interface with four document choices: cash bill, billing note, receipt, and quotation.',
+        caption: 'The live mobile interface starts with the document the business needs to create. No customer record is shown.',
+      },
+    ],
+    links: [
+      { href: 'https://neckttiie090520.github.io/inandon-pwa/index.html', label: 'Open live PWA' },
+      { href: 'https://github.com/neckttiie090520/inandon-pwa', label: 'View public repository' },
+    ],
     caseStudy: {
       context:
-        'A tailoring business needs to create quotations and cash bills as part of its everyday work.',
+        'A tailoring business handles several document types while serving customers, often from a phone rather than a desk.',
       why:
-        'Bringing those tasks into one focused PWA supports the business workflow without publishing customer or bill records.',
+        'A shared starting point for quoting and billing makes the next action clear, while keeping customer, item, deposit, and signature steps in one workflow.',
       role:
-        'Built the PWA and its Google Apps Script backend for quotation and cash-bill work.',
+        'Designed and built the mobile PWA, document-entry flow, and Google Apps Script integration.',
       constraints:
-        'The work involves customer and transaction details, so this portfolio describes the product flow only and shows no records.',
+        'The app handles real customer and transaction details; the public case shows only a blank product screen.',
       decisions:
-        'Keep the interface focused on quoting and billing, with Google Apps Script handling the backend.',
+        'Put the four document types up front, then carry the user through customer selection, line items, deposits, and signatures in the same mobile flow.',
       build: [
-        'Shape the quotation and cash-bill steps for a tailoring workflow.',
-        'Build the PWA interface.',
-        'Connect it to a Google Apps Script backend.',
+        'Built the mobile document selector and entry form for cash bills, billing notes, receipts, and quotations.',
+        'Connected document creation and history to a Google Apps Script JSON backend.',
+        'Made the app installable as a PWA and supported document sharing.',
       ],
       evidence:
-        'The project scope is a tailoring-business quotation and cash-bill PWA; no customer data, bills, or private screenshots are published.',
+        'The live public PWA shows the four document choices and blank entry flow. The public repository documents the implementation. The screenshot contains no customer data.',
       outcome:
-        'A workflow-specific PWA is the verified deliverable. No transaction volume or business-result metrics are claimed.',
+        'A working, mobile-first document workflow for a real tailoring business. No transaction volume or revenue impact is claimed.',
     },
   },
   {
