@@ -209,9 +209,9 @@ function ProjectGraphic({ project }: { project: Project }) {
   }
 
   if (project.id === 'clutchg-pc-optimizer') {
-    return <figure className="case-visual case-visual--clutch" aria-label="ClutchG concept diagram showing evidence, risk, and rollback around 56 vetted Windows tweaks">
+    return <figure className="case-visual case-visual--clutch" aria-label="ClutchG concept diagram showing evidence, risk, and rollback around 44 audited Windows tweak contracts">
       <div className="case-visual__top"><span>CLUTCHG / WINDOWS TOOLING</span><span>01—04</span></div>
-      <div className="case-visual__headline"><strong>56</strong><span>vetted tweaks<br />10 categories<br />3 risk tiers</span></div>
+      <div className="case-visual__headline"><strong>44</strong><span>audited contracts<br />evidence, risk<br />and rollback</span></div>
       <div className="case-visual__steps"><span>01 / Evidence</span><span>02 / Risk</span><span>03 / Backup</span><span>04 / Restore</span></div>
       <figcaption>Designed so every change has context and a way back.</figcaption>
     </figure>;

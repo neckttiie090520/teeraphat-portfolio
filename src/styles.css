@@ -2457,6 +2457,8 @@ p {
 }
 
 .evidence-gallery--compact .evidence-gallery__frame img { object-fit: cover; object-position: center top; }
+.evidence-gallery--compact[data-project="actually-faster-book"] { height: 19rem; background: #e8e4de; }
+.evidence-gallery--compact[data-project="actually-faster-book"] .evidence-gallery__frame img { object-fit: contain; object-position: center; }
 .evidence-gallery--compact .evidence-gallery__frame figcaption { font-size: 0.65rem; }
 
 .evidence-placeholder {
