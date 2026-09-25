@@ -30,59 +30,19 @@ function ProjectLinks({ project }: { project: Project }) {
 }
 
 function EvidenceGallery({ project, compact = false }: { project: Project; compact?: boolean }) {
-  const [active, setActive] = useState(0);
-  const reduceMotion = useReducedMotion();
   const images = project.images ?? [];
 
   if (images.length === 0) return null;
 
-  if (reduceMotion && !compact) {
-    return <div className="evidence-gallery evidence-gallery--list" data-project={project.id} aria-label={`${project.title} image gallery`}>
-      {images.map((item) => <figure key={item.src} className="evidence-gallery__list-item"><img src={item.src} alt={item.alt} loading="lazy" /><figcaption>{item.caption}</figcaption></figure>)}
-    </div>;
-  }
-
-  if (!compact) {
-    return <div className="evidence-gallery evidence-gallery--deck" data-project={project.id} aria-label={`${project.title} image gallery`}>
-      <div className="evidence-gallery__deck">
-        {images.map((item, index) => {
-          const distance = ((index - active + images.length + Math.floor(images.length / 2)) % images.length) - Math.floor(images.length / 2);
-          const depth = Math.abs(distance);
-          const style = {
-            '--stack-x': `${distance * 39}px`,
-            '--stack-y': `${depth * 14}px`,
-            '--stack-rotate': `${distance * -5.5}deg`,
-            '--stack-scale': 1 - depth * 0.065,
-            '--stack-z': images.length - depth,
-          } as CSSProperties;
-          return <figure key={item.src} className="evidence-gallery__card" style={style} aria-hidden={index !== active}>
-            <img src={item.src} alt={index === active ? item.alt : ''} loading="lazy" />
-            <figcaption>{item.caption}</figcaption>
-          </figure>;
-        })}
-      </div>
-      <div className="evidence-gallery__controls">
-        <button type="button" aria-label={`Previous ${project.title} image`} onClick={() => setActive((index) => (index + images.length - 1) % images.length)}>←</button>
-        <span aria-live="polite">{String(active + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</span>
-        <button type="button" aria-label={`Next ${project.title} image`} onClick={() => setActive((index) => (index + 1) % images.length)}>→</button>
-      </div>
-    </div>;
-  }
-
-  const item = images[active];
   return (
-    <div className={'evidence-gallery' + (compact ? ' evidence-gallery--compact' : '')} data-project={project.id} aria-label={`${project.title} image gallery`}>
-      <figure className="evidence-gallery__frame">
-        <img src={item.src} alt={item.alt} loading="lazy" />
-        <figcaption>{item.caption}</figcaption>
-      </figure>
-      {images.length > 1 && (
-        <div className="evidence-gallery__controls">
-          <button type="button" aria-label={`Previous ${project.title} image`} onClick={() => setActive((index) => (index + images.length - 1) % images.length)}>←</button>
-          <span aria-live="polite">{String(active + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</span>
-          <button type="button" aria-label={`Next ${project.title} image`} onClick={() => setActive((index) => (index + 1) % images.length)}>→</button>
-        </div>
-      )}
+    <div className={'evidence-gallery ' + (compact ? 'evidence-gallery--compact' : 'evidence-gallery--journey')} data-project={project.id} aria-label={`${project.title} visual story`}>
+      {!compact && <p className="evidence-gallery__intro">Scroll through the work <span>{String(images.length).padStart(2, '0')} views ↓</span></p>}
+      {images.map((item, index) => (
+        <figure key={item.src} className="evidence-gallery__scene">
+          <img src={item.src} alt={item.alt} loading="lazy" />
+          <figcaption><span>{String(index + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</span>{item.caption}</figcaption>
+        </figure>
+      ))}
     </div>
   );
 }
