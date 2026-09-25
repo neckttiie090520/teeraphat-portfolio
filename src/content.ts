@@ -89,6 +89,16 @@ export const content = {
     title: 'AI-native engineering, from problem to production.',
     intro:
       'My AIDLC connects business → product → AI → engineering. Coding agents accelerate the work; I retain ownership of scope, architecture, validation, and release decisions.',
+    pointOfView: {
+      eyebrow: 'WHAT I BELIEVE',
+      title: 'The outcome matters more than the code produced along the way.',
+      body: 'I see agents as a new execution layer for software and business work. My job is to define intent, give them the right context and tools, and make the result testable. Durable software still matters where reliability, integration, and long-term ownership demand it.',
+      principles: [
+        { title: 'Design the capability', body: 'An agent needs a purpose, bounded context, tools, permissions, and a place in the real workflow.' },
+        { title: 'Engineer the feedback loop', body: 'Evaluate outputs against evidence and ground truth; trace errors and improve the system over time.' },
+        { title: 'Keep authority explicit', body: 'Let AI research, build, extract, and propose. People and deterministic rules own consequential decisions.' },
+      ],
+    },
     steps: [
       { title: 'Understand', body: 'Observe the business workflow, users, constraints, and authority boundaries.' },
       { title: 'Research', body: 'Study the domain, existing systems, evidence, and failure modes.' },

@@ -627,6 +627,23 @@ function App() {
             ))}
           </ol>
 
+          <div className="point-of-view" data-reveal>
+            <div className="point-of-view__intro">
+              <p className="point-of-view__eyebrow">{content.approach.pointOfView.eyebrow}</p>
+              <h3>{content.approach.pointOfView.title}</h3>
+              <p>{content.approach.pointOfView.body}</p>
+            </div>
+            <ol className="point-of-view__principles">
+              {content.approach.pointOfView.principles.map((principle, index) => (
+                <li key={principle.title}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <h4>{principle.title}</h4>
+                  <p>{principle.body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+
           <div className="capabilities-section">
             <p className="capabilities-section__label">Specializations and engineering foundation</p>
             <div className="capability-list">
