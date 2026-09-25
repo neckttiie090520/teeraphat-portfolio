@@ -73,6 +73,39 @@ function TypingHeadline({ reduceMotion }: { reduceMotion: boolean | null }) {
   );
 }
 
+const rotatingWords = ['products.', 'systems.', 'proof.'];
+
+function RolodexStatement({ reduceMotion }: { reduceMotion: boolean | null }) {
+  const wordsRef = useRef<HTMLSpanElement>(null);
+
+  useGSAP(() => {
+    if (reduceMotion || !wordsRef.current) return;
+    const words = gsap.utils.toArray<HTMLElement>('.rolodex__word', wordsRef.current);
+    gsap.set(words, { visibility: 'visible', opacity: 0, rotationX: 90, transformOrigin: '50% 100%' });
+    gsap.set(words[0], { opacity: 1, rotationX: 0 });
+    const sequence = gsap.timeline({ repeat: -1, repeatDelay: 0.25 });
+    words.forEach((word, index) => {
+      const next = words[(index + 1) % words.length];
+      sequence.to({}, { duration: 2.1 });
+      sequence.to(word, { rotationX: -90, opacity: 0, duration: 0.48, ease: 'power2.in', transformOrigin: '50% 0%' });
+      sequence.fromTo(next,
+        { rotationX: 90, opacity: 0, transformOrigin: '50% 100%' },
+        { rotationX: 0, opacity: 1, duration: 0.55, ease: 'power3.out' },
+        '<0.02',
+      );
+    });
+  }, { scope: wordsRef, dependencies: [reduceMotion], revertOnUpdate: true });
+
+  return (
+    <p className="rolodex" aria-label="I build products, systems, and proof.">
+      <span aria-hidden="true">I build </span>
+      <span className="rolodex__stage" aria-hidden="true" ref={wordsRef}>
+        {rotatingWords.map((word, index) => <span key={word} className={'rolodex__word' + (index === 0 ? ' rolodex__word--first' : '')}>{word}</span>)}
+      </span>
+    </p>
+  );
+}
+
 const skillCards = [
   { label: 'AIDLC', size: 'hero', tone: 'ink', angle: -5, lift: 2 },
   { label: 'Agent Engineering', size: 'hero', tone: 'paper', angle: 4, lift: -4 },
@@ -416,6 +449,30 @@ function App() {
         { strokeDashoffset: 0, duration: 1.15, ease: 'power2.out', scrollTrigger: { trigger: '[data-ink-line]', start: 'top 85%', once: true } },
       );
 
+      gsap.to('[data-liquid-map]', {
+        attr: { scale: 3 },
+        duration: 3.8,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut',
+      });
+
+      gsap.fromTo('.story-bridge__progress-fill', { scaleX: 0 }, {
+        scaleX: 1,
+        ease: 'none',
+        scrollTrigger: { trigger: '.story-bridge', start: 'top 75%', end: 'bottom 75%', scrub: true },
+      });
+
+      gsap.utils.toArray<HTMLElement>('.story-bridge__path li').forEach((step, index) => {
+        gsap.from(step, {
+          x: index % 2 === 0 ? -34 : 34,
+          autoAlpha: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: step, start: 'top 82%', once: true },
+        });
+      });
+
       gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
         gsap.from(element, {
           y: 16,
@@ -535,6 +592,7 @@ function App() {
         </section>
 
         <section className="story-bridge" aria-labelledby="story-bridge-title">
+          <svg className="visually-hidden" aria-hidden="true" width="0" height="0" focusable="false"><filter id="liquid-type"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.025" numOctaves="2" seed="4" result="noise" /><feDisplacementMap data-liquid-map in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G" /></filter></svg>
           <div className="story-bridge__header" data-reveal>
             <span className="story-bridge__eyebrow">THE WAY I WORK / 01—04</span>
             <span className="story-bridge__hint">KEEP SCROLLING ↓</span>
@@ -542,15 +600,19 @@ function App() {
           <div className="story-bridge__body">
             <h2 id="story-bridge-title" data-reveal>I begin with<br /><em>the question.</em></h2>
             <div className="story-bridge__aside" data-reveal>
-              <p>What does the business need to achieve, and who has authority over the result? My AIDLC turns that question into a scoped product, a governed AI workflow, and working software.</p>
+              <div className="story-bridge__motion-panel">
+                <RolodexStatement reduceMotion={reduceMotion} />
+                <p>What does the business need to achieve, and who has authority over the result? My AIDLC turns that question into a scoped product, a governed AI workflow, and working software.</p>
+              </div>
               <a href="#evidence" className="story-bridge__cta">See the work <span aria-hidden="true">↘</span></a>
             </div>
           </div>
+          <div className="story-bridge__progress" aria-hidden="true"><span className="story-bridge__progress-fill" /></div>
           <ol className="story-bridge__path" aria-label="My product process">
-            <li data-reveal><span>01 / BUSINESS</span><strong>Find the real problem</strong></li>
-            <li data-reveal><span>02 / PRODUCT</span><strong>Define scope and flow</strong></li>
-            <li data-reveal><span>03 / AI + SOFTWARE</span><strong>Engineer the system</strong></li>
-            <li data-reveal><span>04 / EVIDENCE</span><strong>Evaluate, ship, and learn</strong></li>
+            <li><span>01 / BUSINESS</span><strong>Find the real problem</strong></li>
+            <li><span>02 / PRODUCT</span><strong>Define scope and flow</strong></li>
+            <li><span>03 / AI + SOFTWARE</span><strong>Engineer the system</strong></li>
+            <li><span>04 / EVIDENCE</span><strong>Evaluate, ship, and learn</strong></li>
           </ol>
           <a className="story-bridge__down" href="#evidence" aria-label="Scroll to selected projects"><span aria-hidden="true">↓</span><span>SELECTED PROJECTS BELOW</span></a>
         </section>
