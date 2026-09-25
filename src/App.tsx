@@ -304,9 +304,57 @@ function ProjectIndexRow({ project }: { project: Project }) {
           {project.stack.join(' · ')}
         </p>
         <ProjectLinks project={project} />
+        {project.id === 'actually-faster-book' && <BookPreview />}
         <CaseNotes project={project} />
       </div>
     </article>
+  );
+}
+
+function BookPreview() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const previewUrl = '/files/Actually-Faster-Book-Preview.pdf';
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (isOpen && !dialog.open) dialog.showModal();
+    if (!isOpen && dialog.open) dialog.close();
+  }, [isOpen]);
+
+  return (
+    <div className="book-preview">
+      <p className="book-preview__meta">22-page preview · Thai · Foreword and Chapter 1</p>
+      <button className="book-preview__trigger" type="button" onClick={() => setIsOpen(true)}>
+        Read the book preview <span aria-hidden="true">↗</span>
+      </button>
+      <dialog className="book-reader" ref={dialogRef} onClose={() => setIsOpen(false)} aria-labelledby="book-reader-title">
+        <div className="book-reader__bar">
+          <div>
+            <span className="book-reader__eyebrow">THE PROOF PROJECT / EBOOK PREVIEW</span>
+            <h4 id="book-reader-title">Actually Faster?</h4>
+          </div>
+          <div className="book-reader__actions">
+            <button className="book-reader__zoom" type="button" aria-pressed={isZoomed} onClick={() => setIsZoomed((value) => !value)}>{isZoomed ? 'Fit page' : 'Zoom in'}</button>
+            <button className="book-reader__close" type="button" onClick={() => setIsOpen(false)} aria-label="Close book preview">×</button>
+          </div>
+        </div>
+        <div className={'book-reader__pages' + (isZoomed ? ' book-reader__pages--zoomed' : '')} aria-label="Read the first 22 pages of Actually Faster?">
+          {Array.from({ length: 22 }, (_, index) => (
+            <figure className="book-reader__page" key={index}>
+              <img src={`/book-preview/page-${String(index + 1).padStart(2, '0')}.webp`} alt={`Actually Faster? preview page ${index + 1} of 22`} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
+              <figcaption>{String(index + 1).padStart(2, '0')} / 22</figcaption>
+            </figure>
+          ))}
+        </div>
+        <div className="book-reader__footer">
+          <span>Read the foreword and first chapter.</span>
+          <a href={previewUrl} target="_blank" rel="noreferrer">Open PDF in a new tab ↗</a>
+        </div>
+      </dialog>
+    </div>
   );
 }
 
