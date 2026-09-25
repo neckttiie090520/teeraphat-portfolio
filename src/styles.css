@@ -3545,6 +3545,67 @@ p {
 .page-mascot__guide { transition: background-color 180ms ease, color 180ms ease, transform 220ms cubic-bezier(.16, 1, .3, 1); }
 .page-mascot__guide[aria-expanded="true"] { background: var(--ink); color: var(--page); transform: translateY(-2px); }
 
+/* CRT stays beside the story and speaks in compact, dismissible notes. */
+.page-mascot,
+.page-mascot--contact {
+  position: fixed;
+  z-index: 30;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  justify-items: end;
+  margin: 0;
+}
+.page-mascot__bubble {
+  width: min(19rem, calc(100vw - 2rem));
+  max-height: min(19rem, 65dvh);
+  overflow: visible;
+  padding: .85rem 1rem .8rem;
+  border-color: var(--ink);
+  box-shadow: 5px 5px 0 rgb(24 25 23 / .13);
+}
+.page-mascot__topline { display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; }
+.page-mascot__eyebrow { color: var(--accent); font-size: .62rem; font-weight: 760; letter-spacing: .07em; line-height: 1.25; }
+.page-mascot__dismiss {
+  width: 1.6rem;
+  height: 1.6rem;
+  flex: none;
+  margin: -.35rem -.45rem 0 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: color 180ms ease, transform 220ms cubic-bezier(.16, 1, .3, 1);
+}
+.page-mascot__dismiss:hover { color: var(--accent); transform: rotate(90deg); }
+.page-mascot__intro { margin-top: .32rem; font-size: .83rem; font-weight: 550; line-height: 1.38; }
+.page-mascot__links { margin-top: .4rem; }
+.page-mascot__links a { min-height: 30px; font-size: .74rem; }
+.page-mascot__guide { margin-top: -.2rem; }
+
+@media (max-width: 720px) {
+  .page-mascot,
+  .page-mascot--contact {
+    position: fixed;
+    right: max(.7rem, env(safe-area-inset-right));
+    bottom: max(.7rem, env(safe-area-inset-bottom));
+    justify-items: end;
+    margin: 0;
+  }
+  .page-mascot__bubble {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + .65rem);
+    width: min(17rem, calc(100vw - 1.4rem));
+    margin: 0;
+    transform-origin: bottom right;
+  }
+  .page-mascot__bubble:not(.is-open) { display: block; }
+  .page-mascot__bubble::after { display: block; }
+  .page-mascot__guide { min-height: 2.1rem; font-size: .61rem; }
+}
+
 .project-links a,
 .site-footer__links a,
 .capability-map__proof,
@@ -3567,6 +3628,7 @@ p {
   .book-reader__page,
   .book-reader__bar button,
   .page-mascot__guide { transition: none; }
+  .page-mascot__dismiss { transition: none; }
   .book-reader[open],
   .book-reader[open]::backdrop { animation: none; }
 }

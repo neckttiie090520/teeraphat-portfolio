@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { MotionConfig, motion, useReducedMotion } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -345,6 +345,7 @@ function BookPreview() {
     const finish = () => {
       dialog.classList.remove('is-closing');
       dialog.close();
+      window.dispatchEvent(new Event('mascot:book-closed'));
       closingRef.current = false;
       setIsOpen(false);
       setIsZoomed(false);
@@ -412,13 +413,135 @@ function BookPreview() {
   );
 }
 
+type MascotMoment = { eyebrow: string; body: string; target?: string; action?: string };
+
+const mascotMoments: Record<ChapterId, MascotMoment[]> = {
+  intro: [
+    { eyebrow: 'HELLO, HUMAN', body: "I’m CRT. This is Teeraphat Raksawong — Necktie. He turns fuzzy ideas into working systems. Come meet him.", target: '#experience', action: 'Meet Necktie' },
+    { eyebrow: 'A LITTLE BACKSTORY', body: 'Media Art & Design first. Software engineering and AI next. The common thread? Making ideas useful.', target: '#experience', action: 'Follow the story' },
+  ],
+  experience: [
+    { eyebrow: 'BEHIND THE ROLE', body: 'Necktie connects product decisions, AI workflows, and engineering. The interesting bit is how those pieces become one working system.', target: '#evidence', action: 'See the proof' },
+    { eyebrow: 'YES, HE TEACHES TOO', body: 'He has taken AI from the build room to the classroom, helping people turn a first idea into something they can use.', target: '#evidence', action: 'See the projects' },
+  ],
+  evidence: [
+    { eyebrow: 'WELCOME TO THE WORK', body: 'Start with the question, then the decision, then the evidence. Each case note tells you why the work exists.', target: '#project-nexora', action: 'Start with Nexora' },
+    { eyebrow: 'TAKE A CLOSER LOOK', body: 'Those are real interfaces and research figures. Open a case note if you want the thinking behind the pixels.', target: '#project-clutchg-pc-optimizer', action: 'Explore ClutchG' },
+  ],
+  approach: [
+    { eyebrow: 'HOW HE BUILDS', body: 'The AIDLC connects the business question to product scope, agent design, implementation, evaluation, and release.', target: '#capability-map', action: 'See the capabilities' },
+    { eyebrow: 'ONE METHOD, MANY TOOLS', body: 'AI is part of the process. Judgment, evidence, and a working result still belong to the engineer.', target: '#contact', action: 'Get in touch' },
+  ],
+  contact: [
+    { eyebrow: 'YOU MADE IT', body: 'Thanks for spending time with Necktie’s work. A good problem is a great way to start a conversation.', target: 'mailto:pethreeday@gmail.com', action: 'Say hello' },
+    { eyebrow: 'ONE LAST THING', body: 'Want the short version? The CV is ready. Want the full story? You can always scroll back through the work.', target: '#intro', action: 'Back to the start' },
+  ],
+};
+
+const projectMoments: Record<string, string> = {
+  nexora: 'Here is the agent work layer: AI prepares, evidence stays visible, and people keep the final say.',
+  younum: 'YouNum went from a solo idea to a live product. Necktie owned the flow, interface, code, and launch.',
+  'khaosoi-research': 'A data story with numbers: 22,664 public reviews across 11 Chiang Mai restaurants.',
+  'clutchg-pc-optimizer': 'ClutchG makes Windows changes explainable and reversible. Look for the backup path in the interface.',
+  'hotel-document-intelligence': 'Contracts can be messy. This workflow separates extraction, evidence checks, and human review.',
+  'actually-faster-book': 'Plot twist: the software research became a 158-page book. You can read the opening 22 pages right here.',
+  'inand-on': 'A mobile-first business tool, built around the work people actually do at the counter.',
+  valscout: 'Game and esports knowledge meets product thinking here. Open the case note for the decisions behind it.',
+  comprice: 'This one connects Thai PC retailer data, compatible parts, and a buyer-friendly build flow. Still in development.',
+  homie: 'A small shared home has many moving parts. Homie brings them into one private, mobile-friendly place.',
+  'mcp-thai-thesis': 'Necktie turned thesis-writing pain points into reusable checks for Thai academic work.',
+  'nzs-skills': 'These agent skills make a simple promise: claims should come with evidence you can inspect.',
+  'poop-detector': 'Yes, the name is real. It is a pet-care computer-vision experiment with event logs and notifications.',
+  'atk-firmwaremod': 'A tiny hardware problem became a guided firmware workflow with backup and patch logging.',
+  'qwen3vl-finetune-nexora': 'Here the focus is on preparing and evaluating vision-language models for a real document workflow.',
+  'line-ai-secretary': 'A conversational assistant needs useful boundaries, good context, and a clear path back to a person.',
+  'tracco-tracker': 'Tracking tools only help when the data is clear enough to act on. The case note explains the product choices.',
+};
+
 function PageMascot({ activeChapter, reduceMotion }: {
   activeChapter: ChapterId;
   reduceMotion: boolean | null;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [moment, setMoment] = useState<MascotMoment>(mascotMoments.intro[0]);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const guide = content.mascot.guides[activeChapter];
+  const momentIndex = useRef(0);
+  const lastChapter = useRef<ChapterId>(activeChapter);
+
+  const announce = useCallback((next: MascotMoment) => {
+    setMoment(next);
+    setIsOpen(true);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      if (lastChapter.current === 'intro' && window.scrollY < window.innerHeight * 0.6 && (!window.location.hash || window.location.hash === '#intro')) {
+        announce(mascotMoments.intro[0]);
+      }
+    }, 1150);
+    return () => window.clearTimeout(timer);
+  }, [announce]);
+
+  useEffect(() => {
+    if (lastChapter.current === activeChapter) return;
+    lastChapter.current = activeChapter;
+    momentIndex.current = 0;
+    if (!isPaused) announce(mascotMoments[activeChapter][0]);
+  }, [activeChapter, announce, isPaused]);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = window.setInterval(() => {
+      if (document.visibilityState !== 'visible' || document.querySelector('dialog[open]') || document.querySelector('#mascot-message:hover') || document.activeElement?.closest('#mascot-message')) return;
+      const moments = mascotMoments[activeChapter];
+      momentIndex.current = (momentIndex.current + 1) % moments.length;
+      announce(moments[momentIndex.current]);
+    }, 14000);
+    return () => window.clearInterval(timer);
+  }, [activeChapter, announce, isPaused]);
+
+  useEffect(() => {
+    if (!isOpen || isPaused) return;
+    const timer = window.setTimeout(() => {
+      if (!document.activeElement?.closest('#mascot-message')) setIsOpen(false);
+    }, 8500);
+    return () => window.clearTimeout(timer);
+  }, [isOpen, moment, isPaused]);
+
+  useEffect(() => {
+    if (isPaused || !('IntersectionObserver' in window)) return;
+    let lastProject = '';
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries.find((item) => item.isIntersecting);
+      if (!entry) return;
+      const id = entry.target.id.replace(/^project-/, '');
+      if (id === lastProject || !projectMoments[id]) return;
+      lastProject = id;
+      announce({ eyebrow: 'PROJECT SPOTLIGHT', body: projectMoments[id], target: `#${entry.target.id}`, action: 'Stay with this project' });
+    }, { rootMargin: '-22% 0px -56% 0px' });
+    document.querySelectorAll<HTMLElement>('[id^="project-"]').forEach((heading) => observer.observe(heading));
+    return () => observer.disconnect();
+  }, [announce, isPaused]);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const onClick = (event: MouseEvent) => {
+      if (!(event.target instanceof Element)) return;
+      const notes = event.target.closest('.project-notes__toggle');
+      if (notes && notes.getAttribute('aria-expanded') === 'false') {
+        const title = notes.closest('article')?.querySelector<HTMLElement>('[id^="project-"]')?.textContent?.trim();
+        announce({ eyebrow: 'CASE FILE OPEN', body: `${title || 'This project'} has more to tell. Follow the context, the decision, and what the work actually proved.` });
+      }
+    };
+    const onBookClosed = () => announce({ eyebrow: 'BACK FROM THE BOOK?', body: 'That was only the opening chapter. The full project connects research, source-code audits, and a safer way to change Windows.' });
+    document.addEventListener('click', onClick);
+    window.addEventListener('mascot:book-closed', onBookClosed);
+    return () => {
+      document.removeEventListener('click', onClick);
+      window.removeEventListener('mascot:book-closed', onBookClosed);
+    };
+  }, [announce, isPaused]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -448,11 +571,9 @@ function PageMascot({ activeChapter, reduceMotion }: {
         }}
         transition={reduceMotion ? { duration: 0 } : { duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
       >
-        <p className="page-mascot__eyebrow" aria-live="polite">{guide.eyebrow}</p>
-        <p className="page-mascot__intro">{guide.body}</p>
-        <div className="page-mascot__links">
-          <a href={guide.target} onClick={() => setIsOpen(false)}>{guide.action}<span aria-hidden="true"> ↗</span></a>
-        </div>
+        <div className="page-mascot__topline"><span className="page-mascot__eyebrow">CRT / {moment.eyebrow}</span><button type="button" className="page-mascot__dismiss" aria-label="Pause CRT messages" onClick={() => { setIsPaused(true); setIsOpen(false); buttonRef.current?.focus(); }}>×</button></div>
+        <p className="page-mascot__intro" aria-live="polite">{moment.body}</p>
+        {moment.target && <div className="page-mascot__links"><a href={moment.target} onClick={() => setIsOpen(false)}>{moment.action}<span aria-hidden="true"> ↗</span></a></div>}
       </motion.div>
 
       <Mascot directions="/mascots/crt-directions.webp" reactions="/mascots/crt-reactions.webp" size={84} label="CRT guide" className="page-mascot__crt" />
@@ -460,12 +581,17 @@ function PageMascot({ activeChapter, reduceMotion }: {
         ref={buttonRef}
         className="page-mascot__guide"
         type="button"
-        aria-label={isOpen ? content.mascot.closeLabel : content.mascot.openLabel}
+        aria-label={isPaused ? 'Resume CRT messages' : isOpen ? 'Hear another CRT tip' : content.mascot.openLabel}
         aria-expanded={isOpen}
         aria-controls="mascot-message"
-        onClick={() => setIsOpen((open) => !open)}
+        onClick={() => {
+          if (isPaused) setIsPaused(false);
+          const moments = mascotMoments[activeChapter];
+          momentIndex.current = (momentIndex.current + 1) % moments.length;
+          announce(moments[momentIndex.current]);
+        }}
       >
-        {isOpen ? 'Close guide' : 'Where next?'}
+        {isPaused ? 'Talk to CRT' : isOpen ? 'Tell me more' : 'Where next?'}
       </button>
     </div>
   );
