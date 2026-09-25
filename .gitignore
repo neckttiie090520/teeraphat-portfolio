@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+*.tsbuildinfo
+.env
+.env.*
+tmp/
+output/
+static/
+public/images/*
+!public/images/teeraphat-avatar.png
