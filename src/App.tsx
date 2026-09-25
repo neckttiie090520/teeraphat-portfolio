@@ -300,7 +300,14 @@ function ProjectIndexRow({ project }: { project: Project }) {
       <div className="project-index__heading">
         <p className="project-card__category">{project.category}</p>
         <h3 id={'project-' + project.id}>{project.title}</h3>
-        {project.images?.length ? <EvidenceGallery project={project} compact /> : null}
+        {project.images?.length ? <EvidenceGallery project={project} compact /> : project.visual ? (
+          <figure className="project-flow" aria-label={`${project.title} process: ${project.visual.steps.join(', ')}`}>
+            <span className="project-flow__label">{project.visual.label}</span>
+            <strong className="project-flow__headline">{project.visual.headline}</strong>
+            <ol className="project-flow__steps">{project.visual.steps.map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, '0')}</span>{step}</li>)}</ol>
+            <figcaption>{project.visual.note}</figcaption>
+          </figure>
+        ) : null}
       </div>
       <div className="project-index__detail">
         <p className="project-card__summary">{project.summary}</p>

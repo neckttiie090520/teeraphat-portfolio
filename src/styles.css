@@ -2461,6 +2461,65 @@ p {
 .evidence-gallery--compact[data-project="actually-faster-book"] .evidence-gallery__frame img { object-fit: contain; object-position: center; }
 .evidence-gallery--compact .evidence-gallery__frame figcaption { font-size: 0.65rem; }
 
+.project-flow {
+  min-height: 15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+  padding: 1rem;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--page);
+}
+
+.project-flow__label {
+  color: var(--accent);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.project-flow__headline {
+  max-width: 20ch;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.project-flow__steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.35rem;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-flow__steps li {
+  min-width: 0;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgb(255 255 255 / 0.35);
+  font-size: 0.65rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.project-flow__steps li span {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--accent);
+  font-size: 0.58rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.project-flow figcaption {
+  color: rgb(255 255 255 / 0.68);
+  font-size: 0.62rem;
+  line-height: 1.3;
+}
+
 .evidence-placeholder {
   min-height: 16rem;
   display: flex;
