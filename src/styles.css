@@ -1483,6 +1483,37 @@ p {
   font-size: 0.92rem;
 }
 
+.experience-gallery {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: clamp(0.55rem, 1.3vw, 1rem);
+  margin-top: clamp(1.4rem, 2.5vw, 2rem);
+}
+
+.experience-gallery__item {
+  min-width: 0;
+  margin: 0;
+}
+
+.experience-gallery__item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.experience-gallery__item:first-child img {
+  object-position: 65% center;
+}
+
+.experience-gallery__item figcaption {
+  padding-top: 0.55rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
 .work-section {
   padding-block: var(--section-space);
 }
@@ -2064,6 +2095,14 @@ p {
 
   .experience-entry__body {
     order: 1;
+  }
+
+  .experience-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .experience-gallery__item:first-child {
+    grid-column: 1 / -1;
   }
 
   .story-bridge {

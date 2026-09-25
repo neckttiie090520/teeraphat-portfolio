@@ -68,6 +68,23 @@ export const content = {
           'Designed governed agent workflows and hotel-contract document intelligence with evidence, structured extraction, and human review',
           'Worked directly with business leadership on product direction, technical decisions, and engineering execution',
         ],
+        images: [],
+      },
+      {
+        period: 'Invited session',
+        title: 'Guest Speaker & Workshop Instructor',
+        company: 'CAMT · Chiang Mai University',
+        description:
+          'Led “Vibe Coding: From Feeling to Systems with AI” for third- and fourth-year Software Engineering students in Introduction to Software Business. I showed how to start with a product idea, shape it into a workable flow, and use AI to move from exploration to a working system.',
+        contributions: [
+          'Connected creative product thinking with practical AI-assisted development',
+          'Guided students through a hands-on path from idea to system',
+        ],
+        images: [
+          { src: '/showcase/camt-vibe-coding-speaker.webp', alt: 'Teeraphat Raksawong standing in front of a Vibe First, Code Later presentation slide at CAMT', caption: 'From a feeling to a product idea' },
+          { src: '/showcase/camt-vibe-coding-talk.webp', alt: 'Teeraphat Raksawong speaking into a microphone during the CAMT workshop', caption: 'Explaining the process in the room' },
+          { src: '/showcase/camt-vibe-coding-session.webp', alt: 'CAMT lecture hall displaying the Vibe Coding: From Feeling to Systems with AI workshop title', caption: 'Vibe Coding: From Feeling to Systems with AI' },
+        ],
       },
       {
         period: '2024–2026',
@@ -76,6 +93,7 @@ export const content = {
         description:
           'Facilitated practical AI workshops for corporate and government participants, adapting technical ideas to the work in front of each group.',
         contributions: [],
+        images: [],
       },
     ],
   },

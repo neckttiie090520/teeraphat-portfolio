@@ -579,6 +579,16 @@ function App() {
                       {role.contributions.map((item) => <li key={item}>{item}</li>)}
                     </ul>
                   )}
+                  {role.images.length > 0 && (
+                    <div className="experience-gallery" aria-label={`${role.title} photos`}>
+                      {role.images.map((photo) => (
+                        <figure className="experience-gallery__item" key={photo.src}>
+                          <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+                          <figcaption>{photo.caption}</figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </article>
             ))}
