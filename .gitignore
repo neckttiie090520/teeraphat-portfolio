@@ -10,4 +10,6 @@ output/
 static/
 public/images/*
 !public/images/teeraphat-avatar.png
+!public/images/education/
+!public/images/education/*
 .bug-hunter/

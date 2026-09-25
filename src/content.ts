@@ -45,8 +45,11 @@ export const content = {
   cvUrl: '/files/Teeraphat-Raksawong-CV-2026.pdf',
   hero: {
     background:
-      'My path began in Media Art & Design and continues through software engineering, applied AI, and products built for real workflows.',
-    education: 'Master of Software Engineering candidate · CMU CAMT · 2024–present',
+      'I trained in Media Art & Design at Chiang Mai University. Interactive work taught me to start with the person experiencing a system; software engineering gave me another way to build for them.',
+    education: [
+      'BFA Media Art & Design · CMU · 2020–2023',
+      'MSE candidate · CMU CAMT · 2024–present',
+    ],
     thesis:
       'Thesis focus: reducing Windows OS latency to improve FPS player skills.',
     workCta: 'See selected work',

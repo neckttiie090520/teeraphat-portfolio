@@ -418,7 +418,7 @@ type MascotMoment = { eyebrow: string; body: string; target?: string; action?: s
 const mascotMoments: Record<ChapterId, MascotMoment[]> = {
   intro: [
     { eyebrow: 'HELLO, HUMAN', body: "I’m CRT. This is Teeraphat Raksawong — Necktie. He turns fuzzy ideas into working systems. Come meet him.", target: '#experience', action: 'Meet Necktie' },
-    { eyebrow: 'A LITTLE BACKSTORY', body: 'Media Art & Design first. Software engineering and AI next. The common thread? Making ideas useful.', target: '#experience', action: 'Follow the story' },
+    { eyebrow: 'A LITTLE BACKSTORY', body: 'Before software, Necktie made interactive art. There is a graduation gallery just below the introduction.', target: '#education', action: 'See where it began' },
   ],
   experience: [
     { eyebrow: 'BEHIND THE ROLE', body: 'Necktie connects product decisions, AI workflows, and engineering. The interesting bit is how those pieces become one working system.', target: '#evidence', action: 'See the proof' },
@@ -468,6 +468,7 @@ function PageMascot({ activeChapter, reduceMotion }: {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const momentIndex = useRef(0);
   const lastChapter = useRef<ChapterId>(activeChapter);
+  const educationInView = useRef(false);
 
   const announce = useCallback((next: MascotMoment) => {
     setMoment(next);
@@ -491,9 +492,20 @@ function PageMascot({ activeChapter, reduceMotion }: {
   }, [activeChapter, announce, isPaused]);
 
   useEffect(() => {
+    const section = document.getElementById('education');
+    if (isPaused || !section || !('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      educationInView.current = entry.isIntersecting;
+      if (entry.isIntersecting) announce({ eyebrow: 'BEFORE THE CODE', body: 'A BFA in Media Art & Design came first. The graduation work made visitors part of the experience, a question Necktie still carries into software.', target: '#experience', action: 'Follow the story' });
+    }, { rootMargin: '-20% 0px -55% 0px' });
+    observer.observe(section);
+    return () => { educationInView.current = false; observer.disconnect(); };
+  }, [announce, isPaused]);
+
+  useEffect(() => {
     if (isPaused) return;
     const timer = window.setInterval(() => {
-      if (document.visibilityState !== 'visible' || document.querySelector('dialog[open]') || document.querySelector('#mascot-message:hover') || document.activeElement?.closest('#mascot-message')) return;
+      if (document.visibilityState !== 'visible' || educationInView.current || document.querySelector('dialog[open]') || document.querySelector('#mascot-message:hover') || document.activeElement?.closest('#mascot-message')) return;
       const moments = mascotMoments[activeChapter];
       momentIndex.current = (momentIndex.current + 1) % moments.length;
       announce(moments[momentIndex.current]);
@@ -808,8 +820,45 @@ function App() {
           <HeroShowcase />
 
           <div className="identity-strip" data-reveal>
-            <p><span>Education</span><strong>{content.hero.education}</strong></p>
+            <p><a href="#education">Education <span aria-hidden="true">↘</span></a><strong>{content.hero.education.map((degree) => <span key={degree}>{degree}</span>)}</strong></p>
             <p><span>Research focus</span><strong>{content.hero.thesis}</strong></p>
+          </div>
+        </section>
+
+        <section id="education" className="education-section" aria-labelledby="education-title">
+          <div className="chapter-heading" data-reveal>
+            <p className="chapter-heading__number">THE FOUNDATION / EDUCATION</p>
+            <div>
+              <h2 id="education-title">Before software, I built experiences.</h2>
+              <p>My work began in media art: asking what changes when someone can step in, touch, and become part of the experience. That question still shapes how I build products and AI systems.</p>
+            </div>
+          </div>
+
+          <div className="education-degrees" data-reveal>
+            <div className="education-degree">
+              <span className="education-degree__year">2020–2023</span>
+              <div><h3>Bachelor of Fine Arts in Media Art and Design</h3><p>Faculty of Fine Arts, Chiang Mai University</p><p>Interactive art design and innovative integration.</p></div>
+            </div>
+            <div className="education-degree">
+              <span className="education-degree__year">2024–present</span>
+              <div><h3>Master of Software Engineering <span className="education-degree__status">Candidate</span></h3><p>College of Arts, Media and Technology, Chiang Mai University</p><p>Research focus: Windows OS latency and FPS player performance.</p></div>
+            </div>
+          </div>
+
+          <div className="education-work">
+            <div className="education-work__story" data-reveal>
+              <p className="education-work__eyebrow">UNDERGRADUATE WORK / INTERACTION → INSTALLATION</p>
+              <h3>A visitor completes the work.</h3>
+              <p>The early experiments invited people to interact with a physical object. The graduation work grew into an installation that people could move through and experience together. I kept developing that work over time.</p>
+              <p>It taught me to design for a real person in front of the work. Today I apply the same instinct to user flows, software, and AI: make the system respond in a way people can understand.</p>
+              <a href="https://www.instagram.com/p/Cy-xeAZvep4/" target="_blank" rel="noreferrer">See the 2023 pre-thesis post <span aria-hidden="true">↗</span></a>
+            </div>
+            <div className="education-gallery" aria-label="Media Art and Design project photographs">
+              <figure className="education-gallery__image education-gallery__image--main" data-reveal><img src="/images/education/graduation-installation.jpg" alt="Visitors gathered around a sculptural graduation installation in a red-lit room" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>01 / 04</span> Graduation installation · people in the space</figcaption></figure>
+              <figure className="education-gallery__image" data-reveal><img src="/images/education/touch-experiment.jpg" alt="A visitor touches a glowing plasma sphere in an early interactive art experiment" width="1080" height="1440" loading="lazy" decoding="async" /><figcaption><span>02 / 04</span> Pre-thesis · an invitation to touch</figcaption></figure>
+              <figure className="education-gallery__image" data-reveal><img src="/images/education/visitor-experiment.jpg" alt="Visitors looking at the interactive object inside a wooden enclosure" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>03 / 04</span> The experience, seen with visitors</figcaption></figure>
+              <figure className="education-gallery__image" data-reveal><img src="/images/education/installation-process.jpg" alt="White sculptural forms during construction of the installation" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>04 / 04</span> Form taking shape during the build</figcaption></figure>
+            </div>
           </div>
         </section>
 
