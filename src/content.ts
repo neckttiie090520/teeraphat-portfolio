@@ -84,7 +84,7 @@ export const content = {
   evidence: {
     title: 'Selected evidence',
     intro:
-      'A closer look at strong product UI and research data, followed by the rest of my work. Open any case note for the problem, decisions, and evidence.',
+      'Four projects lead the story: safety-first Windows tooling, a solo product, measured data collection, and a scouting workflow. Open a case note for the decisions and evidence behind each one.',
     featuredLabel: 'Featured work',
     indexLabel: 'More projects',
   },
@@ -244,12 +244,12 @@ export const featuredProjects: Project[] = [
   {
     id: 'khaosoi-research',
     index: '02',
-    title: 'Chiang Mai Khao Soi Review Research',
-    category: 'Data collection · Research',
+    title: 'Google Maps RPC Scraper',
+    category: 'Data platform · Research',
     summary:
-      'A public-review research workflow covering 11 Chiang Mai Khao Soi restaurants, with 22,664 reviews collected and an oral presentation accepted at FAB 2026.',
+      'A Google Maps review collection framework used in a Chiang Mai Khao Soi study: 22,664 reviews across 11 restaurants, with an oral presentation accepted at FAB 2026.',
     ownership:
-      'I built the review-collection workflow and developed the work into a research presentation.',
+      'I built the scraper framework and used it to develop a research dataset and presentation.',
     stack: ['Google Maps RPC scraper', 'Review analysis'],
     feature: 'research',
     facts: [
@@ -265,11 +265,11 @@ export const featuredProjects: Project[] = [
     ],
     caseStudy: {
       context:
-        'The research examines public Google Maps reviews for Khao Soi restaurants in Chiang Mai.',
+        'The scraper collects public Google Maps reviews; a Chiang Mai Khao Soi study put it to work on a bounded research question.',
       why:
         'A bounded dataset makes the local research question concrete enough to collect, compare, and present.',
       role:
-        'I built the review-collection workflow and prepared the research for presentation.',
+        'I built the RPC-based collection workflow and prepared the resulting research for presentation.',
       constraints:
         'The scope is limited to public review data from 11 restaurants; no private customer data or restaurant performance claims are presented.',
       decisions:
@@ -289,6 +289,38 @@ export const featuredProjects: Project[] = [
 ];
 
 export const projects: Project[] = [
+  {
+    id: 'clutchg-pc-optimizer',
+    index: '01',
+    title: 'ClutchG PC Optimizer',
+    category: 'Windows tooling · Evidence-led product',
+    summary:
+      'A Windows optimization tool that makes risk, evidence, and rollback visible before a player changes their system.',
+    ownership:
+      'Built the optimizer workflow, desktop GUI, documentation, and safety model around reversible changes.',
+    stack: ['Python', 'Windows', 'Desktop GUI', 'Research'],
+    facts: [
+      { value: '56', label: 'vetted tweaks' },
+      { value: '23', label: 'optimizer repositories studied' },
+      { value: '3', label: 'risk tiers' },
+    ],
+    links: [{ href: 'https://github.com/neckttiie090520/clutchg-pc-optimizer', label: 'View public repository' }],
+    caseStudy: {
+      context: 'Competitive players are offered many Windows tweaks with little explanation of evidence, risk, or how to undo them.',
+      why: 'An optimization tool should help a person understand the tradeoff before changing a real machine.',
+      role: 'Designed and built the research-backed Windows optimizer, its Python GUI, backup and rollback flow, and documentation.',
+      constraints: 'System changes can create instability. The project avoids disabling core Windows security protections and records changes for reversal.',
+      decisions: 'Study existing tools, classify 56 vetted tweaks by risk, and place hardware detection, profiles, documentation, backup, and restore into one guided workflow.',
+      build: [
+        'Reviewed 23 open-source optimizer repositories and more than 200 techniques.',
+        'Organized 56 vetted tweaks across 10 categories and three risk tiers.',
+        'Built a desktop GUI with hardware detection and profile recommendations.',
+        'Added automatic backup, change logging, and per-tweak rollback.',
+      ],
+      evidence: 'The public repository documents the research method, GUI, tweak encyclopedia, and restore workflow.',
+      outcome: 'A published, reversible Windows optimization tool. No FPS improvement is claimed as a measured result here.',
+    },
+  },
   {
     id: 'atk-firmwaremod',
     index: '04',
@@ -321,48 +353,6 @@ export const projects: Project[] = [
         'The project README documents GUI and CLI support, timeout analysis, backup, patching, and logging.',
       outcome:
         'README-supported capabilities are listed above; no device compatibility or reliability metrics are claimed.',
-    },
-  },
-  {
-    id: 'faii',
-    index: '03',
-    title: 'faii',
-    category: 'Community ecommerce',
-    summary:
-      'A storefront for Muang Kaew community’s handwoven Lampang cotton, with an admin area for managing the shop.',
-    ownership:
-      'Built the customer-facing storefront and admin experience.',
-    stack: ['Next.js', 'React', 'TypeScript', 'Supabase'],
-    images: [
-      { src: '/showcase/faii-home.png', alt: 'faii storefront homepage introducing the Lampang cotton makers', caption: 'The maker story at the entrance to the shop' },
-      { src: '/showcase/faii-product.png', alt: 'faii mobile product page with product photography and an ordering action', caption: 'A mobile product detail and order path' },
-    ],
-    links: [
-      {
-        href: 'https://github.com/neckttiie090520/faii-web',
-        label: 'View public repository',
-      },
-    ],
-    caseStudy: {
-      context:
-        'faii is an ecommerce storefront for Muang Kaew community handwoven cotton from Lampang.',
-      why:
-        'The project gives a community craft an online storefront and a connected way to manage shop content.',
-      role:
-        'Built the storefront and admin area using Next.js, React, TypeScript, and Supabase.',
-      constraints:
-        'The public store and management experience serve different tasks, so each needs a clear place in the product.',
-      decisions:
-        'Pair the customer-facing storefront with an admin workflow, using Supabase as part of the application stack.',
-      build: [
-        'Create the public ecommerce storefront.',
-        'Build an admin area for shop management.',
-        'Implement the product with Next.js, React, TypeScript, and Supabase.',
-      ],
-      evidence:
-        'The public source repository is available at github.com/neckttiie090520/faii-web.',
-      outcome:
-        'Delivered a storefront and admin area connecting the maker story, product catalog, and customer inquiry flow.',
     },
   },
   {
@@ -441,7 +431,7 @@ export const projects: Project[] = [
     ownership:
       'Built a scouting platform that organizes public competitive data for analysis.',
     stack: ['Next.js', 'Supabase', 'Gemini'],
-    links: [],
+    links: [{ href: 'https://github.com/neckttiie090520/valscout', label: 'Repository (access may be restricted)' }],
     caseStudy: {
       context:
         'Coaches and analysts use competitive information to prepare for Valorant matches.',
@@ -474,9 +464,6 @@ export const projects: Project[] = [
     ownership:
       'Built the assistant around everyday personal organization tasks.',
     stack: ['Next.js', 'Supabase', 'LINE API', 'Google Calendar'],
-    images: [
-      { src: '/showcase/line-assistant-menu.png', alt: 'LINE AI Secretary rich menu for chat, tasks, reminders, today, calendar, and dashboard', caption: 'The LINE menu that starts the assistant workflow' },
-    ],
     links: [],
     caseStudy: {
       context:

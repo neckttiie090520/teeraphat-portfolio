@@ -83,18 +83,18 @@ function HeroShowcase() {
   return (
     <div className="hero-showcase" data-entrance aria-label="Project previews">
       <figure className="hero-showcase__card hero-showcase__card--main">
+        <div className="hero-preview hero-preview--clutch" aria-hidden="true"><span>CLUTCHG / SYSTEM CONTROL</span><strong>Optimize with<br />evidence.</strong><div><b>56</b> vetted tweaks <i>↗</i></div></div>
+        <figcaption>ClutchG / Windows tooling</figcaption>
+      </figure>
+      <figure className="hero-showcase__card hero-showcase__card--younum">
         <img src="/showcase/younum-landing.webp" alt="YouNum product landing page" fetchPriority="high" />
-        <figcaption>YouNum / product from concept to release</figcaption>
+        <figcaption>YouNum / solo product</figcaption>
       </figure>
-      <figure className="hero-showcase__card hero-showcase__card--faii">
-        <img src="/showcase/faii-home.png" alt="faii cotton storefront" />
-        <figcaption>faii / commerce</figcaption>
+      <figure className="hero-showcase__card hero-showcase__card--research">
+        <div className="hero-preview hero-preview--data" aria-hidden="true"><span>GOOGLE MAPS / RESEARCH</span><strong>22,664</strong><small>reviews · 11 restaurants</small></div>
+        <figcaption>RPC scraper / measured data</figcaption>
       </figure>
-      <figure className="hero-showcase__card hero-showcase__card--line">
-        <img src="/showcase/line-assistant-menu.png" alt="LINE AI Secretary menu" />
-        <figcaption>LINE / assistant</figcaption>
-      </figure>
-      <p className="hero-showcase__note">Real products, real decisions.<br />Explore the stories below ↘</p>
+      <p className="hero-showcase__note">Product, data, and decisions.<br />Explore the stories below ↘</p>
     </div>
   );
 }
@@ -140,6 +140,24 @@ function CaseNotes({ project }: { project: Project }) {
 }
 
 function ProjectGraphic({ project }: { project: Project }) {
+  if (project.id === 'clutchg-pc-optimizer') {
+    return <figure className="case-visual case-visual--clutch" aria-label="ClutchG concept diagram showing evidence, risk, and rollback around 56 vetted Windows tweaks">
+      <div className="case-visual__top"><span>CLUTCHG / WINDOWS TOOLING</span><span>01—04</span></div>
+      <div className="case-visual__headline"><strong>56</strong><span>vetted tweaks<br />10 categories<br />3 risk tiers</span></div>
+      <div className="case-visual__steps"><span>01 / Evidence</span><span>02 / Risk</span><span>03 / Backup</span><span>04 / Restore</span></div>
+      <figcaption>Designed so every change has context and a way back.</figcaption>
+    </figure>;
+  }
+
+  if (project.id === 'valscout') {
+    return <figure className="case-visual case-visual--valscout" aria-label="Valscout concept diagram showing public competitive data organized into a scouting workflow">
+      <div className="case-visual__top"><span>VALSCOUT / TACTICAL INTELLIGENCE</span><span>04—04</span></div>
+      <div className="case-visual__map" aria-hidden="true"><i /><i /><i /><i /><b>A</b><b>B</b></div>
+      <div className="case-visual__steps"><span>Public data</span><span>→</span><span>Patterns</span><span>→</span><span>Scouting report</span></div>
+      <figcaption>From competitive data to a coach's next decision.</figcaption>
+    </figure>;
+  }
+
   if (project.feature === 'research') {
     return (
       <figure className="research-figure" aria-label="Research figures: 22,664 reviews across 11 restaurants, collected at 26 to 40 or more reviews per second">
@@ -295,8 +313,14 @@ function App() {
   const mainRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
-  const showcaseProjects = [...featuredProjects, ...projects.filter((project) => project.id === 'faii')];
-  const indexedProjects = projects.filter((project) => project.id !== 'faii');
+  const showcaseProjects = [
+    projects.find((project) => project.id === 'clutchg-pc-optimizer')!,
+    featuredProjects.find((project) => project.id === 'younum')!,
+    featuredProjects.find((project) => project.id === 'khaosoi-research')!,
+    projects.find((project) => project.id === 'valscout')!,
+  ].map((project, index) => ({ ...project, index: String(index + 1).padStart(2, '0') }));
+  const indexedProjects = projects.filter((project) => !['clutchg-pc-optimizer', 'valscout'].includes(project.id))
+    .map((project, index) => ({ ...project, index: String(index + 5).padStart(2, '0') }));
 
   useEffect(() => {
     let frame = 0;
@@ -436,7 +460,12 @@ function App() {
               <span className="section-index">01 / INTRODUCTION</span>
               <span>{content.role}</span>
             </p>
-            <TypingHeadline reduceMotion={reduceMotion} />
+            <div className="hero__identity">
+              <TypingHeadline reduceMotion={reduceMotion} />
+              <div className="hero__avatar" data-entrance>
+                <img src="/images/teeraphat-avatar.png" alt="Illustrated avatar of Teeraphat Raksawong" />
+              </div>
+            </div>
             <p className="hero__nickname" data-entrance>(Necktie)</p>
             <p className="hero__intro" data-entrance>
               I move from product questions to <span className="hero__sketch-word">working software
@@ -511,7 +540,7 @@ function App() {
           </div>
 
           <div className="project-index">
-            <p className="project-group-label">{content.evidence.indexLabel}<span>06 additional projects</span></p>
+            <p className="project-group-label">{content.evidence.indexLabel}<span>{String(indexedProjects.length).padStart(2, '0')} additional projects</span></p>
             <div className="project-index__list">
               {indexedProjects.map((project) => <ProjectIndexRow key={project.id} project={project} />)}
             </div>
