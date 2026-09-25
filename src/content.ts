@@ -291,7 +291,7 @@ export const featuredProjects: Project[] = [
 export const projects: Project[] = [
   {
     id: 'atk-firmwaremod',
-    index: '03',
+    index: '04',
     title: 'ATK-FIRMWAREMOD',
     category: 'Firmware maintenance tooling',
     summary:
@@ -325,7 +325,7 @@ export const projects: Project[] = [
   },
   {
     id: 'faii',
-    index: '04',
+    index: '03',
     title: 'faii',
     category: 'Community ecommerce',
     summary:
