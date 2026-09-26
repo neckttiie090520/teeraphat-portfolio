@@ -14,6 +14,7 @@ import {
 } from './content';
 import { capabilityGroups, capabilitySpotlight } from './capabilities';
 import BookReader from './BookReader';
+import { Carousel } from './Carousel';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -306,7 +307,7 @@ function ProjectIndexRow({ project }: { project: Project }) {
       <div className="project-index__heading">
         <p className="project-card__category">{project.category}</p>
         <h3 id={'project-' + project.id}>{project.title}</h3>
-        {project.images?.length ? <EvidenceGallery project={project} compact /> : project.visual ? (
+        {project.id === 'actually-faster-book' ? <Carousel corner={3} /> : project.images?.length ? <EvidenceGallery project={project} compact /> : project.visual ? (
           <figure className="project-flow" aria-label={`${project.title} process: ${project.visual.steps.join(', ')}`}>
             <span className="project-flow__label">{project.visual.label}</span>
             <strong className="project-flow__headline">{project.visual.headline}</strong>
@@ -716,6 +717,13 @@ function App() {
         onClickCapture={(event) => {
           const image = event.target;
           if (!(image instanceof HTMLImageElement) || !image.hasAttribute('data-previewable')) return;
+          const carousel = image.closest('.car-track');
+          if (carousel?.getAttribute('data-suppress-preview') === 'true') {
+            carousel.removeAttribute('data-suppress-preview');
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+          }
           event.preventDefault();
           event.stopPropagation();
           setImagePreview({ src: image.currentSrc || image.src, alt: image.alt });
