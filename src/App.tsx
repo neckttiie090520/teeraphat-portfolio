@@ -877,15 +877,16 @@ function App() {
               </div>
             </div>
 
+            <div className="creative-video-heading" data-reveal><span>SELECTED MOVING-IMAGE WORK</span><span>01 FEATURED CUT / 03 MORE STORIES</span></div>
             <div className="creative-video-list" aria-label="Selected film and video work">
               {[
                 { id: 'Sr2HrU7feqQ', type: 'PARODY MUSIC VIDEO', title: 'U Sick Achoo', detail: 'A parody music video for TangBadVoice, shaped from direction through the final edit.', role: 'Director · Editor — Teeraphat Raksawong' },
                 { id: 'HSGF20gdvDI', type: 'MOVING IMAGE / AD', title: 'Another Place', detail: 'A headphone advertisement made for a moving-image course.', role: 'Course project · moving-image advertisement' },
                 { id: 'i7xiiDgpHxI', type: 'VLOG / 2020', title: 'Vlog film · 01', detail: 'Camera and editing for a vlog.', role: 'Camera · Editor' },
                 { id: 'RJeFe-Ae7PE', type: 'VLOG / 2021', title: 'Vlog film · 02', detail: 'Camera and editing for a second vlog.', role: 'Camera · Editor' },
-              ].map((film) => (
-                <a className="creative-video" href={`https://www.youtube.com/watch?v=${film.id}`} target="_blank" rel="noreferrer" key={film.id} data-reveal aria-label={`Watch ${film.type}: ${film.title} on YouTube`}>
-                  <span className="creative-video__image"><img data-previewable src={`https://i.ytimg.com/vi/${film.id}/hqdefault.jpg`} alt={`${film.title} video thumbnail`} loading="lazy" decoding="async" /></span>
+              ].map((film, index) => (
+                <a className={`creative-video creative-video--${index === 0 ? 'hero' : index === 1 ? 'support' : 'short'}`} href={`https://www.youtube.com/watch?v=${film.id}`} target="_blank" rel="noreferrer" key={film.id} data-reveal aria-label={`Watch ${film.type}: ${film.title} on YouTube`}>
+                  <span className="creative-video__image"><img data-previewable src={`https://i.ytimg.com/vi/${film.id}/maxresdefault.jpg`} alt={`${film.title} video thumbnail`} loading="lazy" decoding="async" /></span>
                   <span className="creative-video__copy"><span>{film.type}</span><strong>{film.title}</strong><span>{film.detail}</span><small>{film.role}</small></span>
                   <span className="creative-video__arrow" aria-hidden="true">↗</span>
                 </a>
