@@ -12,6 +12,7 @@ import {
   type ChapterId,
   type Project,
 } from './content';
+import { capabilityGroups, capabilitySpotlight } from './capabilities';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -746,6 +747,14 @@ function App() {
         });
       });
 
+      gsap.fromTo('.capability-universe__tag', { y: -18 }, {
+        y: 0,
+        duration: 0.55,
+        stagger: 0.025,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.capability-universe', start: 'top 86%', once: true },
+      });
+
       gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
         gsap.from(element, {
           y: 16,
@@ -863,6 +872,7 @@ function App() {
               <h3>A visitor completes the work.</h3>
               <p>The early experiments invited people to interact with a physical object. The graduation work grew into an installation that people could move through and experience together. I kept developing that work over time.</p>
               <p>It taught me to design for a real person in front of the work. Today I apply the same instinct to user flows, software, and AI: make the system respond in a way people can understand.</p>
+              <p className="hand-note hand-note--education">What happens if someone touches it? ↗</p>
               <a href="https://www.instagram.com/p/Cy-xeAZvep4/" target="_blank" rel="noreferrer">See the 2023 pre-thesis post <span aria-hidden="true">↗</span></a>
             </div>
             <div className="education-gallery" aria-label="Media Art and Design project photographs">
@@ -878,6 +888,7 @@ function App() {
               <p className="education-work__eyebrow">CREATIVE PRACTICE / FILM & MUSIC</p>
               <h3 id="creative-practice-title">I learned to tell a story before I built software.</h3>
               <p>Outside interactive installations, I worked behind the camera and made music. Directing, shooting, editing, songwriting, and covers taught me how to shape a sequence for people who will actually watch or listen. That sense of pacing still informs how I present a product and guide someone through it.</p>
+              <p className="hand-note hand-note--creative">There is always another way to tell it. ↘</p>
             </div>
 
             <div className="creative-practice__features">
@@ -978,7 +989,7 @@ function App() {
             <span className="story-bridge__hint">KEEP SCROLLING ↓</span>
           </div>
           <div className="story-bridge__body">
-            <h2 id="story-bridge-title" data-reveal>I begin with<br /><em>the question.</em></h2>
+            <div className="story-bridge__thought" data-reveal><h2 id="story-bridge-title">I begin with<br /><em>the question.</em></h2><p className="hand-note hand-note--bridge">Wait, what problem are we solving?</p></div>
             <div className="story-bridge__aside" data-reveal>
               <div className="story-bridge__motion-panel">
                 <RolodexStatement reduceMotion={reduceMotion} />
@@ -1043,6 +1054,7 @@ function App() {
               <p className="point-of-view__eyebrow">{content.approach.pointOfView.eyebrow}</p>
               <h3>{content.approach.pointOfView.title}</h3>
               <p>{content.approach.pointOfView.body}</p>
+              <p className="hand-note hand-note--belief">Make it useful. Then see if it worked.</p>
             </div>
             <ol className="point-of-view__principles">
               {content.approach.pointOfView.principles.map((principle, index) => (
@@ -1056,24 +1068,34 @@ function App() {
           </div>
 
           <div className="capabilities-section" id="capability-map">
-            <div className="capability-map__intro">
-              <p className="capabilities-section__label">WHAT I BUILD WITH</p>
-              <h3>Across the whole system.</h3>
-              <p>AI-native engineering is my method. The work also demands product judgment, data, software, systems, security thinking, and the ability to keep it running.</p>
+            <div className="capability-universe__intro" data-reveal>
+              <p className="capabilities-section__label">THE THINGS I BUILD / DESIGN / ENGINEER / CREATE</p>
+              <h3>One person.<br /><em>Many disciplines.</em></h3>
+              <p>Media art led me into interaction design, software, AI, agents, product systems, and creative technology. My way of working connects these fields instead of treating them as separate careers.</p>
             </div>
-            <ol className="capability-map">
-              {content.approach.skills.map((group, index) => (
-                <li className="capability-map__layer" key={group.title} data-reveal>
-                  <span className="capability-map__index">{String(index + 1).padStart(2, '0')}</span>
-                  <div className="capability-map__main">
-                    <h4>{group.title}</h4>
-                    <p>{group.summary}</p>
-                    <ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
-                  </div>
-                  <a className="capability-map__proof" href={group.proofHref}>{group.proof}<span aria-hidden="true"> ↗</span></a>
-                </li>
+            <div className="capability-universe" aria-label={`${capabilitySpotlight.length} selected capabilities`}>
+              {capabilitySpotlight.map((capability, index) => (
+                <span className={`capability-universe__tag capability-universe__tag--${capability.size}`} style={{ '--skill-index': index } as CSSProperties} key={capability.label}>{capability.label}</span>
               ))}
-            </ol>
+            </div>
+            <div className="capability-catalog__heading" data-reveal>
+              <div><p className="capabilities-section__label">EXPLORE THE FULL MAP</p><h4>Twenty-seven areas of practice.</h4></div>
+              <p>Open a discipline to see the full set. <span>{capabilityGroups.reduce((count, group) => count + group.items.length, 0)} labels across {capabilityGroups.length} areas.</span></p>
+            </div>
+            <div className="capability-catalog">
+              {capabilityGroups.map((group) => (
+                <details className="capability-catalog__group" key={group.id}>
+                  <summary>
+                    <span className="capability-catalog__number">{group.id}</span>
+                    <span className="capability-catalog__summary"><strong>{group.title}</strong><span>{group.items.slice(0, 3).join(' · ')}</span></span>
+                    <span className="capability-catalog__count">{group.items.length} skills</span>
+                    <span className="capability-catalog__expand" aria-hidden="true">+</span>
+                  </summary>
+                  <ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
+                </details>
+              ))}
+            </div>
+            <p className="capability-universe__footer">From business systems to interactive media. <span>Same curiosity, different materials.</span></p>
           </div>
 
           <p className="language-note">{content.approach.language}</p>
