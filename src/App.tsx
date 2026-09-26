@@ -77,31 +77,12 @@ function TypingHeadline({ reduceMotion }: { reduceMotion: boolean | null }) {
 
 const rotatingWords = ['products.', 'systems.', 'proof.'];
 
-function RolodexStatement({ reduceMotion }: { reduceMotion: boolean | null }) {
-  const wordsRef = useRef<HTMLSpanElement>(null);
-
-  useGSAP(() => {
-    if (reduceMotion || !wordsRef.current) return;
-    const words = gsap.utils.toArray<HTMLElement>('.rolodex__word', wordsRef.current);
-    gsap.set(words, { visibility: 'visible', opacity: 0, rotationX: 90, transformOrigin: '50% 100%' });
-    gsap.set(words[0], { opacity: 1, rotationX: 0 });
-    const sequence = gsap.timeline({ repeat: -1, repeatDelay: 0.25 });
-    words.forEach((word, index) => {
-      const next = words[(index + 1) % words.length];
-      sequence.to({}, { duration: 2.1 });
-      sequence.to(word, { rotationX: -90, opacity: 0, duration: 0.48, ease: 'power2.in', transformOrigin: '50% 0%' });
-      sequence.fromTo(next,
-        { rotationX: 90, opacity: 0, transformOrigin: '50% 100%' },
-        { rotationX: 0, opacity: 1, duration: 0.55, ease: 'power3.out' },
-        '<0.02',
-      );
-    });
-  }, { scope: wordsRef, dependencies: [reduceMotion], revertOnUpdate: true });
-
+function RolodexStatement() {
   return (
     <p className="rolodex" aria-label="I build products, systems, and proof.">
       <span aria-hidden="true">I build </span>
-      <span className="rolodex__stage" aria-hidden="true" ref={wordsRef}>
+      <span className="rolodex__stage" aria-hidden="true">
+        <span className="rolodex__measure">products.</span>
         {rotatingWords.map((word, index) => <span key={word} className={'rolodex__word' + (index === 0 ? ' rolodex__word--first' : '')}>{word}</span>)}
       </span>
     </p>
@@ -962,7 +943,7 @@ function App() {
             <div className="story-bridge__thought" data-reveal><h2 id="story-bridge-title">I begin with<br /><em>the question.</em></h2><p className="hand-note hand-note--bridge">Wait, what problem are we solving?</p></div>
             <div className="story-bridge__aside" data-reveal>
               <div className="story-bridge__motion-panel">
-                <RolodexStatement reduceMotion={reduceMotion} />
+                <RolodexStatement />
                 <p>What does the business need to achieve, and who has authority over the result? My AIDLC turns that question into a scoped product, a governed AI workflow, and working software.</p>
               </div>
               <a href="#evidence" className="story-bridge__cta">See the work <span aria-hidden="true">↘</span></a>

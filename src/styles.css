@@ -2776,10 +2776,7 @@ p {
 @keyframes border-beam { to { --beam-angle: 360deg; } }
 .story-bridge__aside p:not(.rolodex) { max-width: 35ch; font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.45; }
 .rolodex {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  column-gap: 0.25em;
+  display: block;
   margin: 0 0 1.25rem;
   font-size: clamp(1.25rem, 2vw, 1.9rem);
   font-weight: 650;
@@ -2789,15 +2786,38 @@ p {
 .rolodex__stage {
   position: relative;
   display: inline-block;
-  width: 8.5ch;
-  height: 1.25em;
+  margin-left: .24em;
+  vertical-align: baseline;
+  font-family: var(--font-hand);
+  font-size: 1.16em;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
   text-align: left;
   perspective: 600px;
   transform-style: preserve-3d;
   overflow: visible;
 }
-.rolodex__word { position: absolute; inset: 0 auto auto 0; display: block; white-space: nowrap; backface-visibility: hidden; transform-style: preserve-3d; visibility: hidden; }
-.rolodex__word--first { visibility: visible; }
+.rolodex__measure { visibility: hidden; white-space: nowrap; }
+.rolodex__word {
+  position: absolute;
+  inset: 0 auto auto 0;
+  display: block;
+  white-space: nowrap;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  opacity: 0;
+  animation: rolodex-turn 9s cubic-bezier(.16, 1, .3, 1) infinite both;
+}
+.rolodex__word--first { animation-delay: -.7s; }
+.rolodex__word:nth-child(3) { animation-delay: 2.3s; }
+.rolodex__word:nth-child(4) { animation-delay: 5.3s; }
+@keyframes rolodex-turn {
+  0%, 4% { opacity: 0; transform: rotateX(90deg); }
+  8%, 28% { opacity: 1; transform: rotateX(0); }
+  33%, 100% { opacity: 0; transform: rotateX(-90deg); }
+}
 .story-bridge__progress { height: 2px; margin-bottom: -2rem; background: rgb(255 255 255 / 0.17); }
 .story-bridge__progress-fill { display: block; width: 100%; height: 100%; background: var(--accent); transform-origin: left center; }
 .story-bridge__cta {
@@ -3126,6 +3146,7 @@ p {
   .story-bridge h2 em { filter: none; }
   .story-bridge__motion-panel::after { animation: none; display: none; }
   .rolodex__word:not(.rolodex__word--first) { display: none; }
+  .rolodex__word--first { animation: none; opacity: 1; transform: none; }
   .story-bridge__progress-fill { transform: none !important; }
   .story-bridge__cta span,
   .story-bridge__down span:first-child { transition: none; }
