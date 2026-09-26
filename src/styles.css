@@ -3792,6 +3792,13 @@ p {
 .portfolio-view button[aria-pressed="true"],
 .portfolio-view button:hover { background: var(--ink); color: var(--page); }
 .portfolio-view button:hover { transform: translateY(-2px); }
+.portfolio-view-return { position: fixed; z-index: 29; left: max(1rem, env(safe-area-inset-left)); bottom: max(1rem, env(safe-area-inset-bottom)); display: grid; gap: .15rem; min-height: 3rem; padding: .5rem .8rem; border: 1px solid var(--ink); background: var(--page); color: var(--ink); box-shadow: 3px 3px 0 rgb(24 25 23 / .11); cursor: pointer; font: inherit; text-align: left; transition: transform 220ms cubic-bezier(.16, 1, .3, 1), background-color 180ms ease, color 180ms ease; }
+.portfolio-view-return > span { color: var(--accent); font-size: .58rem; font-weight: 760; letter-spacing: .07em; }
+.portfolio-view-return strong { font-size: .75rem; line-height: 1.15; }
+.portfolio-view-return:hover,
+.portfolio-view-return:focus-visible { transform: translateY(-3px); background: var(--ink); color: var(--page); }
+.portfolio-view-return:hover > span,
+.portfolio-view-return:focus-visible > span { color: var(--accent); }
 .page-mascot__topline { display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; }
 .page-mascot__eyebrow { color: var(--accent); font-size: .62rem; font-weight: 760; letter-spacing: .07em; line-height: 1.25; }
 .page-mascot__dismiss {
@@ -3834,6 +3841,7 @@ p {
   .page-mascot__bubble:not(.is-open) { display: block; }
   .page-mascot__bubble::after { display: block; }
   .page-mascot__guide { min-height: 1.7rem; font-size: .57rem; }
+  .portfolio-view-return { left: max(.7rem, env(safe-area-inset-left)); bottom: max(.7rem, env(safe-area-inset-bottom)); }
 }
 
 .project-links a,
@@ -3861,6 +3869,7 @@ p {
   .page-mascot__dismiss { transition: none; }
   .page-mascot__choices button,
   .portfolio-view button { transition: none; }
+  .portfolio-view-return { transition: none; }
   .book-reader[open],
   .book-reader[open]::backdrop { animation: none; }
 }

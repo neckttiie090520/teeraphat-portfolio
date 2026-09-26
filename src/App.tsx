@@ -798,6 +798,15 @@ function App() {
         </div>
       </header>
 
+      {viewMode === 'engineering' && <button
+        className="portfolio-view-return"
+        type="button"
+        onClick={() => {
+          chooseView('everything');
+          window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: reduceMotion ? 'instant' : 'smooth' }));
+        }}
+      ><span>ENGINEERING VIEW</span><strong>Back to full story <span aria-hidden="true">↖</span></strong></button>}
+
       <main id="main" className="site-main" ref={mainRef}>
         <section id="intro" className="hero" data-chapter="intro" aria-labelledby="hero-title">
           <div className="hero__copy">
