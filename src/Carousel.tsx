@@ -4,9 +4,9 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
    Bencho's pictures do not travel with its code: these are
    rendered pages from Teeraphat's own finished book. */
 const SHOTS = [
-  { name: 'cover', src: '/showcase/actually-faster-cover.webp', alt: 'Cover of the 158-page book Actually Faster?', caption: 'The finished 6 × 9 inch book cover' },
-  { name: 'audit', src: '/showcase/actually-faster-audit-funnel.webp', alt: 'Book infographic showing the candidate-to-implementation audit funnel', caption: 'Source-grounded figure: 200+ candidates → 45 screened → 44 verified contracts' },
-  { name: 'risk', src: '/showcase/actually-faster-risk-framework.webp', alt: 'Book page showing the risk classification framework for Windows changes', caption: 'Risk framework drawn as an SVG figure in the book' },
+  { name: 'cover', src: '/book-full/page-001.webp', alt: 'Cover of the 158-page book Actually Faster?', caption: 'The finished 6 × 9 inch book cover' },
+  { name: 'audit', src: '/book-full/page-028.webp', alt: 'Book infographic showing the candidate-to-implementation audit funnel', caption: 'Source-grounded figure: 200+ candidates → 45 screened → 44 verified contracts' },
+  { name: 'risk', src: '/book-full/page-040.webp', alt: 'Book page showing the risk classification framework for Windows changes', caption: 'Risk framework drawn as an SVG figure in the book' },
 ];
 
 /* ══ Carousel ═════════════════════════════════════════════
@@ -55,8 +55,8 @@ const mix = (a: number, b: number, t: number) => a + (b - a) * t;
    cent off the height. These are photographs with nothing at
    their top or bottom edge, and the card reading as a card
    rather than as a slat is worth the last few rows. */
-const CARD_W = 206;
-const CARD_H = 292;
+const CARD_W = 330;
+const CARD_H = 495;
 
 /* ── the frame, and it is only a frame ─────────────────────
    No box, no clip, no mask. Nothing here hides its overflow,
@@ -94,9 +94,9 @@ const CARD_H = 292;
    which is the thing the ResizeObserver on the wall and the
    overlay would both do. */
 const STAGE_W = 476;
-const STAGE_H = 340;
+const STAGE_H = 545;
 
-const ORBIT = 138;
+const ORBIT = 150;
 /* ── how much smaller the back of the ring is ──────────────
    Read as a percentage of the way to half size: 100 puts the
    card at the back at 0.5, which is where this sits. The knob
@@ -235,13 +235,10 @@ const spotOf = (i: number, turn: number, orbit: number, depth: number): Spot => 
 };
 
 const write = (el: HTMLElement, sp: Spot, angle: number) => {
-  /* NO OPACITY IS WRITTEN HERE. The cards used to fade with
-     distance, which meant dragging dimmed and lit every one of
-     them — the whole block pulsed on a gesture that should
-     only move things round. Size, lean and paint order say
-     which is in front; none of them touch the picture. */
+  /* Recede the side pages so the full-size reading page wins. */
   el.style.transform = `translate(-50%, -50%) translate(${sp.x.toFixed(2)}px, ${sp.y.toFixed(2)}px) rotate(${angle}deg) scale(${sp.s.toFixed(4)})`;
   el.style.zIndex = String(sp.z);
+  el.style.opacity = String(mix(0.48, 1, sp.z / 100));
 };
 
 const out = (t: number) => 1 - (1 - t) ** 4;

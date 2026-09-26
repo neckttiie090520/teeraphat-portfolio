@@ -4044,7 +4044,7 @@ img[data-previewable]:focus-visible { outline: 3px solid var(--accent); outline-
    as one unit so the geometry and pointer response stay intact. */
 .book-carousel {
   width: 100%;
-  max-width: 28rem;
+  max-width: 32rem;
   margin-top: 1.2rem;
 }
 .book-carousel .car {
