@@ -880,6 +880,7 @@ function App() {
 
             <div className="creative-video-list" aria-label="Selected film and video work">
               {[
+                { id: 'Sr2HrU7feqQ', type: 'PARODY MUSIC VIDEO', title: 'U Sick Achoo', detail: 'A parody music video for TangBadVoice, shaped from direction through the final edit.', role: 'Director · Editor — Teeraphat Raksawong' },
                 { id: 'HSGF20gdvDI', type: 'MOVING IMAGE / AD', title: 'Another Place', detail: 'A headphone advertisement made for a moving-image course.', role: 'Course project · moving-image advertisement' },
                 { id: 'i7xiiDgpHxI', type: 'VLOG / 2020', title: 'Vlog film · 01', detail: 'Camera and editing for a vlog.', role: 'Camera · Editor' },
                 { id: 'RJeFe-Ae7PE', type: 'VLOG / 2021', title: 'Vlog film · 02', detail: 'Camera and editing for a second vlog.', role: 'Camera · Editor' },
