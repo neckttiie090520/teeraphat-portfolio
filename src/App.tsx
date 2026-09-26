@@ -435,7 +435,7 @@ type MascotMoment = { eyebrow: string; body: string; target?: string; action?: s
 
 const mascotMoments: Record<ChapterId, MascotMoment[]> = {
   intro: [
-    { eyebrow: 'HELLO, HUMAN', body: "I’m CRT. This is Teeraphat Raksawong — Necktie. He turns fuzzy ideas into working systems. Come meet him.", target: '#experience', action: 'Meet Necktie' },
+    { eyebrow: 'HELLO, HUMAN', body: "I’m CRT, Necktie’s tiny guide. He turns fuzzy ideas into working systems.", target: '#experience', action: 'Meet Necktie' },
     { eyebrow: 'A LITTLE BACKSTORY', body: 'Before software, Necktie made interactive art. There is a graduation gallery just below the introduction.', target: '#education', action: 'See where it began' },
   ],
   experience: [
