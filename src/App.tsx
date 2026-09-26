@@ -553,12 +553,32 @@ function App() {
   const [activeChapter, setActiveChapter] = useState<ChapterId>('intro');
   const [viewMode, setViewMode] = useState<PortfolioView>('everything');
   const [hasChosenView, setHasChosenView] = useState(false);
+  const [transitionTo, setTransitionTo] = useState<PortfolioView | null>(null);
   const [imagePreview, setImagePreview] = useState<ImagePreviewData | null>(null);
   const mainRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const imagePreviewRef = useRef<HTMLDialogElement>(null);
+  const viewTransitionTimers = useRef<number[]>([]);
   const reduceMotion = useReducedMotion();
-  const chooseView = (view: PortfolioView) => { setViewMode(view); setHasChosenView(true); };
+  const chooseView = (view: PortfolioView, returnToStart = false) => {
+    if (transitionTo || (hasChosenView && viewMode === view)) return;
+    setHasChosenView(true);
+    viewTransitionTimers.current.forEach(window.clearTimeout);
+    setTransitionTo(view);
+    if (reduceMotion) {
+      setViewMode(view);
+      if (returnToStart) window.scrollTo({ top: 0, behavior: 'instant' });
+      viewTransitionTimers.current = [window.setTimeout(() => setTransitionTo(null), 1800)];
+      return;
+    }
+    viewTransitionTimers.current = [
+      window.setTimeout(() => {
+        setViewMode(view);
+        if (returnToStart) window.scrollTo({ top: 0, behavior: 'instant' });
+      }, 450),
+      window.setTimeout(() => setTransitionTo(null), 1500),
+    ];
+  };
   const featuredOrder = viewMode === 'engineering'
     ? ['nexora', 'clutchg-pc-optimizer', 'hotel-document-intelligence', 'khaosoi-research', 'younum']
     : ['nexora', 'younum', 'khaosoi-research', 'clutchg-pc-optimizer', 'hotel-document-intelligence'];
@@ -574,6 +594,8 @@ function App() {
   const visibleCapabilitySpotlight = viewMode === 'engineering'
     ? capabilitySpotlight.filter((item) => !['Music Production', 'Vlogging', 'Creative Technology', 'Video Production', 'Photography', 'Songwriting', 'Singing', 'Interactive Art', 'Cinematography', 'Motion Graphics', 'Content Creation', 'Workshop Facilitation', 'Documentary Direction'].includes(item.label))
     : capabilitySpotlight;
+
+  useEffect(() => () => viewTransitionTimers.current.forEach(window.clearTimeout), []);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
@@ -759,6 +781,13 @@ function App() {
         }}
       >
       <a className="skip-link" href="#main">Skip to main content</a>
+      {transitionTo && <div className={'view-transition' + (reduceMotion ? ' view-transition--reduced' : '')} role="status" aria-live="polite">
+        <div className="view-transition__copy">
+          <span className="view-transition__eyebrow">NEXIE / CHANGING THE LENS</span>
+          <div className="view-transition__title"><span aria-hidden="true">{transitionTo === 'engineering' ? '02' : '01'}</span><strong>{transitionTo === 'engineering' ? 'The engineering story.' : 'The full story.'}</strong></div>
+          <p>{transitionTo === 'engineering' ? 'The systems, decisions, and evidence behind the work.' : 'The person, the practice, and every part of the journey.'}</p>
+        </div>
+      </div>}
       <header className="site-header">
         <div className="site-header__inner">
           <a className="wordmark" href="#intro" aria-label="Teeraphat Raksawong, back to introduction">
@@ -801,10 +830,7 @@ function App() {
       {viewMode === 'engineering' && <button
         className="portfolio-view-return"
         type="button"
-        onClick={() => {
-          chooseView('everything');
-          window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: reduceMotion ? 'instant' : 'smooth' }));
-        }}
+        onClick={() => chooseView('everything', true)}
       ><span>ENGINEERING VIEW</span><strong>Back to full story <span aria-hidden="true">↖</span></strong></button>}
 
       <main id="main" className="site-main" ref={mainRef}>
