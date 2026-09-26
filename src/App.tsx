@@ -40,7 +40,7 @@ function EvidenceGallery({ project, compact = false }: { project: Project; compa
       {!compact && <p className="evidence-gallery__intro">Scroll through the work <span>{String(images.length).padStart(2, '0')} views ↓</span></p>}
       {images.map((item, index) => (
         <figure key={item.src} className="evidence-gallery__scene">
-          <img src={item.src} alt={item.alt} loading="lazy" />
+          <img data-previewable src={item.src} alt={item.alt} loading="lazy" />
           <figcaption><span>{String(index + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</span>{item.caption}</figcaption>
         </figure>
       ))}
@@ -417,7 +417,7 @@ function BookPreview() {
         <div className={'book-reader__pages' + (isZoomed ? ' book-reader__pages--zoomed' : '')} aria-label="Read the first 22 pages of Actually Faster?">
           {Array.from({ length: 22 }, (_, index) => (
             <figure className="book-reader__page" key={index}>
-              <img src={`/book-preview/page-${String(index + 1).padStart(2, '0')}.webp`} alt={`Actually Faster? preview page ${index + 1} of 22`} width="864" height="1296" loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
+              <img data-previewable src={`/book-preview/page-${String(index + 1).padStart(2, '0')}.webp`} alt={`Actually Faster? preview page ${index + 1} of 22`} width="864" height="1296" loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
               <figcaption>{String(index + 1).padStart(2, '0')} / 22</figcaption>
             </figure>
           ))}
@@ -432,6 +432,7 @@ function BookPreview() {
 }
 
 type MascotMoment = { eyebrow: string; body: string; target?: string; action?: string };
+type ImagePreviewData = { src: string; alt: string };
 
 const mascotMoments: Record<ChapterId, MascotMoment[]> = {
   intro: [
@@ -642,8 +643,10 @@ function PageMascot({ activeChapter, reduceMotion }: {
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeChapter, setActiveChapter] = useState<ChapterId>('intro');
+  const [imagePreview, setImagePreview] = useState<ImagePreviewData | null>(null);
   const mainRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const imagePreviewRef = useRef<HTMLDialogElement>(null);
   const reduceMotion = useReducedMotion();
   const showcaseProjects = [
     featuredProjects.find((project) => project.id === 'nexora')!,
@@ -654,6 +657,21 @@ function App() {
   ].map((project, index) => ({ ...project, index: String(index + 1).padStart(2, '0') }));
   const indexedProjects = projects.filter((project) => project.id !== 'clutchg-pc-optimizer')
     .map((project, index) => ({ ...project, index: String(index + 6).padStart(2, '0') }));
+
+  useEffect(() => {
+    const dialog = imagePreviewRef.current;
+    if (!dialog) return;
+    if (imagePreview && !dialog.open) dialog.showModal();
+    if (!imagePreview && dialog.open) dialog.close();
+  }, [imagePreview]);
+
+  useEffect(() => {
+    document.querySelectorAll<HTMLImageElement>('img[data-previewable]').forEach((image) => {
+      image.tabIndex = 0;
+      image.setAttribute('role', 'button');
+      image.setAttribute('aria-label', `Preview image: ${image.alt || 'Portfolio image'}`);
+    });
+  }, []);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -787,6 +805,23 @@ function App() {
 
   return (
     <MotionConfig reducedMotion="user">
+      <div
+        className="app-shell"
+        onClickCapture={(event) => {
+          const image = event.target;
+          if (!(image instanceof HTMLImageElement) || !image.hasAttribute('data-previewable')) return;
+          event.preventDefault();
+          event.stopPropagation();
+          setImagePreview({ src: image.currentSrc || image.src, alt: image.alt });
+        }}
+        onKeyDownCapture={(event) => {
+          const image = event.target;
+          if (!(image instanceof HTMLImageElement) || !image.hasAttribute('data-previewable') || (event.key !== 'Enter' && event.key !== ' ')) return;
+          event.preventDefault();
+          event.stopPropagation();
+          setImagePreview({ src: image.currentSrc || image.src, alt: image.alt });
+        }}
+      >
       <a className="skip-link" href="#main">Skip to main content</a>
       <header className="site-header">
         <div className="site-header__inner">
@@ -838,7 +873,7 @@ function App() {
               <TypingHeadline reduceMotion={reduceMotion} />
               <div className="hero__signature" data-entrance>
                 <div className="hero__avatar">
-                  <img src="/images/teeraphat-avatar.png" alt="Illustrated avatar of Teeraphat Raksawong" />
+                  <img data-previewable src="/images/teeraphat-avatar.png" alt="Illustrated avatar of Teeraphat Raksawong" />
                 </div>
                 <p className="hero__nickname">(Necktie)</p>
               </div>
@@ -893,10 +928,10 @@ function App() {
               <a href="https://www.instagram.com/p/Cy-xeAZvep4/" target="_blank" rel="noreferrer">See the 2023 pre-thesis post <span aria-hidden="true">↗</span></a>
             </div>
             <div className="education-gallery" aria-label="Media Art and Design project photographs">
-              <figure className="education-gallery__image education-gallery__image--main" data-reveal><img src="/images/education/graduation-installation.jpg" alt="Visitors gathered around a sculptural graduation installation in a red-lit room" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>01 / 04</span> Graduation installation · people in the space</figcaption></figure>
-              <figure className="education-gallery__image" data-reveal><img src="/images/education/touch-experiment.jpg" alt="A visitor touches a glowing plasma sphere in an early interactive art experiment" width="1080" height="1440" loading="lazy" decoding="async" /><figcaption><span>02 / 04</span> Pre-thesis · an invitation to touch</figcaption></figure>
-              <figure className="education-gallery__image" data-reveal><img src="/images/education/visitor-experiment.jpg" alt="Visitors looking at the interactive object inside a wooden enclosure" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>03 / 04</span> The experience, seen with visitors</figcaption></figure>
-              <figure className="education-gallery__image" data-reveal><img src="/images/education/installation-process.jpg" alt="White sculptural forms during construction of the installation" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>04 / 04</span> Form taking shape during the build</figcaption></figure>
+              <figure className="education-gallery__image education-gallery__image--main" data-reveal><img data-previewable src="/images/education/graduation-installation.jpg" alt="Visitors gathered around a sculptural graduation installation in a red-lit room" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>01 / 04</span> Graduation installation · people in the space</figcaption></figure>
+              <figure className="education-gallery__image" data-reveal><img data-previewable src="/images/education/touch-experiment.jpg" alt="A visitor touches a glowing plasma sphere in an early interactive art experiment" width="1080" height="1440" loading="lazy" decoding="async" /><figcaption><span>02 / 04</span> Pre-thesis · an invitation to touch</figcaption></figure>
+              <figure className="education-gallery__image" data-reveal><img data-previewable src="/images/education/visitor-experiment.jpg" alt="Visitors looking at the interactive object inside a wooden enclosure" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>03 / 04</span> The experience, seen with visitors</figcaption></figure>
+              <figure className="education-gallery__image" data-reveal><img data-previewable src="/images/education/installation-process.jpg" alt="White sculptural forms during construction of the installation" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>04 / 04</span> Form taking shape during the build</figcaption></figure>
             </div>
           </div>
 
@@ -910,7 +945,7 @@ function App() {
 
             <div className="creative-practice__features">
               <a className="creative-film creative-film--lead" href="https://www.youtube.com/watch?v=RjLryUSlC4c" target="_blank" rel="noreferrer" data-reveal aria-label="Watch Graduated, a short documentary directed, filmed, and edited by Teeraphat Raksawong on YouTube">
-                <span className="creative-film__visual"><img src="https://i.ytimg.com/vi/RjLryUSlC4c/hqdefault.jpg" alt="Still from the short documentary Graduated" loading="lazy" decoding="async" /><span className="creative-film__play" aria-hidden="true">↗</span></span>
+                <span className="creative-film__visual"><img data-previewable src="https://i.ytimg.com/vi/RjLryUSlC4c/hqdefault.jpg" alt="Still from the short documentary Graduated" loading="lazy" decoding="async" /><span className="creative-film__play" aria-hidden="true">↗</span></span>
                 <span className="creative-film__meta">SHORT DOCUMENTARY <span>21 MIN · 2021</span></span>
                 <strong>Graduated</strong>
                 <span className="creative-film__role">Director · Director of Photography · Editor</span>
@@ -936,7 +971,7 @@ function App() {
                 { id: 'RJeFe-Ae7PE', type: 'VLOG / 2021', title: 'Vlog film · 02', detail: 'Camera and editing for a second vlog.', role: 'Camera · Editor' },
               ].map((film) => (
                 <a className="creative-video" href={`https://www.youtube.com/watch?v=${film.id}`} target="_blank" rel="noreferrer" key={film.id} data-reveal aria-label={`Watch ${film.type}: ${film.title} on YouTube`}>
-                  <span className="creative-video__image"><img src={`https://i.ytimg.com/vi/${film.id}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" /></span>
+                  <span className="creative-video__image"><img data-previewable src={`https://i.ytimg.com/vi/${film.id}/hqdefault.jpg`} alt={`${film.title} video thumbnail`} loading="lazy" decoding="async" /></span>
                   <span className="creative-video__copy"><span>{film.type}</span><strong>{film.title}</strong><span>{film.detail}</span><small>{film.role}</small></span>
                   <span className="creative-video__arrow" aria-hidden="true">↗</span>
                 </a>
@@ -987,7 +1022,7 @@ function App() {
                     <div className="experience-gallery" aria-label={`${role.title} photos`}>
                       {role.images.map((photo) => (
                         <figure className="experience-gallery__item" key={photo.src}>
-                          <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+                          <img data-previewable src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
                           <figcaption>{photo.caption}</figcaption>
                         </figure>
                       ))}
@@ -1142,6 +1177,18 @@ function App() {
         </div>
         <a className="site-footer__top" href="#intro">Back to top ↑</a>
       </footer>
+      <dialog
+        className="image-preview"
+        ref={imagePreviewRef}
+        aria-label={imagePreview?.alt || 'Image preview'}
+        onClose={() => setImagePreview(null)}
+        onCancel={(event) => { event.preventDefault(); setImagePreview(null); }}
+        onClick={(event) => { if (event.target === event.currentTarget) setImagePreview(null); }}
+      >
+        <button className="image-preview__close" type="button" aria-label="Close image preview" onClick={() => setImagePreview(null)}>×</button>
+        {imagePreview && <figure><img src={imagePreview.src} alt={imagePreview.alt} /><figcaption>{imagePreview.alt}</figcaption></figure>}
+      </dialog>
+      </div>
     </MotionConfig>
   );
 }
