@@ -839,7 +839,6 @@ function App() {
               <p>The early experiments invited people to interact with a physical object. The graduation work grew into an installation that people could move through and experience together. I kept developing that work over time.</p>
               <p>It taught me to design for a real person in front of the work. Today I apply the same instinct to user flows, software, and AI: make the system respond in a way people can understand.</p>
               <p className="hand-note hand-note--education">What happens if someone touches it? ↗</p>
-              <a href="https://www.instagram.com/p/Cy-xeAZvep4/" target="_blank" rel="noreferrer">See the 2023 pre-thesis post <span aria-hidden="true">↗</span></a>
             </div>
             <div className="education-gallery" aria-label="Media Art and Design project photographs">
               <figure className="education-gallery__image education-gallery__image--main" data-reveal><img data-previewable src="/images/education/graduation-installation.jpg" alt="Visitors gathered around a sculptural graduation installation in a red-lit room" width="2160" height="2880" loading="lazy" decoding="async" /><figcaption><span>01 / 04</span> Graduation installation · people in the space</figcaption></figure>
