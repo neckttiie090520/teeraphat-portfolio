@@ -4,9 +4,9 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
    Bencho's pictures do not travel with its code: these are
    rendered pages from Teeraphat's own finished book. */
 const SHOTS = [
-  { name: 'cover', src: '/book-full/page-001.webp', alt: 'Cover of the 158-page book Actually Faster?', caption: 'The finished 6 × 9 inch book cover' },
-  { name: 'audit', src: '/book-full/page-028.webp', alt: 'Book infographic showing the candidate-to-implementation audit funnel', caption: 'Source-grounded figure: 200+ candidates → 45 screened → 44 verified contracts' },
-  { name: 'risk', src: '/book-full/page-040.webp', alt: 'Book page showing the risk classification framework for Windows changes', caption: 'Risk framework drawn as an SVG figure in the book' },
+  { name: 'cover', src: '/showcase/actually-faster-page-001-sharp.webp', alt: 'Cover of the 158-page book Actually Faster?', caption: 'The finished 6 × 9 inch book cover' },
+  { name: 'audit', src: '/showcase/actually-faster-page-028-sharp.webp', alt: 'Book infographic showing the candidate-to-implementation audit funnel', caption: 'Source-grounded figure: 200+ candidates → 45 screened → 44 verified contracts' },
+  { name: 'risk', src: '/showcase/actually-faster-page-040-sharp.webp', alt: 'Book page showing the risk classification framework for Windows changes', caption: 'Risk framework drawn as an SVG figure in the book' },
 ];
 
 /* ══ Carousel ═════════════════════════════════════════════
@@ -109,7 +109,7 @@ const ORBIT = 150;
 const DEPTH = 100;
 const DEPTH_MAX = 150;
 const CORNER = 18;
-const FLOAT = 15;
+const FLOAT = 0;
 const SINK = 50;
 const SETTLE = 50;
 
@@ -236,7 +236,7 @@ const spotOf = (i: number, turn: number, orbit: number, depth: number): Spot => 
 
 const write = (el: HTMLElement, sp: Spot, angle: number) => {
   /* Recede the side pages so the full-size reading page wins. */
-  el.style.transform = `translate(-50%, -50%) translate(${sp.x.toFixed(2)}px, ${sp.y.toFixed(2)}px) rotate(${angle}deg) scale(${sp.s.toFixed(4)})`;
+  el.style.transform = `translate(-50%, -50%) translate(${sp.x.toFixed(2)}px, ${sp.y.toFixed(2)}px) rotate(${(angle * (1 - sp.z / 100)).toFixed(2)}deg) scale(${sp.s.toFixed(4)})`;
   el.style.zIndex = String(sp.z);
   el.style.opacity = String(mix(0.48, 1, sp.z / 100));
 };
