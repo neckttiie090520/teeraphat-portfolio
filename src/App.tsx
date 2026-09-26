@@ -658,8 +658,15 @@ function App() {
       );
 
       gsap.to('[data-liquid-map]', {
-        attr: { scale: 3 },
-        duration: 3.8,
+        attr: { scale: 15 },
+        duration: 3.2,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut',
+      });
+      gsap.to('[data-liquid-noise]', {
+        attr: { baseFrequency: '0.009 0.027' },
+        duration: 5.4,
         yoyo: true,
         repeat: -1,
         ease: 'sine.inOut',
@@ -934,7 +941,7 @@ function App() {
         </section>
 
         <section className="story-bridge" aria-labelledby="story-bridge-title">
-          <svg className="visually-hidden" aria-hidden="true" width="0" height="0" focusable="false"><filter id="liquid-type"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.025" numOctaves="2" seed="4" result="noise" /><feDisplacementMap data-liquid-map in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G" /></filter></svg>
+          <svg className="visually-hidden" aria-hidden="true" width="0" height="0" focusable="false"><filter id="liquid-type" x="-8%" y="-18%" width="116%" height="136%"><feTurbulence data-liquid-noise type="fractalNoise" baseFrequency="0.006 0.018" numOctaves="2" seed="4" result="noise" /><feDisplacementMap data-liquid-map in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" /></filter></svg>
           <div className="story-bridge__header" data-reveal>
             <span className="story-bridge__eyebrow">THE WAY I WORK / 01—04</span>
             <span className="story-bridge__hint">KEEP SCROLLING ↓</span>

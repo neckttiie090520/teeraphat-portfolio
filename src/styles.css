@@ -2750,7 +2750,7 @@ p {
   font-weight: 650;
 }
 .story-bridge h2 em { color: var(--accent); font-style: normal; white-space: nowrap; }
-.story-bridge h2 em { filter: url(#liquid-type); }
+.story-bridge h2 { filter: url(#liquid-type); }
 .story-bridge__aside { min-width: 0; width: 100%; padding-bottom: 0.5rem; }
 .story-bridge__motion-panel {
   position: relative;
@@ -2810,13 +2810,13 @@ p {
   opacity: 0;
   animation: rolodex-turn 9s cubic-bezier(.16, 1, .3, 1) infinite both;
 }
-.rolodex__word--first { animation-delay: -.7s; }
-.rolodex__word:nth-child(3) { animation-delay: 2.3s; }
-.rolodex__word:nth-child(4) { animation-delay: 5.3s; }
+.rolodex__word--first { animation-delay: -1s; }
+.rolodex__word:nth-child(3) { animation-delay: 2s; }
+.rolodex__word:nth-child(4) { animation-delay: 5s; }
 @keyframes rolodex-turn {
-  0%, 4% { opacity: 0; transform: rotateX(90deg); }
-  8%, 28% { opacity: 1; transform: rotateX(0); }
-  33%, 100% { opacity: 0; transform: rotateX(-90deg); }
+  0% { opacity: 0; transform: rotateX(90deg); }
+  5%, 28% { opacity: 1; transform: rotateX(0); }
+  36%, 100% { opacity: 0; transform: rotateX(-90deg); }
 }
 .story-bridge__progress { height: 2px; margin-bottom: -2rem; background: rgb(255 255 255 / 0.17); }
 .story-bridge__progress-fill { display: block; width: 100%; height: 100%; background: var(--accent); transform-origin: left center; }
@@ -3143,7 +3143,7 @@ p {
 
 @media (prefers-reduced-motion: reduce) {
   .hero__cursor { animation: none; opacity: 0; }
-  .story-bridge h2 em { filter: none; }
+  .story-bridge h2 { filter: none; }
   .story-bridge__motion-panel::after { animation: none; display: none; }
   .rolodex__word:not(.rolodex__word--first) { display: none; }
   .rolodex__word--first { animation: none; opacity: 1; transform: none; }
