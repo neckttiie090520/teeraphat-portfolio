@@ -3762,7 +3762,7 @@ p {
 .page-mascot__guide { transition: background-color 180ms ease, color 180ms ease, transform 220ms cubic-bezier(.16, 1, .3, 1); }
 .page-mascot__guide[aria-expanded="true"] { background: var(--ink); color: var(--page); transform: translateY(-2px); }
 
-/* CRT stays beside the story and speaks in compact, dismissible notes. */
+/* Nexie stays beside the story and speaks in compact, dismissible notes. */
 .page-mascot,
 .page-mascot--contact {
   position: fixed;
@@ -3780,6 +3780,18 @@ p {
   border-color: var(--ink);
   box-shadow: 3px 3px 0 rgb(24 25 23 / .11);
 }
+.page-mascot__bubble--welcome { width: min(20rem, calc(100vw - 2rem)); max-height: min(18rem, 58dvh); }
+.page-mascot__choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem; margin-top: .65rem; }
+.page-mascot__choices button { min-height: 3.1rem; display: grid; align-content: center; gap: .1rem; padding: .45rem .55rem; border: 1px solid var(--ink); background: var(--page); color: var(--ink); cursor: pointer; font: inherit; font-size: .72rem; font-weight: 730; text-align: left; transition: background-color 180ms ease, color 180ms ease, transform 180ms ease; }
+.page-mascot__choices button:hover,
+.page-mascot__choices button:focus-visible { transform: translateY(-2px); background: var(--ink); color: var(--page); }
+.page-mascot__choices button span { font-size: .62rem; font-weight: 480; }
+.portfolio-view { display: flex; align-items: center; flex-wrap: wrap; gap: .35rem; margin-top: 1.1rem; }
+.portfolio-view > span { margin-right: .45rem; color: var(--muted); font-size: .64rem; font-weight: 740; letter-spacing: .08em; }
+.portfolio-view button { min-height: 2rem; padding: .3rem .65rem; border: 1px solid var(--ink); border-radius: 100px; background: transparent; color: var(--ink); cursor: pointer; font: inherit; font-size: .7rem; font-weight: 680; transition: background-color 180ms ease, color 180ms ease, transform 180ms ease; }
+.portfolio-view button[aria-pressed="true"],
+.portfolio-view button:hover { background: var(--ink); color: var(--page); }
+.portfolio-view button:hover { transform: translateY(-2px); }
 .page-mascot__topline { display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; }
 .page-mascot__eyebrow { color: var(--accent); font-size: .62rem; font-weight: 760; letter-spacing: .07em; line-height: 1.25; }
 .page-mascot__dismiss {
@@ -3818,6 +3830,7 @@ p {
     margin: 0;
     transform-origin: bottom right;
   }
+  .page-mascot__bubble--welcome { width: min(19rem, calc(100vw - 1.4rem)); }
   .page-mascot__bubble:not(.is-open) { display: block; }
   .page-mascot__bubble::after { display: block; }
   .page-mascot__guide { min-height: 1.7rem; font-size: .57rem; }
@@ -3846,6 +3859,8 @@ p {
   .book-reader__bar button,
   .page-mascot__guide { transition: none; }
   .page-mascot__dismiss { transition: none; }
+  .page-mascot__choices button,
+  .portfolio-view button { transition: none; }
   .book-reader[open],
   .book-reader[open]::backdrop { animation: none; }
 }

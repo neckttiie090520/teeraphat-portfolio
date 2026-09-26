@@ -122,12 +122,15 @@ const skillCards = [
   { label: 'Audio & Video', size: 'minor', tone: 'paper', angle: 5, lift: -3 },
 ];
 
-function HeroShowcase() {
+function HeroShowcase({ viewMode }: { viewMode: PortfolioView }) {
+  const visibleSkills = viewMode === 'engineering'
+    ? skillCards.filter((skill) => !['Creative Direction', 'Audio & Video', 'Workshops', 'Games & Esports'].includes(skill.label))
+    : skillCards;
   return (
     <section className="skill-wall" data-entrance aria-label="A preview of the domains I work across">
       <div className="skill-wall__header"><span>ONE METHOD, MANY LAYERS</span><span>DISCOVER → ENGINEER → OPERATE</span></div>
       <ul className="skill-wall__pile">
-        {skillCards.map((skill, index) => (
+        {visibleSkills.map((skill, index) => (
           <li
             key={skill.label}
             className={`skill-card skill-card--${skill.size} skill-card--${skill.tone}`}
@@ -333,10 +336,11 @@ function ProjectIndexRow({ project }: { project: Project }) {
 
 type MascotMoment = { eyebrow: string; body: string; target?: string; action?: string };
 type ImagePreviewData = { src: string; alt: string };
+type PortfolioView = 'everything' | 'engineering';
 
 const mascotMoments: Record<ChapterId, MascotMoment[]> = {
   intro: [
-    { eyebrow: 'HELLO, HUMAN', body: "I’m CRT, Necktie’s tiny guide. He turns fuzzy ideas into working systems.", target: '#experience', action: 'Meet Necktie' },
+    { eyebrow: 'HELLO, HUMAN', body: "I’m Nexie, Necktie’s tiny guide. He turns fuzzy ideas into working systems.", target: '#experience', action: 'Meet Necktie' },
     { eyebrow: 'A LITTLE BACKSTORY', body: 'Before software, Necktie made interactive art. There is a graduation gallery just below the introduction.', target: '#education', action: 'See where it began' },
   ],
   experience: [
@@ -377,9 +381,12 @@ const projectMoments: Record<string, string> = {
   'tracco-tracker': 'Tracking tools only help when the data is clear enough to act on. The case note explains the product choices.',
 };
 
-function PageMascot({ activeChapter, reduceMotion }: {
+function PageMascot({ activeChapter, reduceMotion, viewMode, hasChosenView, onChooseView }: {
   activeChapter: ChapterId;
   reduceMotion: boolean | null;
+  viewMode: PortfolioView;
+  hasChosenView: boolean;
+  onChooseView: (view: PortfolioView) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -389,6 +396,7 @@ function PageMascot({ activeChapter, reduceMotion }: {
   const lastChapter = useRef<ChapterId>(activeChapter);
   const educationInView = useRef(false);
   const creativeInView = useRef(false);
+  const welcome: MascotMoment = { eyebrow: 'WELCOME', body: 'Hi, I’m Nexie! How would you like to get to know Necktie and explore his work?' };
 
   const announce = useCallback((next: MascotMoment) => {
     setMoment(next);
@@ -397,44 +405,42 @@ function PageMascot({ activeChapter, reduceMotion }: {
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      if (lastChapter.current === 'intro' && window.scrollY < window.innerHeight * 0.6 && (!window.location.hash || window.location.hash === '#intro')) {
-        announce(mascotMoments.intro[0]);
-      }
+      if (!hasChosenView) announce(welcome);
     }, 1150);
     return () => window.clearTimeout(timer);
-  }, [announce]);
+  }, [announce, hasChosenView]);
 
   useEffect(() => {
     if (lastChapter.current === activeChapter) return;
     lastChapter.current = activeChapter;
     momentIndex.current = 0;
-    if (!isPaused) announce(mascotMoments[activeChapter][0]);
-  }, [activeChapter, announce, isPaused]);
+    if (!isPaused && hasChosenView) announce(mascotMoments[activeChapter][0]);
+  }, [activeChapter, announce, hasChosenView, isPaused]);
 
   useEffect(() => {
     const section = document.getElementById('education');
-    if (isPaused || !section || !('IntersectionObserver' in window)) return;
+    if (isPaused || !hasChosenView || viewMode === 'engineering' || !section || !('IntersectionObserver' in window)) return;
     const observer = new IntersectionObserver(([entry]) => {
       educationInView.current = entry.isIntersecting;
       if (entry.isIntersecting) announce({ eyebrow: 'BEFORE THE CODE', body: 'A BFA in Media Art & Design came first. The graduation work made visitors part of the experience, a question Necktie still carries into software.', target: '#experience', action: 'Follow the story' });
     }, { rootMargin: '-20% 0px -55% 0px' });
     observer.observe(section);
     return () => { educationInView.current = false; observer.disconnect(); };
-  }, [announce, isPaused]);
+  }, [announce, hasChosenView, isPaused, viewMode]);
 
   useEffect(() => {
     const section = document.getElementById('creative-practice');
-    if (isPaused || !section || !('IntersectionObserver' in window)) return;
+    if (isPaused || !hasChosenView || viewMode === 'engineering' || !section || !('IntersectionObserver' in window)) return;
     const observer = new IntersectionObserver(([entry]) => {
       creativeInView.current = entry.isIntersecting;
       if (entry.isIntersecting) announce({ eyebrow: 'THE CREATIVE SIDE', body: 'Before designing user flows, Necktie directed, filmed, edited, and made music. Start with the documentary, then follow the rest of the work.', target: 'https://www.youtube.com/watch?v=RjLryUSlC4c', action: 'Watch Graduated' });
     }, { rootMargin: '-20% 0px -55% 0px' });
     observer.observe(section);
     return () => { creativeInView.current = false; observer.disconnect(); };
-  }, [announce, isPaused]);
+  }, [announce, hasChosenView, isPaused, viewMode]);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !hasChosenView) return;
     const timer = window.setInterval(() => {
       if (document.visibilityState !== 'visible' || educationInView.current || creativeInView.current || document.querySelector('dialog[open]') || document.querySelector('#mascot-message:hover') || document.activeElement?.closest('#mascot-message')) return;
       const moments = mascotMoments[activeChapter];
@@ -442,18 +448,18 @@ function PageMascot({ activeChapter, reduceMotion }: {
       announce(moments[momentIndex.current]);
     }, 14000);
     return () => window.clearInterval(timer);
-  }, [activeChapter, announce, isPaused]);
+  }, [activeChapter, announce, hasChosenView, isPaused]);
 
   useEffect(() => {
-    if (!isOpen || isPaused) return;
+    if (!isOpen || isPaused || !hasChosenView) return;
     const timer = window.setTimeout(() => {
       if (!document.activeElement?.closest('#mascot-message')) setIsOpen(false);
     }, 8500);
     return () => window.clearTimeout(timer);
-  }, [isOpen, moment, isPaused]);
+  }, [isOpen, moment, hasChosenView, isPaused]);
 
   useEffect(() => {
-    if (isPaused || !('IntersectionObserver' in window)) return;
+    if (isPaused || !hasChosenView || !('IntersectionObserver' in window)) return;
     let lastProject = '';
     const observer = new IntersectionObserver((entries) => {
       const entry = entries.find((item) => item.isIntersecting);
@@ -465,10 +471,10 @@ function PageMascot({ activeChapter, reduceMotion }: {
     }, { rootMargin: '-22% 0px -56% 0px' });
     document.querySelectorAll<HTMLElement>('[id^="project-"]').forEach((heading) => observer.observe(heading));
     return () => observer.disconnect();
-  }, [announce, isPaused]);
+  }, [announce, hasChosenView, isPaused]);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !hasChosenView) return;
     const onClick = (event: MouseEvent) => {
       if (!(event.target instanceof Element)) return;
       const notes = event.target.closest('.project-notes__toggle');
@@ -484,7 +490,7 @@ function PageMascot({ activeChapter, reduceMotion }: {
       document.removeEventListener('click', onClick);
       window.removeEventListener('mascot:book-closed', onBookClosed);
     };
-  }, [announce, isPaused]);
+  }, [announce, hasChosenView, isPaused]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -503,7 +509,7 @@ function PageMascot({ activeChapter, reduceMotion }: {
     <div className={'page-mascot' + (activeChapter === 'contact' ? ' page-mascot--contact' : '')}>
       <motion.div
         id="mascot-message"
-        className={'page-mascot__bubble' + (isOpen ? ' is-open' : '')}
+        className={'page-mascot__bubble' + (isOpen ? ' is-open' : '') + (!hasChosenView ? ' page-mascot__bubble--welcome' : '')}
         aria-hidden={!isOpen}
         inert={!isOpen}
         initial={false}
@@ -514,27 +520,29 @@ function PageMascot({ activeChapter, reduceMotion }: {
         }}
         transition={reduceMotion ? { duration: 0 } : { duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="page-mascot__topline"><span className="page-mascot__eyebrow">CRT / {moment.eyebrow}</span><button type="button" className="page-mascot__dismiss" aria-label="Pause CRT messages" onClick={() => { setIsPaused(true); setIsOpen(false); buttonRef.current?.focus(); }}>×</button></div>
-        <p className="page-mascot__intro" aria-live="polite">{moment.body}</p>
-        {moment.target && <div className="page-mascot__links"><a href={moment.target} onClick={() => setIsOpen(false)}>{moment.action}<span aria-hidden="true"> ↗</span></a></div>}
+        <div className="page-mascot__topline"><span className="page-mascot__eyebrow">NEXIE / {hasChosenView ? moment.eyebrow : 'WELCOME'}</span><button type="button" className="page-mascot__dismiss" aria-label={hasChosenView ? 'Pause Nexie messages' : 'Continue with everything'} onClick={() => { if (!hasChosenView) onChooseView('everything'); else setIsPaused(true); setIsOpen(false); buttonRef.current?.focus(); }}>×</button></div>
+        <p className="page-mascot__intro" aria-live="polite">{hasChosenView ? moment.body : welcome.body}</p>
+        {!hasChosenView && <div className="page-mascot__choices" role="group" aria-label="Choose a portfolio view"><button type="button" onClick={() => { onChooseView('everything'); setIsOpen(false); }}>Everything <span>Full story</span></button><button type="button" onClick={() => { onChooseView('engineering'); setIsOpen(false); }}>Engineering <span>Systems &amp; work</span></button></div>}
+        {hasChosenView && moment.target && <div className="page-mascot__links"><a href={moment.target} onClick={() => setIsOpen(false)}>{moment.action}<span aria-hidden="true"> ↗</span></a></div>}
       </motion.div>
 
-      <Mascot directions="/mascots/crt-directions.webp" reactions="/mascots/crt-reactions.webp" size={84} label="CRT guide" className="page-mascot__crt" />
+      <Mascot directions="/mascots/crt-directions.webp" reactions="/mascots/crt-reactions.webp" size={84} label="Nexie guide" className="page-mascot__crt" />
       <button
         ref={buttonRef}
         className="page-mascot__guide"
         type="button"
-        aria-label={isPaused ? 'Resume CRT messages' : isOpen ? 'Hear another CRT tip' : content.mascot.openLabel}
+        aria-label={isPaused ? 'Resume Nexie messages' : isOpen ? 'Hear another Nexie tip' : content.mascot.openLabel}
         aria-expanded={isOpen}
         aria-controls="mascot-message"
         onClick={() => {
           if (isPaused) setIsPaused(false);
+          if (!hasChosenView) { setIsOpen(true); return; }
           const moments = mascotMoments[activeChapter];
           momentIndex.current = (momentIndex.current + 1) % moments.length;
           announce(moments[momentIndex.current]);
         }}
       >
-        {isPaused ? 'Talk to CRT' : isOpen ? 'Tell me more' : 'Where next?'}
+        {isPaused ? 'Talk to Nexie' : isOpen ? (hasChosenView ? 'Tell me more' : 'Choose a view') : 'Where next?'}
       </button>
     </div>
   );
@@ -543,20 +551,34 @@ function PageMascot({ activeChapter, reduceMotion }: {
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeChapter, setActiveChapter] = useState<ChapterId>('intro');
+  const [viewMode, setViewMode] = useState<PortfolioView>('everything');
+  const [hasChosenView, setHasChosenView] = useState(false);
   const [imagePreview, setImagePreview] = useState<ImagePreviewData | null>(null);
   const mainRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const imagePreviewRef = useRef<HTMLDialogElement>(null);
   const reduceMotion = useReducedMotion();
-  const showcaseProjects = [
-    featuredProjects.find((project) => project.id === 'nexora')!,
-    featuredProjects.find((project) => project.id === 'younum')!,
-    featuredProjects.find((project) => project.id === 'khaosoi-research')!,
-    projects.find((project) => project.id === 'clutchg-pc-optimizer')!,
-    featuredProjects.find((project) => project.id === 'hotel-document-intelligence')!,
-  ].map((project, index) => ({ ...project, index: String(index + 1).padStart(2, '0') }));
+  const chooseView = (view: PortfolioView) => { setViewMode(view); setHasChosenView(true); };
+  const featuredOrder = viewMode === 'engineering'
+    ? ['nexora', 'clutchg-pc-optimizer', 'hotel-document-intelligence', 'khaosoi-research', 'younum']
+    : ['nexora', 'younum', 'khaosoi-research', 'clutchg-pc-optimizer', 'hotel-document-intelligence'];
+  const showcaseProjects = featuredOrder.map((id, index) => ({
+    ...(featuredProjects.find((project) => project.id === id) ?? projects.find((project) => project.id === id)!),
+    index: String(index + 1).padStart(2, '0'),
+  }));
   const indexedProjects = projects.filter((project) => project.id !== 'clutchg-pc-optimizer')
     .map((project, index) => ({ ...project, index: String(index + 6).padStart(2, '0') }));
+  const visibleCapabilityGroups = viewMode === 'engineering'
+    ? capabilityGroups.filter((group, index) => index < 18 || group.title === 'PROJECT / DELIVERY')
+    : capabilityGroups;
+  const visibleCapabilitySpotlight = viewMode === 'engineering'
+    ? capabilitySpotlight.filter((item) => !['Music Production', 'Vlogging', 'Creative Technology', 'Video Production', 'Photography', 'Songwriting', 'Singing', 'Interactive Art', 'Cinematography', 'Motion Graphics', 'Content Creation', 'Workshop Facilitation', 'Documentary Direction'].includes(item.label))
+    : capabilitySpotlight;
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => window.cancelAnimationFrame(frame);
+  }, [viewMode]);
 
   useEffect(() => {
     const dialog = imagePreviewRef.current;
@@ -797,22 +819,27 @@ function App() {
                 <svg aria-hidden="true" viewBox="0 0 240 22" preserveAspectRatio="none"><path data-ink-line d="M3 15 C50 5, 100 18, 157 11 S218 10, 237 5" /></svg>
               </span>: defining the product, designing agents and architecture, building with AI, evaluating the result, and shipping it.
             </p>
-            <p className="hero__background" data-entrance>{content.hero.background}</p>
+            <p className="hero__background" data-entrance>{viewMode === 'engineering' ? 'I connect product scope, agent workflows, system architecture, implementation, and evaluation. This path follows the engineering decisions and working systems behind my projects.' : content.hero.background}</p>
             <div className="hero__actions" data-entrance>
               <a className="button button--accent" href="#evidence">{content.hero.workCta}</a>
               <a className="button button--outline" href={content.cvUrl} download>{content.hero.cvCta}</a>
             </div>
+            <div className="portfolio-view" data-entrance role="group" aria-label="Portfolio view">
+              <span>EXPLORE AS</span>
+              <button type="button" aria-pressed={viewMode === 'everything'} onClick={() => chooseView('everything')}>Everything</button>
+              <button type="button" aria-pressed={viewMode === 'engineering'} onClick={() => chooseView('engineering')}>Engineering</button>
+            </div>
           </div>
 
-          <HeroShowcase />
+          <HeroShowcase viewMode={viewMode} />
 
           <div className="identity-strip" data-reveal>
-            <p><a href="#education">Education <span aria-hidden="true">↘</span></a><strong>{content.hero.education.map((degree) => <span key={degree}>{degree}</span>)}</strong></p>
+            <p><a href={viewMode === 'engineering' ? '#experience' : '#education'}>Education <span aria-hidden="true">↘</span></a><strong>{content.hero.education.map((degree) => <span key={degree}>{degree}</span>)}</strong></p>
             <p><span>Research focus</span><strong>{content.hero.thesis}</strong></p>
           </div>
         </section>
 
-        <section id="education" className="education-section" aria-labelledby="education-title">
+        {viewMode === 'everything' && <section id="education" className="education-section" aria-labelledby="education-title">
           <div className="chapter-heading" data-reveal>
             <p className="chapter-heading__number">THE FOUNDATION / EDUCATION</p>
             <div>
@@ -893,7 +920,7 @@ function App() {
               ))}
             </div>
           </div>
-        </section>
+        </section>}
 
         <section id="experience" className="experience-section" data-chapter="experience" aria-labelledby="experience-title">
           <div className="chapter-heading" data-reveal>
@@ -905,7 +932,7 @@ function App() {
           </div>
 
           <div className="experience-list">
-            {content.experience.roles.map((role) => (
+            {content.experience.roles.filter((role) => viewMode === 'everything' || role.title === 'AI Lead Engineer').map((role) => (
               <article className="experience-entry" key={role.title} data-reveal>
                 <p className="experience-entry__period">{role.period}</p>
                 <div className="experience-entry__body">
@@ -1036,21 +1063,21 @@ function App() {
 
           <div className="capabilities-section" id="capability-map">
             <div className="capability-universe__intro" data-reveal>
-              <p className="capabilities-section__label">THE THINGS I BUILD / DESIGN / ENGINEER / CREATE</p>
+              <p className="capabilities-section__label">{viewMode === 'engineering' ? 'THE SYSTEMS I DESIGN / BUILD / EVALUATE' : 'THE THINGS I BUILD / DESIGN / ENGINEER / CREATE'}</p>
               <h3>One person.<br /><em>Many disciplines.</em></h3>
-              <p>Media art led me into interaction design, software, AI, agents, product systems, and creative technology. My way of working connects these fields instead of treating them as separate careers.</p>
+              <p>{viewMode === 'engineering' ? 'My engineering practice connects product scope, AI agents, data, software architecture, reliability, and delivery.' : 'Media art led me into interaction design, software, AI, agents, product systems, and creative technology. My way of working connects these fields instead of treating them as separate careers.'}</p>
             </div>
-            <div className="capability-universe" aria-label={`${capabilitySpotlight.length} selected capabilities`}>
-              {capabilitySpotlight.map((capability, index) => (
+            <div className="capability-universe" aria-label={`${visibleCapabilitySpotlight.length} selected capabilities`}>
+              {visibleCapabilitySpotlight.map((capability, index) => (
                 <span className={`capability-universe__tag capability-universe__tag--${capability.size}`} style={{ '--skill-index': index } as CSSProperties} key={capability.label}>{capability.label}</span>
               ))}
             </div>
             <div className="capability-catalog__heading" data-reveal>
-              <div><p className="capabilities-section__label">EXPLORE THE FULL MAP</p><h4>Twenty-seven areas of practice.</h4></div>
-              <p>Open a discipline to see the full set. <span>{capabilityGroups.reduce((count, group) => count + group.items.length, 0)} labels across {capabilityGroups.length} areas.</span></p>
+              <div><p className="capabilities-section__label">EXPLORE THE {viewMode === 'engineering' ? 'ENGINEERING' : 'FULL'} MAP</p><h4>{visibleCapabilityGroups.length} areas of practice.</h4></div>
+              <p>Open a discipline to see the full set. <span>{visibleCapabilityGroups.reduce((count, group) => count + group.items.length, 0)} labels across {visibleCapabilityGroups.length} areas.</span></p>
             </div>
             <div className="capability-catalog">
-              {capabilityGroups.map((group) => (
+              {visibleCapabilityGroups.map((group) => (
                 <details className="capability-catalog__group" key={group.id}>
                   <summary>
                     <span className="capability-catalog__number">{group.id}</span>
@@ -1078,7 +1105,7 @@ function App() {
             <a className="button button--dark" href={'mailto:' + content.contact.email}>{content.contact.emailCta}</a>
             <a className="button button--light" href={content.cvUrl} download>{content.contact.cvCta}</a>
           </div>
-          <PageMascot activeChapter={activeChapter} reduceMotion={reduceMotion} />
+          <PageMascot activeChapter={activeChapter} reduceMotion={reduceMotion} viewMode={viewMode} hasChosenView={hasChosenView} onChooseView={chooseView} />
         </section>
       </main>
 
