@@ -408,13 +408,8 @@ export function Carousel({
   sink = SINK,
   /* how quickly a swipe settles, 0..100 */
   settle = SETTLE,
-  /* ── seconds for one whole turn of the ring ──────────────
-     0 is off, and off is the default: on the bench this ring
-     is a thing you push, and one that also drifts round on its
-     own would be answering a gesture nobody made. It is here
-     for the places the carousel is a PICTURE rather than a
-     control — the Pro sheet, today — where it has to carry
-     itself because nobody is going to touch it. */
+  /* Seconds used to pace a full set of pages; 0 disables
+     automatic turns. Each page rests before the next turn. */
   spin = 12,
 }: {
   orbit?: number;
@@ -449,6 +444,7 @@ export function Carousel({
   const [held, setHeld] = useState(false);
   const [visible, setVisible] = useState(false);
   const suppressClick = useRef(false);
+  const autoStep = useRef(0);
 
   const paint = useCallback(() => {
     slots.current.forEach((el, i) =>
@@ -482,33 +478,42 @@ export function Carousel({
 
   useEffect(() => () => cancelAnimationFrame(raf.current), []);
 
-  /* ── the ring turning itself ─────────────────────────────
-     Its own frame loop and its own handle, deliberately not
-     `raf` — that one belongs to the settle after a swipe, and
-     the two sharing it would mean whichever started last
-     cancelled the other.
-
-     It advances `turn` by time rather than stepping between
-     whole positions: a ring that clicks from card to card is
-     reading as a slideshow, and the whole point of this one is
-     that it is a continuous ring you are looking at side on.
-
-     Held pauses it. Nothing on the Pro sheet can grab it —
-     that reel is pointer-events: none — but the pause costs a
-     line and means the prop is safe anywhere. */
+  /* Let each page rest long enough to read, then turn exactly
+     one card. Alternate a measured and a brisk turn so the
+     sequence has rhythm without becoming a constant spinner. */
   useEffect(() => {
     if (!spin || still || held || !visible) return;
     let id = 0;
-    let prev = 0;
-    const step = (t: number) => {
-      /* N cards over `spin` seconds is one whole revolution */
-      if (prev) turn.current += ((t - prev) / 1000) * (N / spin);
-      prev = t;
-      paint();
-      id = requestAnimationFrame(step);
+    let timer = 0;
+    let cancelled = false;
+    const schedule = () => {
+      const brisk = autoStep.current % 2 === 1;
+      timer = window.setTimeout(() => {
+        cancelAnimationFrame(raf.current);
+        const from = turn.current;
+        const to = Math.round(from) + 1;
+        const duration = brisk ? 680 : 1150;
+        const start = performance.now();
+        const tick = (now: number) => {
+          if (cancelled) return;
+          const progress = Math.min(1, (now - start) / duration);
+          turn.current = mix(from, to, out(progress));
+          paint();
+          if (progress < 1) id = requestAnimationFrame(tick);
+          else {
+            autoStep.current += 1;
+            schedule();
+          }
+        };
+        id = requestAnimationFrame(tick);
+      }, Math.max(2800, (spin / N) * 1000) + (brisk ? -450 : 1000));
     };
-    id = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(id);
+    schedule();
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+      cancelAnimationFrame(id);
+    };
   }, [spin, still, held, visible, paint]);
 
   /* ── the settle ──────────────────────────────────────────
