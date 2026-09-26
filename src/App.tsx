@@ -13,6 +13,7 @@ import {
   type Project,
 } from './content';
 import { capabilityGroups, capabilitySpotlight } from './capabilities';
+import BookReader from './BookReader';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -341,93 +342,10 @@ function ProjectIndexRow({ project }: { project: Project }) {
           {project.stack.join(' · ')}
         </p>
         <ProjectLinks project={project} />
-        {project.id === 'actually-faster-book' && <BookPreview />}
+        {project.id === 'actually-faster-book' && <BookReader />}
         <CaseNotes project={project} />
       </div>
     </article>
-  );
-}
-
-function BookPreview() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(false);
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const closingRef = useRef(false);
-  const reduceMotion = useReducedMotion();
-  const previewUrl = '/files/Actually-Faster-Book-Preview.pdf';
-
-  const closeReader = () => {
-    const dialog = dialogRef.current;
-    if (!dialog?.open || closingRef.current) return;
-
-    const finish = () => {
-      dialog.classList.remove('is-closing');
-      dialog.close();
-      window.dispatchEvent(new Event('mascot:book-closed'));
-      closingRef.current = false;
-      setIsOpen(false);
-      setIsZoomed(false);
-    };
-
-    if (reduceMotion) {
-      finish();
-      return;
-    }
-
-    closingRef.current = true;
-    dialog.classList.add('is-closing');
-    const animation = dialog.animate(
-      [{ opacity: 1, transform: 'translateY(0) scale(1)' }, { opacity: 0, transform: 'translateY(14px) scale(.985)' }],
-      { duration: 220, easing: 'cubic-bezier(.4, 0, 1, 1)' },
-    );
-    animation.finished.then(finish, finish);
-  };
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-    if (isOpen && !dialog.open) dialog.showModal();
-    if (!isOpen && dialog.open) dialog.close();
-  }, [isOpen]);
-
-  return (
-    <div className="book-preview">
-      <p className="book-preview__meta">22-page preview · Thai · Foreword and Chapter 1</p>
-      <button className="book-preview__trigger" type="button" onClick={() => setIsOpen(true)}>
-        Read the book preview <span aria-hidden="true">↗</span>
-      </button>
-      <dialog
-        className="book-reader"
-        ref={dialogRef}
-        onClose={() => setIsOpen(false)}
-        onCancel={(event) => { event.preventDefault(); closeReader(); }}
-        onClick={(event) => { if (event.target === event.currentTarget) closeReader(); }}
-        aria-labelledby="book-reader-title"
-      >
-        <div className="book-reader__bar">
-          <div>
-            <span className="book-reader__eyebrow">THE PROOF PROJECT / EBOOK PREVIEW</span>
-            <h4 id="book-reader-title">Actually Faster?</h4>
-          </div>
-          <div className="book-reader__actions">
-            <button className="book-reader__zoom" type="button" aria-pressed={isZoomed} onClick={() => setIsZoomed((value) => !value)}>{isZoomed ? 'Fit page' : 'Zoom in'}</button>
-            <button className="book-reader__close" type="button" onClick={closeReader} aria-label="Close book preview">×</button>
-          </div>
-        </div>
-        <div className={'book-reader__pages' + (isZoomed ? ' book-reader__pages--zoomed' : '')} aria-label="Read the first 22 pages of Actually Faster?">
-          {Array.from({ length: 22 }, (_, index) => (
-            <figure className="book-reader__page" key={index}>
-              <img data-previewable src={`/book-preview/page-${String(index + 1).padStart(2, '0')}.webp`} alt={`Actually Faster? preview page ${index + 1} of 22`} width="864" height="1296" loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
-              <figcaption>{String(index + 1).padStart(2, '0')} / 22</figcaption>
-            </figure>
-          ))}
-        </div>
-        <div className="book-reader__footer">
-          <span>Read the foreword and first chapter.</span>
-          <a href={previewUrl} target="_blank" rel="noreferrer">Open PDF in a new tab ↗</a>
-        </div>
-      </dialog>
-    </div>
   );
 }
 
@@ -463,7 +381,7 @@ const projectMoments: Record<string, string> = {
   'khaosoi-research': 'A data story with numbers: 22,664 public reviews across 11 Chiang Mai restaurants.',
   'clutchg-pc-optimizer': 'ClutchG makes Windows changes explainable and reversible. Look for the backup path in the interface.',
   'hotel-document-intelligence': 'Contracts can be messy. This workflow separates extraction, evidence checks, and human review.',
-  'actually-faster-book': 'Plot twist: the software research became a 158-page book. You can read the opening 22 pages right here.',
+  'actually-faster-book': 'Plot twist: the software research became a 158-page book. You can flip through every page right here.',
   'inand-on': 'A mobile-first business tool, built around the work people actually do at the counter.',
   valscout: 'Game and esports knowledge meets product thinking here. Open the case note for the decisions behind it.',
   comprice: 'This one connects Thai PC retailer data, compatible parts, and a buyer-friendly build flow. Still in development.',
