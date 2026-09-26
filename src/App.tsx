@@ -858,7 +858,7 @@ function App() {
 
             <div className="creative-practice__features">
               <a className="creative-film creative-film--lead" href="https://www.youtube.com/watch?v=RjLryUSlC4c" target="_blank" rel="noreferrer" data-reveal aria-label="Watch Graduated, a short documentary directed, filmed, and edited by Teeraphat Raksawong on YouTube">
-                <span className="creative-film__visual"><img data-previewable src="https://i.ytimg.com/vi/RjLryUSlC4c/hqdefault.jpg" alt="Still from the short documentary Graduated" loading="lazy" decoding="async" /><span className="creative-film__play" aria-hidden="true">↗</span></span>
+                <span className="creative-film__visual"><img data-previewable src="https://i.ytimg.com/vi/RjLryUSlC4c/maxresdefault.jpg" alt="Still from the short documentary Graduated" loading="lazy" decoding="async" /><span className="creative-film__play" aria-hidden="true">↗</span></span>
                 <span className="creative-film__meta">SHORT DOCUMENTARY <span>21 MIN · 2021</span></span>
                 <strong>Graduated</strong>
                 <span className="creative-film__role">Director · Director of Photography · Editor</span>
