@@ -411,6 +411,10 @@ function PageMascot({ activeChapter, reduceMotion, viewMode, hasChosenView, onCh
   }, [announce, hasChosenView]);
 
   useEffect(() => {
+    if (hasChosenView) setIsOpen(false);
+  }, [hasChosenView]);
+
+  useEffect(() => {
     if (lastChapter.current === activeChapter) return;
     lastChapter.current = activeChapter;
     momentIndex.current = 0;
@@ -552,7 +556,10 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeChapter, setActiveChapter] = useState<ChapterId>('intro');
   const [viewMode, setViewMode] = useState<PortfolioView>('everything');
-  const [hasChosenView, setHasChosenView] = useState(false);
+  const [hasChosenView, setHasChosenView] = useState(() => {
+    const hash = window.location.hash.toLowerCase();
+    return Boolean(hash && !['#intro', '#top', '#main'].includes(hash));
+  });
   const [transitionTo, setTransitionTo] = useState<PortfolioView | null>(null);
   const [imagePreview, setImagePreview] = useState<ImagePreviewData | null>(null);
   const mainRef = useRef<HTMLElement>(null);
@@ -596,6 +603,19 @@ function App() {
     : capabilitySpotlight;
 
   useEffect(() => () => viewTransitionTimers.current.forEach(window.clearTimeout), []);
+
+  useEffect(() => {
+    if (hasChosenView) return;
+    const acceptEverythingOnScroll = () => {
+      if (window.scrollY > 32) setHasChosenView(true);
+    };
+    window.addEventListener('scroll', acceptEverythingOnScroll, { passive: true });
+    const frame = window.requestAnimationFrame(acceptEverythingOnScroll);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', acceptEverythingOnScroll);
+    };
+  }, [hasChosenView]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
