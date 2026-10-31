@@ -20,7 +20,7 @@ Precise, practical, inventive. Copy is direct and grounded in evidence, with pla
 
 - Generic developer portfolio templates and tool-logo walls.
 - Unsupported AI claims, invented metrics, or vague case-study outcomes.
-- Publishing confidential DMC Connect or Nexora details, customer information, private data, or internal screenshots.
+- Publishing employer product names, confidential details, customer information, private data, or internal screenshots.
 - Dark-gradient, glassmorphism, or decorative motion that obscures content.
 
 ## Design Principles

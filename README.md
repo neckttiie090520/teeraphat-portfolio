@@ -33,8 +33,8 @@ The site is a static build and can also be hosted on GitHub Pages or any static 
 
 ## Updating portfolio content
 
-Edit the English copy and project entries in `src/content.ts`. Project images are in `static/images/`; the downloadable CV is in `static/files/`.
+Edit the English copy and project entries in `src/content.ts`. Public project assets are in `public/`; the downloadable CV is in `public/files/`.
 
 ## Public case-study boundary
 
-The Nexora/DMC Connect experience is summarized at a public, high level. Do not add internal architecture, customer or supplier names, confidential data, or private screenshots without approval.
+Employer-related experience is described in general terms. Omit employer product names, internal architecture, customer or supplier names, confidential data, and private screenshots.
