@@ -404,7 +404,10 @@ export const projects: Project[] = [
       { value: '23', label: 'optimizer repositories studied' },
       { value: '3', label: 'risk tiers' },
     ],
-    links: [{ href: 'https://github.com/neckttiie090520/clutchg-pc-optimizer', label: 'View public repository' }],
+    links: [
+      { href: 'https://github.com/neckttiie090520/clutchg-pc-optimizer', label: 'View public repository' },
+      { href: 'https://www.linkedin.com/pulse/clutchg-what-optimize-button-should-allowed-do-teeraphat-raksawong-mlz8c/', label: 'Read the LinkedIn article' },
+    ],
     caseStudy: {
       context: 'Competitive players are offered many Windows tweaks with little explanation of evidence, risk, or how to undo them.',
       why: 'An optimization tool should help a person understand the tradeoff before changing a real machine.',
@@ -435,7 +438,7 @@ export const projects: Project[] = [
       { src: '/showcase/actually-faster-cover.webp', alt: 'Cover of the 158-page book Actually Faster?', caption: 'The finished 6 × 9 inch book cover' },
       { src: '/showcase/actually-faster-risk-framework.webp', alt: 'Book page showing the risk classification framework for Windows changes', caption: 'Risk framework drawn as an SVG figure in the book' },
     ],
-    links: [],
+    links: [{ href: 'https://www.linkedin.com/pulse/turning-my-engineering-work-book-ai-assisted-pipeline-raksawong-o1vyc/', label: 'Read the LinkedIn article' }],
     caseStudy: {
       context: 'ClutchG began as a software and research project. Its methods, tradeoffs, and failure modes deserved an explanation that someone could follow beyond a code repository.',
       why: 'A book forces the engineering story to be readable and accountable: every number, figure, and recommendation needs a source and a clear limit.',
