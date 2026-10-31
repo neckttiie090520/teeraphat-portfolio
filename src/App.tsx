@@ -916,9 +916,9 @@ function App() {
 
           <div className="education-work">
             <div className="education-work__story" data-reveal>
-              <p className="education-work__eyebrow">UNDERGRADUATE WORK / INTERACTION → INSTALLATION</p>
-              <h3>A visitor completes the work.</h3>
-              <p>The early experiments invited people to interact with a physical object. The graduation work grew into an installation that people could move through and experience together. I kept developing that work over time.</p>
+              <p className="education-work__eyebrow">BFA GRADUATION PROJECT / INTERACTION → INSTALLATION</p>
+              <h3>The Beginning of Force.</h3>
+              <p>My BFA thesis explored energy and human perception through an interactive installation combining a Tesla coil, plasma ball, and AI voice interaction. Visitors completed the work through their own presence and participation.</p>
               <p>It taught me to design for a real person in front of the work. Today I apply the same instinct to user flows, software, and AI: make the system respond in a way people can understand.</p>
               <p className="hand-note hand-note--education">What happens if someone touches it? ↗</p>
             </div>
@@ -987,7 +987,7 @@ function App() {
           </div>
 
           <div className="experience-list">
-            {content.experience.roles.filter((role) => viewMode === 'everything' || role.title === 'AI Lead Engineer').map((role) => (
+            {content.experience.roles.filter((role) => viewMode === 'everything' || ['AI Lead Engineer', 'Founder & Product Developer'].includes(role.title)).map((role) => (
               <article className="experience-entry" key={role.title} data-reveal>
                 <p className="experience-entry__period">{role.period}</p>
                 <div className="experience-entry__body">
@@ -1171,6 +1171,12 @@ function App() {
           <a href={'mailto:' + content.contact.email}>{content.contact.email}</a>
           <a href={'tel:' + content.contact.phoneHref}>{content.contact.phone}</a>
           <a href={content.contact.github} target="_blank" rel="noreferrer">{content.contact.githubLabel}<span aria-hidden="true"> ↗</span></a>
+          <a className="site-footer__linkedin" href={content.contact.linkedin} target="_blank" rel="noreferrer">
+            <svg className="site-footer__linkedin-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.369 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 1 1 .001-4.125 2.062 2.062 0 0 1-.001 4.125ZM7.119 20.452H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z" />
+            </svg>
+            {content.contact.linkedinLabel}<span aria-hidden="true"> ↗</span>
+          </a>
         </div>
         <a className="site-footer__top" href="#intro">Back to top ↑</a>
       </footer>

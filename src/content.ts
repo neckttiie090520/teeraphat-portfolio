@@ -119,6 +119,19 @@ export const content = {
           { src: '/showcase/ai-workshop-teaching-assistant.webp', alt: 'Teeraphat Raksawong supporting participants with a laptop during an in-person workshop', caption: 'Helping participants apply the tools during an in-person workshop' },
         ],
       },
+      {
+        period: '2022–2024',
+        title: 'Founder & Product Developer',
+        company: 'Nextzus Optimizer · Personal business',
+        description:
+          'Built and ran a Windows optimization product for PC users and gamers, from batch-script automation to distribution and community support.',
+        contributions: [
+          'Served an estimated 3,000–5,000 users (self-reported).',
+          'Designed the product journey around license access, guided system changes, and recovery.',
+        ],
+        images: [],
+        engagements: [],
+      },
     ],
   },
   evidence: {
@@ -165,6 +178,8 @@ export const content = {
     phoneHref: '+66950362311',
     github: 'https://github.com/neckttiie090520',
     githubLabel: 'GitHub · neckttiie090520',
+    linkedin: 'https://www.linkedin.com/in/teeraphat-raksawong-251514179/',
+    linkedinLabel: 'LinkedIn profile',
     emailCta: 'Email Teeraphat',
     cvCta: 'Download CV',
     footer: 'AI-native engineering with evidence, human judgment, and working software.',
