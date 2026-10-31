@@ -2247,6 +2247,20 @@ p {
   font-size: 0.78rem;
 }
 
+.book-preview__note {
+  max-width: 48rem;
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.book-preview__note a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .book-preview__trigger {
   display: inline-flex;
   align-items: center;

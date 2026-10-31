@@ -135,6 +135,10 @@ export default function BookReader() {
       <button className="book-preview__trigger" type="button" onClick={openReader}>
         Read the full book <span aria-hidden="true">↗</span>
       </button>
+      <p className="book-preview__note">
+        Audit update: 44 reachable knowledge records are not 44 individually verified execution contracts.{' '}
+        <a href="https://github.com/neckttiie090520/clutchg-pc-optimizer/blob/9dc03e8b7605e9a8f38b829735e7c166e9acf81f/docs/iso29110-clutchg/14-Audited-Tweak-Execution-Correction-2026-08-02.md" target="_blank" rel="noreferrer">Read the audit</a>.
+      </p>
       <dialog
         className="book-reader book-reader--flip"
         ref={dialogRef}
