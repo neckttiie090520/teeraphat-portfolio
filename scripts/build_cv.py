@@ -153,9 +153,9 @@ def build():
         p("Teeraphat Raksawong", "Name"),
         p("AI Lead Engineer | Product Engineering | Document Intelligence &amp; Automation", "Headline"),
         p("Chiang Mai, Thailand | +66 95 036 2311 | pethreeday@gmail.com<br/>"
-          "<link href='https://github.com/neckttiie090520'>GitHub</link> | "
-          "<link href='https://www.linkedin.com/in/teeraphat-raksawong-251514179/'>LinkedIn</link> | "
-          "<link href='https://teeraphat-raksawong.netlify.app'>Portfolio</link>", "Contact"),
+          "<link href='https://github.com/neckttiie090520' color='#184F7D'><u>GitHub</u></link> | "
+          "<link href='https://www.linkedin.com/in/teeraphat-raksawong-251514179/' color='#184F7D'><u>LinkedIn</u></link> | "
+          "<link href='https://teeraphat-raksawong.netlify.app' color='#184F7D'><u>Portfolio</u></link>", "Contact"),
         section("Professional Summary"),
         p("AI Lead Engineer and Software Engineering master's candidate who connects business needs to product direction, "
           "AI-enabled systems, data workflows, and software delivery. Experience spans document intelligence, full-stack "
@@ -181,25 +181,26 @@ def build():
 
     story.extend([
         section("Featured Product"),
-        role("YouNum | End-to-End Product & Full-Stack Development", "younum.me"),
+        role("YouNum | End-to-End Product & Full-Stack Development", "<link href='https://www.linkedin.com/pulse/younum-making-personalized-number-explain-itself-teeraphat-raksawong-uvigc/' color='#184F7D'><u>LinkedIn article</u></link>"),
         bullet("Independently designed, built, and launched a Thai-language web product from concept through UX/UI, architecture, full-stack implementation, integrations, testing, release, and iteration using Next.js, React, TypeScript, and Supabase."),
         bullet("Built a Thai-language dream and lucky-number experience with deterministic number generation; AI is disabled in the current MVP."),
         section("Selected Projects & Research"),
-        role("Document Intelligence | Structured Extraction & Human Review", "<link href='https://www.linkedin.com/pulse/building-extraction-pipeline-you-can-inspect-teeraphat-raksawong-p7mnc/'>LinkedIn article</link>"),
+        role("Document Intelligence | Structured Extraction & Human Review", "<link href='https://www.linkedin.com/pulse/building-extraction-pipeline-you-can-inspect-teeraphat-raksawong-p7mnc/' color='#184F7D'><u>LinkedIn article</u></link>"),
         bullet("Built a LiteParse + OCR workflow and review interface for PDF content, with reading, text, table, image, and JSON views tied to source-page geometry."),
         bullet("Extended extraction with evidence retrieval and typed source relationships, and connected agent workflows through defined tools for evidence inspection, proposals, and human input."),
-        role("Decoding Chiang Mai's Khao Soi Experience | Google Maps Review Analysis", "2025 - 2026"),
+        role("Khao Soi Research | Google Maps Review Analysis (2025 - 2026)", "<link href='https://www.linkedin.com/pulse/scraper-only-beginning-teeraphat-raksawong-eohwc/' color='#184F7D'><u>LinkedIn article</u></link>"),
         bullet("Analyzed 22,664 Google Maps reviews across 11 Chiang Mai Khao Soi restaurants for food-tourism and consumer-perception research."),
         bullet("Developed a multilingual RPC-based collection framework and structured analysis workflow, reaching 26-40+ reviews per second during extraction."),
         bullet("Accepted for oral presentation at The 8th International Conference on Food and Applied Bioscience (FAB 2026), Chiang Mai University."),
         PageBreak(),
         section("Selected Projects & Research (Continued)"),
-        role("ClutchG PC Optimizer | Evidence-Led Windows Tooling", "<link href='https://www.linkedin.com/pulse/clutchg-what-optimize-button-should-allowed-do-teeraphat-raksawong-mlz8c/'>LinkedIn article</link>"),
+        role("ClutchG PC Optimizer | Evidence-Led Windows Tooling", "<link href='https://www.linkedin.com/pulse/clutchg-what-optimize-button-should-allowed-do-teeraphat-raksawong-mlz8c/' color='#184F7D'><u>LinkedIn article</u></link>"),
         bullet("Built a Python desktop optimizer with explanations, backups, and rollback, grounded in research across 23 open-source repositories and 200+ techniques."),
-        role("Actually Faster? | Technical Book &amp; Research", "<link href='https://www.linkedin.com/pulse/i-wrote-book-question-could-longer-answer-confidently-raksawong-ybzic/'>LinkedIn article</link>"),
+        role("Actually Faster? | Technical Book &amp; Research", "<link href='https://www.linkedin.com/pulse/i-wrote-book-question-could-longer-answer-confidently-raksawong-ybzic/' color='#184F7D'><u>LinkedIn article</u></link>"),
         bullet("Authored a 158-page account of Windows optimization research, evidence, risk, and reversibility; built an AI-assisted pipeline for manuscript, figures, layout, and review."),
         role("MCP & AI Tooling | Selected Prototypes", ""),
         bullet("Built experimental Model Context Protocol integrations, web applications, PWAs, and automation tools for AI-assisted research and information workflows."),
+        p("Read the engineering stories: <link href='https://www.linkedin.com/pulse/write-thesis-yourself-automate-checks-teeraphat-raksawong-ysgxc/' color='#184F7D'><u>MCP Thai Thesis</u></link> | <link href='https://www.linkedin.com/pulse/agents-done-needs-witness-teeraphat-raksawong-re3yc/' color='#184F7D'><u>nzs-skills</u></link> | <link href='https://www.linkedin.com/pulse/give-agent-delegation-real-job-lifecycle-teeraphat-raksawong-hkmsc/' color='#184F7D'><u>Perch Agent MCP</u></link>.", "Small"),
         role("InAndOn Billing PWA | Billing and Quotation System", ""),
         bullet("Built an installable PWA for creating cash bills and quotations, with document history, shareable records, and a Google Apps Script backend."),
         role("Valscout | Valorant Tactical Intelligence Platform", ""),
