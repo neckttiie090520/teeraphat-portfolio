@@ -196,7 +196,7 @@ def build():
         section("Selected Projects & Research (Continued)"),
         role("ClutchG PC Optimizer | Evidence-Led Windows Tooling", "<link href='https://www.linkedin.com/pulse/clutchg-what-optimize-button-should-allowed-do-teeraphat-raksawong-mlz8c/'>LinkedIn article</link>"),
         bullet("Built a Python desktop optimizer with explanations, backups, and rollback, grounded in research across 23 open-source repositories and 200+ techniques."),
-        role("Actually Faster? | Technical Book &amp; Research", "<link href='https://www.linkedin.com/pulse/turning-my-engineering-work-book-ai-assisted-pipeline-raksawong-o1vyc/'>LinkedIn article</link>"),
+        role("Actually Faster? | Technical Book &amp; Research", "<link href='https://www.linkedin.com/pulse/i-wrote-book-question-could-longer-answer-confidently-raksawong-ybzic/'>LinkedIn article</link>"),
         bullet("Authored a 158-page account of Windows optimization research, evidence, risk, and reversibility; built an AI-assisted pipeline for manuscript, figures, layout, and review."),
         role("MCP & AI Tooling | Selected Prototypes", ""),
         bullet("Built experimental Model Context Protocol integrations, web applications, PWAs, and automation tools for AI-assisted research and information workflows."),

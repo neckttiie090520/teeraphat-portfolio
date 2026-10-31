@@ -438,7 +438,7 @@ export const projects: Project[] = [
       { src: '/showcase/actually-faster-cover.webp', alt: 'Cover of the 158-page book Actually Faster?', caption: 'The finished 6 × 9 inch book cover' },
       { src: '/showcase/actually-faster-risk-framework.webp', alt: 'Book page showing the risk classification framework for Windows changes', caption: 'Risk framework drawn as an SVG figure in the book' },
     ],
-    links: [{ href: 'https://www.linkedin.com/pulse/turning-my-engineering-work-book-ai-assisted-pipeline-raksawong-o1vyc/', label: 'Read the LinkedIn article' }],
+    links: [{ href: 'https://www.linkedin.com/pulse/i-wrote-book-question-could-longer-answer-confidently-raksawong-ybzic/', label: 'Read the LinkedIn article' }],
     caseStudy: {
       context: 'ClutchG began as a software and research project. Its methods, tradeoffs, and failure modes deserved an explanation that someone could follow beyond a code repository.',
       why: 'A book forces the engineering story to be readable and accountable: every number, figure, and recommendation needs a source and a clear limit.',
