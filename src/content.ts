@@ -61,14 +61,14 @@ export const content = {
       'I connect business workflows to AI systems and software delivery, with human ownership of the decisions that matter.',
     roles: [
       {
-        period: 'Sep 2026–Present',
+        period: 'Jul 2026–Present',
         title: 'AI Lead Engineer',
         company: 'DMC Connect',
         description:
-          'Primary technical owner for Nexora, translating travel operations into product scope, AI workflow design, system architecture, and AI-native implementation.',
+          'Established the AI team’s technical foundations and lead projects from business discovery and product direction through architecture and delivery.',
         contributions: [
           'Defined an AIDLC workflow linking product requirements, user flows, architecture, coding agents, tests, AI evaluation, and release review',
-          'Designed governed agent workflows and hotel-contract document intelligence with evidence, structured extraction, and human review',
+          'Designed AI and document workflows with structured extraction, source evidence, and human review',
           'Worked directly with business leadership on product direction, technical decisions, and engineering execution',
         ],
         images: [],
@@ -224,12 +224,12 @@ export const content = {
 
 export const featuredProjects: Project[] = [
   {
-    id: 'nexora',
+    id: 'ai-systems',
     index: '01',
-    title: 'Nexora',
+    title: 'AI Systems & Product Engineering',
     category: 'AI product architecture · Agent systems',
     summary:
-      'A governed AI work layer for travel operations. I help turn messy operational work into scoped, evidence-backed workflows with human control over consequential actions.',
+      'A look at how I approach scoped AI workflows, source evidence, and human control over consequential actions.',
     ownership:
       'Primary technical owner across product definition, architecture, agent workflow design, AI-native development, and engineering execution.',
     stack: ['AIDLC', 'Agent workflow design', 'System architecture', 'Human approval'],
@@ -237,13 +237,13 @@ export const featuredProjects: Project[] = [
     links: [],
     caseStudy: {
       context:
-        'Travel teams work across enquiries, contracts, quotations, and existing systems. The challenge is to coordinate that work without losing source evidence or decision ownership.',
+        'Operational teams work across documents, decisions, and existing systems. AI workflows need clear boundaries and human ownership.',
       why:
         'An AI assistant is useful only when it knows the scope of a task, the source of a claim, and who can authorize the next action.',
       role:
         'I lead technical direction and translate business needs into product boundaries, user flows, agent capabilities, architecture, and implementation plans.',
       constraints:
-        'Nexora is an active internal initiative. The full platform and proposed capabilities should not be presented as deployed; confidential operational details stay private.',
+        'This is a general account of engineering practice. It excludes employer product details, confidential information, and claims about deployment.',
       decisions:
         'Design a scoped work layer in which AI prepares and proposes, evidence remains traceable, and people or deterministic rules authorize consequential decisions.',
       build: [
@@ -347,30 +347,30 @@ export const featuredProjects: Project[] = [
     },
   },
   {
-    id: 'hotel-document-intelligence',
+    id: 'document-intelligence',
     index: '05',
-    title: 'Hotel Contract Intelligence',
+    title: 'Inspectable Document Intelligence',
     category: 'Document intelligence · AI evaluation',
     summary:
-      'An internal evaluation workflow for extracting structured hotel-contract information, checking evidence, and routing uncertain fields to human review.',
+      'An approach to structured extraction that connects source evidence, review, and downstream AI workflows.',
     ownership:
       'Worked on dataset preparation, ground truth, model comparison, error analysis, and the review workflow.',
     stack: ['Document intelligence', 'Structured extraction', 'Model evaluation', 'Human review'],
     feature: 'product',
-    links: [],
+    links: [{ href: 'https://www.linkedin.com/pulse/building-extraction-pipeline-you-can-inspect-teeraphat-raksawong-p7mnc/', label: 'Read the LinkedIn article' }],
     caseStudy: {
       context:
-        'Hotel contracts contain business-critical details in documents that vary in layout and wording.',
+        'Complex documents can contain important information across tables, pages, and varied layouts.',
       why:
         'Extraction needs source evidence and human verification before a business workflow can rely on the result.',
       role:
         'I worked on dataset preparation, extraction evaluation, model comparison, error analysis, and the human-review direction.',
       constraints:
-        'The work uses internal documents. This page excludes contract content, customer information, accuracy scores, and claims of production-scale automation.',
+        'The linked article uses synthetic examples and excludes confidential material, accuracy scores, and claims of production-scale automation.',
       decisions:
         'Treat parsing, candidate extraction, verification, and human review as separate steps; compare outputs against ground truth and track failure types.',
       build: [
-        'Prepared contract examples and ground-truth fields for evaluation.',
+        'Prepared examples and reference fields for evaluation.',
         'Compared extraction outputs and recorded error categories.',
         'Designed a review path for uncertain or consequential fields.',
       ],
@@ -400,7 +400,7 @@ export const projects: Project[] = [
       { src: '/showcase/clutchg-backup.png', alt: 'ClutchG backup screen showing automatic backup and a restore action', caption: 'Backup: a visible path back from a system change' },
     ],
     facts: [
-      { value: '44', label: 'audited tweak contracts' },
+      { value: '44', label: 'reachable knowledge records' },
       { value: '23', label: 'optimizer repositories studied' },
       { value: '3', label: 'risk tiers' },
     ],
@@ -410,15 +410,15 @@ export const projects: Project[] = [
       why: 'An optimization tool should help a person understand the tradeoff before changing a real machine.',
       role: 'Designed and built the research-backed Windows optimizer, its Python GUI, backup and rollback flow, and documentation.',
       constraints: 'System changes can create instability. The project avoids disabling core Windows security protections and records changes for reversal.',
-      decisions: 'Study existing tools, classify candidate changes by risk, and place hardware detection, profiles, documentation, backup, and restore into one guided workflow. A later code audit corrected the earlier 56-tweak claim: 45 passed screening and 44 had verified execution and rollback contracts.',
+      decisions: 'Study existing tools, classify candidate changes by risk, and place hardware detection, profiles, documentation, backup, and restore into one guided workflow. A later audit found 44 reachable knowledge records; that count does not establish 44 individually verified execution and rollback contracts.',
       build: [
         'Reviewed 23 open-source optimizer repositories and more than 200 techniques.',
-        'Audited 44 executable, reversible tweak contracts across the risk framework.',
+        'Audited the mapping between the knowledge catalogue and implementation; three exact executable contracts were individually examined.',
         'Built a desktop GUI with hardware detection and profile recommendations.',
         'Added automatic backup, change logging, and per-tweak rollback.',
       ],
       evidence: 'The public repository and a 158-page book document the research, GUI, risk model, and self-audit. The audit found that all nine Quick Action bundles still contained an unresolved item, so their fail-closed guard stopped those bundles from executing.',
-      outcome: 'A documented desktop optimizer and an audit that corrected its own claim from 56 to 44 verified contracts. Quick Action repair was unfinished when the book was written; player FPS experiments were planned, not completed.',
+      outcome: 'A documented desktop optimizer and a revised understanding of what the audit can support. Quick Action repair was unfinished when the book was written; player FPS experiments were planned, not completed.',
     },
   },
   {
@@ -433,7 +433,6 @@ export const projects: Project[] = [
     stack: ['AI-assisted editorial workflow', 'Python', 'HTML/CSS', 'SVG', 'PDF audit'],
     images: [
       { src: '/showcase/actually-faster-cover.webp', alt: 'Cover of the 158-page book Actually Faster?', caption: 'The finished 6 × 9 inch book cover' },
-      { src: '/showcase/actually-faster-audit-funnel.webp', alt: 'Book infographic showing the candidate-to-implementation audit funnel', caption: 'Source-grounded figure: 200+ candidates → 45 screened → 44 verified contracts' },
       { src: '/showcase/actually-faster-risk-framework.webp', alt: 'Book page showing the risk classification framework for Windows changes', caption: 'Risk framework drawn as an SVG figure in the book' },
     ],
     links: [],
@@ -447,7 +446,7 @@ export const projects: Project[] = [
         'Wrote a 158-page account of ClutchG and the research behind it.',
         'Used Python, HTML, and CSS to produce the cover, chapters, typography, and mirrored print gutters.',
         'Created seven source-traced SVG infographics and ran manuscript, Thai-language, and PDF layout audits.',
-        'Used the book audit to correct an earlier 56-tweak claim to 44 verified execution and rollback contracts.',
+        'Revisited the book’s audit after publication: 44 reachable knowledge records should not be treated as 44 individually verified executable contracts.',
       ],
       evidence: 'The preview images are rendered pages from the finished PDF; the production workspace contains the build, infographic, and audit scripts.',
       outcome: 'A finished 158-page book and a more honest account of the underlying software. The audit also surfaced unresolved Quick Action bundles; no measured FPS gain is claimed.',
@@ -656,9 +655,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 'qwen3vl-finetune-nexora',
+    id: 'model-evaluation',
     index: '06',
-    title: 'qwen3vl-finetune-nexora',
+    title: 'Vision-Language Model Evaluation',
     category: 'AI evaluation · Structured extraction',
     summary:
       'A model-evaluation and structured-extraction workflow where uncertain outputs go to human review.',

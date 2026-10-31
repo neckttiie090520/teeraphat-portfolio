@@ -276,9 +276,9 @@ export const capabilityGroups: CapabilityGroup[] = [
       "Document Pipelines",
       "Document AI",
       "Multimodal AI",
-      "Hotel Contract Intelligence",
-      "Hotel Rate Extraction",
-      "DMC Knowledge Base",
+      "Document Intelligence",
+      "Structured Data Extraction",
+      "Knowledge Retrieval",
       "Structured Contract Data",
       "Document Evidence"
     ]

@@ -203,25 +203,25 @@ function CaseNotes({ project }: { project: Project }) {
 }
 
 function ProjectGraphic({ project }: { project: Project }) {
-  if (project.id === 'nexora' || project.id === 'hotel-document-intelligence') {
-    const isNexora = project.id === 'nexora';
-    const steps = isNexora
+  if (project.id === 'ai-systems' || project.id === 'document-intelligence') {
+    const isAgentSystem = project.id === 'ai-systems';
+    const steps = isAgentSystem
       ? ['Scope the work', 'Ground in evidence', 'Agent proposes', 'Human authorizes']
       : ['Parse document', 'Extract fields', 'Check evidence', 'Human reviews'];
     return <figure className="system-figure" aria-label={`${project.title} system design: ${steps.join(', ')}`}>
-      <div className="system-figure__top"><span>{isNexora ? 'NEXORA / AGENT WORK LAYER' : 'HOTEL CONTRACT / DOCUMENT INTELLIGENCE'}</span><span>DESIGN &amp; EVALUATION</span></div>
-      <p className="system-figure__title">{isNexora ? 'AI prepares.\nPeople decide.' : 'From document\nto verified field.'}</p>
+      <div className="system-figure__top"><span>{isAgentSystem ? 'AI SYSTEMS / AGENT WORKFLOWS' : 'DOCUMENT INTELLIGENCE / EVIDENCE'}</span><span>DESIGN &amp; EVALUATION</span></div>
+      <p className="system-figure__title">{isAgentSystem ? 'AI prepares.\nPeople decide.' : 'From document\nto reviewed field.'}</p>
       <ol className="system-figure__flow">{steps.map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, '0')}</span><strong>{step}</strong></li>)}</ol>
-      <figcaption>{isNexora ? 'Public-safe architecture concept · active internal work' : 'Public-safe evaluation workflow · internal data excluded'}</figcaption>
+      <figcaption>{isAgentSystem ? 'A general architecture concept' : 'A general review workflow'}</figcaption>
     </figure>;
   }
 
   if (project.id === 'clutchg-pc-optimizer') {
-    return <figure className="case-visual case-visual--clutch" aria-label="ClutchG concept diagram showing evidence, risk, and rollback around 44 audited Windows tweak contracts">
+    return <figure className="case-visual case-visual--clutch" aria-label="ClutchG concept diagram showing evidence, risk, backup and restore">
       <div className="case-visual__top"><span>CLUTCHG / WINDOWS TOOLING</span><span>01—04</span></div>
-      <div className="case-visual__headline"><strong>44</strong><span>audited contracts<br />evidence, risk<br />and rollback</span></div>
+      <div className="case-visual__headline"><strong>01—04</strong><span>evidence, risk<br />backup and<br />recovery</span></div>
       <div className="case-visual__steps"><span>01 / Evidence</span><span>02 / Risk</span><span>03 / Backup</span><span>04 / Restore</span></div>
-      <figcaption>Designed so every change has context and a way back.</figcaption>
+      <figcaption>Designed to make changes and recovery paths easier to inspect.</figcaption>
     </figure>;
   }
 
@@ -348,7 +348,7 @@ const mascotMoments: Record<ChapterId, MascotMoment[]> = {
     { eyebrow: 'YES, HE TEACHES TOO', body: 'He has taken AI from the build room to the classroom, helping people turn a first idea into something they can use.', target: '#evidence', action: 'See the projects' },
   ],
   evidence: [
-    { eyebrow: 'WELCOME TO THE WORK', body: 'Start with the question, then the decision, then the evidence. Each case note tells you why the work exists.', target: '#project-nexora', action: 'Start with Nexora' },
+    { eyebrow: 'WELCOME TO THE WORK', body: 'Start with the question, then the decision, then the evidence. Each case note tells you why the work exists.', target: '#project-ai-systems', action: 'Explore AI systems' },
     { eyebrow: 'TAKE A CLOSER LOOK', body: 'Those are real interfaces and research figures. Open a case note if you want the thinking behind the pixels.', target: '#project-clutchg-pc-optimizer', action: 'Explore ClutchG' },
   ],
   approach: [
@@ -362,7 +362,7 @@ const mascotMoments: Record<ChapterId, MascotMoment[]> = {
 };
 
 const projectMoments: Record<string, string> = {
-  nexora: 'Here is the agent work layer: AI prepares, evidence stays visible, and people keep the final say.',
+  'ai-systems': 'Here is how I think about agent workflows: AI prepares, evidence stays visible, and people keep the final say.',
   younum: 'YouNum went from a solo idea to a live product. Necktie owned the flow, interface, code, and launch.',
   'khaosoi-research': 'A data story with numbers: 22,664 public reviews across 11 Chiang Mai restaurants.',
   'clutchg-pc-optimizer': 'ClutchG makes Windows changes explainable and reversible. Look for the backup path in the interface.',
@@ -376,7 +376,7 @@ const projectMoments: Record<string, string> = {
   'nzs-skills': 'These agent skills make a simple promise: claims should come with evidence you can inspect.',
   'poop-detector': 'Yes, the name is real. It is a pet-care computer-vision experiment with event logs and notifications.',
   'atk-firmwaremod': 'A tiny hardware problem became a guided firmware workflow with backup and patch logging.',
-  'qwen3vl-finetune-nexora': 'Here the focus is on preparing and evaluating vision-language models for a real document workflow.',
+  'model-evaluation': 'Here the focus is on preparing and evaluating vision-language models for document workflows.',
   'line-ai-secretary': 'A conversational assistant needs useful boundaries, good context, and a clear path back to a person.',
   'tracco-tracker': 'Tracking tools only help when the data is clear enough to act on. The case note explains the product choices.',
 };
@@ -587,8 +587,8 @@ function App() {
     ];
   };
   const featuredOrder = viewMode === 'engineering'
-    ? ['nexora', 'clutchg-pc-optimizer', 'hotel-document-intelligence', 'khaosoi-research', 'younum']
-    : ['nexora', 'younum', 'khaosoi-research', 'clutchg-pc-optimizer', 'hotel-document-intelligence'];
+    ? ['ai-systems', 'clutchg-pc-optimizer', 'document-intelligence', 'khaosoi-research', 'younum']
+    : ['ai-systems', 'younum', 'khaosoi-research', 'clutchg-pc-optimizer', 'document-intelligence'];
   const showcaseProjects = featuredOrder.map((id, index) => ({
     ...(featuredProjects.find((project) => project.id === id) ?? projects.find((project) => project.id === id)!),
     index: String(index + 1).padStart(2, '0'),

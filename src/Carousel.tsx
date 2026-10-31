@@ -5,7 +5,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
    rendered pages from Teeraphat's own finished book. */
 const SHOTS = [
   { name: 'cover', src: '/showcase/actually-faster-page-001-sharp.webp', alt: 'Cover of the 158-page book Actually Faster?', caption: 'The finished 6 × 9 inch book cover' },
-  { name: 'audit', src: '/showcase/actually-faster-page-028-sharp.webp', alt: 'Book infographic showing the candidate-to-implementation audit funnel', caption: 'Source-grounded figure: 200+ candidates → 45 screened → 44 verified contracts' },
+  { name: 'illustration', src: '/showcase/actually-faster-page-008.webp', alt: 'Illustrated opening page from the book Actually Faster?', caption: 'An illustrated opening from the finished book' },
   { name: 'risk', src: '/showcase/actually-faster-page-040-sharp.webp', alt: 'Book page showing the risk classification framework for Windows changes', caption: 'Risk framework drawn as an SVG figure in the book' },
 ];
 
