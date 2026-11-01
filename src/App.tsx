@@ -918,8 +918,9 @@ function App() {
             <div className="education-work__story" data-reveal>
               <p className="education-work__eyebrow">BFA GRADUATION PROJECT / INTERACTION → INSTALLATION</p>
               <h3>The Beginning of Force.</h3>
-              <p>My BFA thesis explored energy and human perception through an interactive installation combining a Tesla coil, plasma ball, and AI voice interaction. Visitors completed the work through their own presence and participation.</p>
+              <p>My BFA thesis explored energy and human perception through interactive experiments with a Tesla coil, a plasma ball, and AI voice. Using speech-to-text, GPT-3.5 and text-to-speech, I built a way for visitors to have a spoken conversation with the installation.</p>
               <p>It taught me to design for a real person in front of the work. Today I apply the same instinct to user flows, software, and AI: make the system respond in a way people can understand.</p>
+              <a href="https://www.linkedin.com/pulse/i-gave-invisible-force-voice-building-interactive-ai-raksawong-ila6c/" target="_blank" rel="noreferrer">Read the story on LinkedIn ↗</a>
               <p className="hand-note hand-note--education">What happens if someone touches it? ↗</p>
             </div>
             <div className="education-gallery" aria-label="Media Art and Design project photographs">
